@@ -31,7 +31,7 @@ function ConsentPage() {
   };
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '80px', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       <div style={{
         position: 'fixed',
         top: 0,
@@ -92,26 +92,7 @@ function ConsentPage() {
           <p>City General Hospital, Mumbai</p>
         </div>
         <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-          <div style={{
-            display: 'inline-block',
-            width: '60px',
-            height: '70px',
-            border: '3px solid #7c3aed',
-            borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%',
-            position: 'relative',
-            marginBottom: '10px'
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '20px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '20px',
-              height: '30px',
-              border: '2px solid #7c3aed',
-              borderRadius: '50%'
-            }}></div>
-          </div>
+          <div style={{ fontSize: '3rem', color: '#7c3aed' }}>🔒</div>
           <p style={{ color: '#ccc', fontSize: '14px' }}>This is cryptographically secure</p>
         </div>
         <div style={{ marginBottom: '20px' }}>
