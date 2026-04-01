@@ -1,0 +1,31 @@
+pragma compact 0.28.0;
+language_version >= 0.14.0;
+
+import CompactStandardLibrary;
+
+ledger state {
+  consents: Cell<Map<Field, Boolean>>
+}
+
+witness functions {
+  grantConsent(patientHash: Field, fields: List<Field>) -> Field {
+    let consentId = persistentHash(patientHash + fields);
+    consents.get().set(consentId, true);
+    return consentId;
+  }
+
+  checkConsent(consentId: Field) -> Boolean {
+    return consents.get().get(consentId).unwrap_or(false);
+  }
+
+  revokeConsent(consentId: Field) -> Boolean {
+    consents.get().set(consentId, false);
+    return true;
+  }
+}
+
+export circuits {
+  grantConsent,
+  checkConsent,
+  revokeConsent
+}

@@ -1,0 +1,31 @@
+pragma compact 0.28.0;
+language_version >= 0.14.0;
+
+import CompactStandardLibrary;
+
+ledger state {
+  exchanges: Cell<Map<Field, Field>>
+}
+
+witness functions {
+  recordExchange(patientHash: Field, hospital: Field, purpose: Field) -> Field {
+    let receipt = persistentHash(patientHash + hospital + purpose);
+    exchanges.get().set(receipt, patientHash);
+    return receipt;
+  }
+
+  verifyExchange(receipt: Field) -> Boolean {
+    return exchanges.get().contains_key(receipt);
+  }
+
+  getReceipt(patientHash: Field) -> Option<Field> {
+    // Simplified, in real would search or use index
+    return exchanges.get().values().find(|v| v == patientHash);
+  }
+}
+
+export circuits {
+  recordExchange,
+  verifyExchange,
+  getReceipt
+}

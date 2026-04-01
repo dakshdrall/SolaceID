@@ -1,0 +1,29 @@
+pragma compact 0.28.0;
+language_version >= 0.14.0;
+
+import CompactStandardLibrary;
+
+ledger state {
+  identityCommitment: Cell<Field>,
+  isVerified: Cell<Boolean>
+}
+
+witness functions {
+  commitIdentity(data: Field) -> Field {
+    let commitment = persistentHash(data);
+    identityCommitment.set(commitment);
+    return commitment;
+  }
+
+  verifyIdentity(proof: Field, data: Field) -> Boolean {
+    let commitment = persistentHash(data);
+    let verified = commitment == proof;
+    isVerified.set(verified);
+    return verified;
+  }
+}
+
+export circuits {
+  commitIdentity,
+  verifyIdentity
+}
