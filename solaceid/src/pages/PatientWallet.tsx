@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function PatientWallet() {
@@ -121,7 +121,7 @@ function PatientWallet() {
   );
 }
 
-const inputStyle = {
+const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '12px',
   margin: '10px 0',
@@ -131,7 +131,7 @@ const inputStyle = {
   boxSizing: 'border-box'
 };
 
-const buttonStyle = {
+const buttonStyle: React.CSSProperties = {
   padding: '12px 24px',
   border: 'none',
   borderRadius: '5px',

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
@@ -50,7 +49,7 @@ function LandingPage() {
   );
 }
 
-const cardStyle = {
+const cardStyle: React.CSSProperties = {
   backgroundColor: '#1a1f2e',
   padding: '20px',
   borderRadius: '10px',
@@ -59,7 +58,7 @@ const cardStyle = {
   textAlign: 'center'
 };
 
-const buttonStyle = {
+const buttonStyle: React.CSSProperties = {
   padding: '15px 30px',
   border: 'none',
   borderRadius: '5px',

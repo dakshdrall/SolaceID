@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
+interface PatientData {
+  name: string;
+  dob: string;
+  bloodType: string;
+  allergies: string;
+  vaccination: boolean;
+}
+
+interface AuditTrail {
+  receiptHash: string | null;
+  timestamp: string;
+  network: string;
+  purpose: string;
+}
 
 function HospitalDashboard() {
   const [patientHash, setPatientHash] = useState('');
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
-  const [patientData, setPatientData] = useState(null);
-  const [auditTrail, setAuditTrail] = useState(null);
+  const [patientData, setPatientData] = useState<PatientData | null>(null);
+  const [auditTrail, setAuditTrail] = useState<AuditTrail | null>(null);
 
   const handleVerify = () => {
     setLoading(true);
     setTimeout(() => {
       const storedHash = localStorage.getItem('patientHash');
       if (patientHash === storedHash) {
-        const data = JSON.parse(localStorage.getItem('patientData'));
-        const consent = JSON.parse(localStorage.getItem('consentData'));
+        const data = JSON.parse(localStorage.getItem('patientData') || '{}');
+        const consent = JSON.parse(localStorage.getItem('consentData') || '{}');
         const tx = localStorage.getItem('consentTx');
         setPatientData(data);
         setAuditTrail({
@@ -107,16 +122,16 @@ function HospitalDashboard() {
             </div>
             <div style={{ marginBottom: '30px' }}>
               <h3>Patient Health Record</h3>
-              <p><strong>Blood Type:</strong> {patientData.bloodType}</p>
-              <p><strong>Allergies:</strong> {patientData.allergies}</p>
-              <p><strong>Vaccination Status:</strong> {patientData.vaccination ? 'Vaccinated' : 'Not Vaccinated'}</p>
+              <p><strong>Blood Type:</strong> {patientData?.bloodType}</p>
+              <p><strong>Allergies:</strong> {patientData?.allergies}</p>
+              <p><strong>Vaccination Status:</strong> {patientData?.vaccination ? 'Vaccinated' : 'Not Vaccinated'}</p>
             </div>
             <div style={{ marginBottom: '30px' }}>
               <h3>Audit Trail</h3>
-              <p><strong>Receipt Hash:</strong> {auditTrail.receiptHash}</p>
-              <p><strong>Timestamp:</strong> {auditTrail.timestamp}</p>
-              <p><strong>Network:</strong> {auditTrail.network}</p>
-              <p><strong>Purpose:</strong> {auditTrail.purpose}</p>
+              <p><strong>Receipt Hash:</strong> {auditTrail?.receiptHash}</p>
+              <p><strong>Timestamp:</strong> {auditTrail?.timestamp}</p>
+              <p><strong>Network:</strong> {auditTrail?.network}</p>
+              <p><strong>Purpose:</strong> {auditTrail?.purpose}</p>
             </div>
             <footer style={{
               textAlign: 'center',
@@ -135,7 +150,7 @@ function HospitalDashboard() {
   );
 }
 
-const inputStyle = {
+const inputStyle: React.CSSProperties = {
   width: '60%',
   padding: '12px',
   border: 'none',
@@ -144,7 +159,7 @@ const inputStyle = {
   boxSizing: 'border-box'
 };
 
-const buttonStyle = {
+const buttonStyle: React.CSSProperties = {
   padding: '12px 24px',
   border: 'none',
   borderRadius: '5px',
