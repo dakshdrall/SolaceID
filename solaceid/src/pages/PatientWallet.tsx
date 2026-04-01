@@ -31,7 +31,46 @@ function PatientWallet() {
   };
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '3rem', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '5rem', scrollPaddingTop: '3rem' }}>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: 'rgba(10,15,30,0.9)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid #7c3aed',
+        zIndex: 1000,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 2rem'
+      }}>
+        <div style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          SolaceID
+        </div>
+        <div style={{ display: 'flex', gap: '2rem' }}>
+          <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
+          <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
+          <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
+        </div>
+        <button style={{
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          color: 'white',
+          border: 'none',
+          padding: '0.5rem 1rem',
+          borderRadius: '5px',
+          cursor: 'pointer'
+        }}>
+          Connect Wallet
+        </button>
+      </div>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1 style={{
           fontSize: '48px',
@@ -42,79 +81,123 @@ function PatientWallet() {
         }}>
           SolaceID
         </h1>
+        <h2>Patient Portal</h2>
       </div>
       <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Patient Onboarding</h2>
-        <form style={{ marginBottom: '20px' }}>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={form.name}
-            onChange={e => setForm({ ...form, name: e.target.value })}
-            style={inputStyle}
-          />
-          <input
-            type="date"
-            placeholder="Date of Birth"
-            value={form.dob}
-            onChange={e => setForm({ ...form, dob: e.target.value })}
-            style={inputStyle}
-          />
-          <select
-            value={form.bloodType}
-            onChange={e => setForm({ ...form, bloodType: e.target.value })}
-            style={inputStyle}
-          >
-            <option value="">Select Blood Type</option>
-            <option>A+</option>
-            <option>A-</option>
-            <option>B+</option>
-            <option>B-</option>
-            <option>O+</option>
-            <option>O-</option>
-            <option>AB+</option>
-            <option>AB-</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Allergies"
-            value={form.allergies}
-            onChange={e => setForm({ ...form, allergies: e.target.value })}
-            style={inputStyle}
-          />
-          <label style={{ display: 'block', margin: '10px 0', fontSize: '16px' }}>
-            <input
-              type="checkbox"
-              checked={form.vaccination}
-              onChange={e => setForm({ ...form, vaccination: e.target.checked })}
-              style={{ marginRight: '10px' }}
-            />
-            Vaccination Status
-          </label>
-        </form>
-        <div style={{ textAlign: 'center' }}>
-          <button
-            onClick={handleGenerate}
-            disabled={loading || success}
-            style={{
-              ...buttonStyle,
-              background: loading ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-              opacity: loading || success ? 0.6 : 1
-            }}
-          >
-            {loading ? 'Generating ZK Identity...' : success ? 'ZK Identity Generated' : 'Generate ZK Identity'}
-          </button>
-          {loading && <div style={{ marginTop: '10px', fontSize: '14px' }}>Processing...</div>}
-          {success && (
-            <div style={{ marginTop: '20px', color: '#10b981', fontSize: '18px' }}>
-              Success! Commitment Hash: {hash}
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          borderRadius: '15px',
+          padding: '30px',
+          marginBottom: '20px'
+        }}>
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+              color: 'white',
+              padding: '10px 20px',
+              borderRadius: '20px',
+              fontWeight: 'bold'
+            }}>
+              Your Privacy Score: 100%
             </div>
-          )}
-          {success && (
-            <button onClick={handleProceed} style={{ ...buttonStyle, background: '#10b981', marginTop: '20px' }}>
-              Proceed to Consent
+          </div>
+          <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Patient Onboarding</h2>
+          <form style={{ marginBottom: '20px' }}>
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })}
+              style={inputStyle}
+            />
+            <input
+              type="date"
+              placeholder="Date of Birth"
+              value={form.dob}
+              onChange={e => setForm({ ...form, dob: e.target.value })}
+              style={inputStyle}
+            />
+            <select
+              value={form.bloodType}
+              onChange={e => setForm({ ...form, bloodType: e.target.value })}
+              style={inputStyle}
+            >
+              <option value="">Select Blood Type</option>
+              <option>A+</option>
+              <option>A-</option>
+              <option>B+</option>
+              <option>B-</option>
+              <option>O+</option>
+              <option>O-</option>
+              <option>AB+</option>
+              <option>AB-</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Allergies"
+              value={form.allergies}
+              onChange={e => setForm({ ...form, allergies: e.target.value })}
+              style={inputStyle}
+            />
+            <label style={{ display: 'block', margin: '10px 0', fontSize: '16px' }}>
+              <input
+                type="checkbox"
+                checked={form.vaccination}
+                onChange={e => setForm({ ...form, vaccination: e.target.checked })}
+                style={{ marginRight: '10px' }}
+              />
+              Vaccination Status
+            </label>
+          </form>
+          <div style={{ textAlign: 'center' }}>
+            <button
+              onClick={handleGenerate}
+              disabled={loading || success}
+              style={{
+                ...buttonStyle,
+                background: loading ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                opacity: loading || success ? 0.6 : 1
+              }}
+            >
+              {loading ? 'Generating ZK Identity...' : success ? 'ZK Identity Generated' : 'Generate ZK Identity'}
             </button>
-          )}
+            {loading && <div style={{ marginTop: '10px', fontSize: '14px' }}>Processing...</div>}
+            {success && (
+              <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                <div style={{
+                  display: 'inline-block',
+                  width: '50px',
+                  height: '50px',
+                  border: '3px solid #10b981',
+                  borderRadius: '50%',
+                  position: 'relative',
+                  marginBottom: '10px'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '15px',
+                    width: '15px',
+                    height: '25px',
+                    border: 'solid #10b981',
+                    borderWidth: '0 3px 3px 0',
+                    transform: 'rotate(45deg)'
+                  }}></div>
+                </div>
+                <div style={{ color: '#10b981', fontSize: '18px', fontWeight: 'bold' }}>
+                  Success! Commitment Hash: {hash}
+                </div>
+              </div>
+            )}
+            {success && (
+              <button onClick={handleProceed} style={{ ...buttonStyle, background: '#10b981', marginTop: '20px' }}>
+                Proceed to Consent
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

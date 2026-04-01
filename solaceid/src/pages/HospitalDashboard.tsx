@@ -46,7 +46,46 @@ function HospitalDashboard() {
   };
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '3rem', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '5rem', scrollPaddingTop: '3rem' }}>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: 'rgba(10,15,30,0.9)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid #7c3aed',
+        zIndex: 1000,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 2rem'
+      }}>
+        <div style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          SolaceID
+        </div>
+        <div style={{ display: 'flex', gap: '2rem' }}>
+          <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
+          <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
+          <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
+        </div>
+        <button style={{
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          color: 'white',
+          border: 'none',
+          padding: '0.5rem 1rem',
+          borderRadius: '5px',
+          cursor: 'pointer'
+        }}>
+          Connect Wallet
+        </button>
+      </div>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1 style={{
           fontSize: '48px',
@@ -112,13 +151,104 @@ function HospitalDashboard() {
             <div style={{
               textAlign: 'center',
               marginBottom: '30px',
-              padding: '20px',
-              backgroundColor: '#10b981',
-              borderRadius: '10px',
-              fontSize: '24px',
-              fontWeight: 'bold'
+              padding: '30px',
+              background: 'linear-gradient(135deg, #10b981, #7c3aed)',
+              borderRadius: '15px',
+              fontSize: '28px',
+              fontWeight: 'bold',
+              boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)'
             }}>
+              <div style={{
+                display: 'inline-block',
+                width: '60px',
+                height: '60px',
+                border: '4px solid white',
+                borderRadius: '50%',
+                position: 'relative',
+                marginBottom: '15px'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '15px',
+                  left: '20px',
+                  width: '20px',
+                  height: '30px',
+                  border: 'solid white',
+                  borderWidth: '0 4px 4px 0',
+                  transform: 'rotate(45deg)'
+                }}></div>
+              </div>
+              <br />
               ZK Proof Verified
+              <div style={{
+                marginTop: '15px',
+                fontSize: '16px',
+                fontWeight: 'normal',
+                background: 'rgba(255,255,255,0.2)',
+                padding: '10px',
+                borderRadius: '10px',
+                display: 'inline-block'
+              }}>
+                Midnight Network
+              </div>
+            </div>
+            <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+              <h3>Blockchain Transaction Timeline</h3>
+              <div style={{ position: 'relative', paddingLeft: '50px' }}>
+                <div style={{
+                  position: 'absolute',
+                  left: '20px',
+                  top: 0,
+                  bottom: 0,
+                  width: '2px',
+                  background: 'linear-gradient(to bottom, #7c3aed, #06b6d4)'
+                }}></div>
+                <div style={{ marginBottom: '20px', position: 'relative' }}>
+                  <div style={{
+                    position: 'absolute',
+                    left: '-40px',
+                    top: '5px',
+                    width: '20px',
+                    height: '20px',
+                    background: '#7c3aed',
+                    borderRadius: '50%'
+                  }}></div>
+                  <div style={{ background: 'rgba(124, 58, 237, 0.1)', padding: '15px', borderRadius: '10px', border: '1px solid #7c3aed' }}>
+                    <strong>Identity Commitment</strong><br />
+                    Patient ZK identity created on Midnight Network
+                  </div>
+                </div>
+                <div style={{ marginBottom: '20px', position: 'relative' }}>
+                  <div style={{
+                    position: 'absolute',
+                    left: '-40px',
+                    top: '5px',
+                    width: '20px',
+                    height: '20px',
+                    background: '#06b6d4',
+                    borderRadius: '50%'
+                  }}></div>
+                  <div style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '15px', borderRadius: '10px', border: '1px solid #06b6d4' }}>
+                    <strong>Consent Transaction</strong><br />
+                    Patient signed consent for data sharing
+                  </div>
+                </div>
+                <div style={{ position: 'relative' }}>
+                  <div style={{
+                    position: 'absolute',
+                    left: '-40px',
+                    top: '5px',
+                    width: '20px',
+                    height: '20px',
+                    background: '#10b981',
+                    borderRadius: '50%'
+                  }}></div>
+                  <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '15px', borderRadius: '10px', border: '1px solid #10b981' }}>
+                    <strong>ZK Verification</strong><br />
+                    Hospital verified proof and accessed authorized data
+                  </div>
+                </div>
+              </div>
             </div>
             <div style={{ marginBottom: '30px' }}>
               <h3>Patient Health Record</h3>

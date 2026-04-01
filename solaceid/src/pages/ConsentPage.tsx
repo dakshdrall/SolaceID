@@ -31,7 +31,46 @@ function ConsentPage() {
   };
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '3rem', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '5rem', scrollPaddingTop: '3rem' }}>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: 'rgba(10,15,30,0.9)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid #7c3aed',
+        zIndex: 1000,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 2rem'
+      }}>
+        <div style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          SolaceID
+        </div>
+        <div style={{ display: 'flex', gap: '2rem' }}>
+          <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
+          <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
+          <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
+        </div>
+        <button style={{
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          color: 'white',
+          border: 'none',
+          padding: '0.5rem 1rem',
+          borderRadius: '5px',
+          cursor: 'pointer'
+        }}>
+          Connect Wallet
+        </button>
+      </div>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1 style={{
           fontSize: '48px',
@@ -42,15 +81,38 @@ function ConsentPage() {
         }}>
           SolaceID
         </h1>
+        <h2>Patient Consent</h2>
       </div>
       <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Patient Consent</h2>
         <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #7c3aed', borderRadius: '10px' }}>
           <p><strong>Patient Hash:</strong> {patientHash}</p>
         </div>
         <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #06b6d4', borderRadius: '10px' }}>
           <h3>Hospital</h3>
           <p>City General Hospital, Mumbai</p>
+        </div>
+        <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+          <div style={{
+            display: 'inline-block',
+            width: '60px',
+            height: '70px',
+            border: '3px solid #7c3aed',
+            borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%',
+            position: 'relative',
+            marginBottom: '10px'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '20px',
+              height: '30px',
+              border: '2px solid #7c3aed',
+              borderRadius: '50%'
+            }}></div>
+          </div>
+          <p style={{ color: '#ccc', fontSize: '14px' }}>This is cryptographically secure</p>
         </div>
         <div style={{ marginBottom: '20px' }}>
           <h3>Fields to Share</h3>
