@@ -4,7 +4,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '130px', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '80px', scrollPaddingTop: '3rem' }}>
       <div style={{
         position: 'fixed',
         top: 0,
@@ -53,18 +53,8 @@ function LandingPage() {
         background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(6, 182, 212, 0.1))',
         zIndex: -1
       }}></div>
-      <header style={{ textAlign: 'center', padding: '80px 20px 40px' }}>
-        <h1 style={{
-          fontSize: '3rem',
-          fontWeight: 'bold',
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          margin: '0'
-        }}>
-          SolaceID
-        </h1>
-        <p style={{ fontSize: '1.5rem', margin: '16px 0 20px', color: '#ccc' }}>The future of patient privacy on blockchain</p>
+      <header style={{ textAlign: 'center', padding: '20px 20px 40px' }}>
+  <p style={{ fontSize: '2rem', margin: '0 0 20px', color: '#ccc', fontWeight: '600' }}>The future of patient privacy on blockchain</p>
         <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 20px', lineHeight: '1.6' }}>
           SolaceID is a privacy-preserving patient identity and health record exchange built on Midnight Network blockchain.
           Patients control their data, hospitals access only what they need, all verified with zero-knowledge proofs.
