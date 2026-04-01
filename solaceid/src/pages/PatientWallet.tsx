@@ -31,7 +31,7 @@ function PatientWallet() {
   };
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '5rem', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '80px', scrollPaddingTop: '3rem' }}>
       <div style={{
         position: 'fixed',
         top: 0,
