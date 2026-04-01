@@ -4,7 +4,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '130px', scrollPaddingTop: '3rem' }}>
       <div style={{
         position: 'fixed',
         top: 0,
@@ -55,7 +55,7 @@ function LandingPage() {
       }}></div>
       <header style={{ textAlign: 'center', padding: '80px 20px 40px' }}>
         <h1 style={{
-          fontSize: '4rem',
+          fontSize: '3rem',
           fontWeight: 'bold',
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
           WebkitBackgroundClip: 'text',
@@ -64,25 +64,26 @@ function LandingPage() {
         }}>
           SolaceID
         </h1>
-        <p style={{ fontSize: '1.5rem', margin: '10px 0 20px', color: '#ccc' }}>The future of patient privacy on blockchain</p>
-        <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
+        <p style={{ fontSize: '1.5rem', margin: '16px 0 20px', color: '#ccc' }}>The future of patient privacy on blockchain</p>
+        <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 20px', lineHeight: '1.6' }}>
           SolaceID is a privacy-preserving patient identity and health record exchange built on Midnight Network blockchain.
           Patients control their data, hospitals access only what they need, all verified with zero-knowledge proofs.
         </p>
-        <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+        <div style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
           <span style={{ background: 'rgba(124, 58, 237, 0.2)', padding: '10px 20px', borderRadius: '20px', border: '1px solid #7c3aed' }}>100% Private</span>
           <span style={{ background: 'rgba(6, 182, 212, 0.2)', padding: '10px 20px', borderRadius: '20px', border: '1px solid #06b6d4' }}>Zero Data On-Chain</span>
           <span style={{ background: 'rgba(16, 185, 129, 0.2)', padding: '10px 20px', borderRadius: '20px', border: '1px solid #10b981' }}>ZK Verified</span>
         </div>
+        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <button onClick={() => navigate('/wallet')} style={{ ...buttonStyle, background: 'linear-gradient(to right, #7c3aed, #06b6d4)', padding: '15px 40px', fontSize: '18px' }}>
+            Get Started as Patient
+          </button>
+          <button onClick={() => navigate('/hospital')} style={{ ...buttonStyle, background: '#06b6d4', padding: '15px 40px', fontSize: '18px' }}>
+            Hospital Login
+          </button>
+        </div>
       </header>
-      <section style={{ padding: '40px 20px', textAlign: 'center' }}>
-        <button onClick={() => navigate('/wallet')} style={{ ...buttonStyle, background: 'linear-gradient(to right, #7c3aed, #06b6d4)', marginRight: '20px', padding: '15px 40px', fontSize: '18px' }}>
-          Get Started as Patient
-        </button>
-        <button onClick={() => navigate('/hospital')} style={{ ...buttonStyle, background: '#06b6d4', padding: '15px 40px', fontSize: '18px' }}>
-          Hospital Login
-        </button>
-      </section>
+
       <section style={{ padding: '80px 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
