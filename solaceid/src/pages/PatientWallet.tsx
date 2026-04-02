@@ -37,19 +37,20 @@ function PatientWallet() {
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       <Navbar />
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{
-          fontSize: '48px',
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          margin: '0'
-        }}>
-          SolaceID
-        </h1>
-        <h2>Patient Portal</h2>
-      </div>
-      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+      <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{
+            fontSize: '48px',
+            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            margin: '0'
+          }}>
+            SolaceID
+          </h1>
+          <h2>Patient Portal</h2>
+        </div>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
         <div style={{
           background: 'rgba(255, 255, 255, 0.1)',
           backdropFilter: 'blur(10px)',
@@ -165,6 +166,7 @@ function PatientWallet() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

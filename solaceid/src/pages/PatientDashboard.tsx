@@ -8,10 +8,19 @@ function PatientDashboard() {
   const createdDate = localStorage.getItem('patientCreated') || new Date().toISOString();
 
   const [consents, setConsents] = useState<any[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
     setConsents(Array.isArray(savedConsents) ? savedConsents : []);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const activeConsents = consents.filter(c => c.status === 'Active').length;
@@ -41,10 +50,10 @@ function PatientDashboard() {
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       <Navbar />
-      <div style={{ padding: '140px 20px 40px', margin: '0 auto', maxWidth: '1000px' }}>
+      <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', flexWrap: 'wrap', gap: '20px', marginBottom: '20px' }}>
           <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
             <h3 style={{ margin: '0 0 10px', color: '#7c3aed' }}>Consents Given</h3>
             <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{consents.length}</div>

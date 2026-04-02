@@ -18,7 +18,7 @@ function LandingPage() {
         zIndex: -1
       }}></div>
 
-      <header style={{ textAlign: 'center', padding: '40px 20px 60px' }}>
+      <header style={{ textAlign: 'center', padding: '40px 1rem 60px' }}>
         <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>The future of patient privacy on blockchain</h1>
         <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 24px', lineHeight: '1.6', color: '#ccc' }}>
           SolaceID is a privacy-preserving patient identity and health record exchange built on Midnight Network blockchain. Patients control their data, hospitals access only what they need, all verified with zero-knowledge proofs.
@@ -44,7 +44,7 @@ function LandingPage() {
         </div>
       </header>
 
-      <section style={{ padding: '80px 20px 20px', textAlign: 'center' }}>
+      <section style={{ padding: '80px 1rem 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
           <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(124,58,237,0.1))', border: '1px solid #7c3aed' }}>
@@ -65,8 +65,8 @@ function LandingPage() {
         </div>
       </section>
 
-      <section style={{ padding: '40px 20px', textAlign: 'center' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', maxWidth: '1000px', margin: '0 auto' }}>
+      <section style={{ padding: '40px 1rem', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
           <div style={cardStyle}>
             <h3>ZK-Patient ID</h3>
             <p>Create a zero-knowledge identity that proves your eligibility without revealing personal details.</p>

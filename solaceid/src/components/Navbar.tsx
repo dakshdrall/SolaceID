@@ -4,12 +4,22 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   const [walletAddress, setWalletAddress] = useState('');
   const [showInstallModal, setShowInstallModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress') || '';
     if (savedAddress) {
       setWalletAddress(savedAddress);
     }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const connectWallet = async () => {
@@ -39,6 +49,10 @@ function Navbar() {
     setShowInstallModal(false);
   };
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <>
       <nav style={{
@@ -53,15 +67,33 @@ function Navbar() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 24px',
+        padding: isMobile ? '0 1rem' : '0 24px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <Link to='/' style={{ color: 'white', textDecoration: 'none', fontSize: '1.4rem', fontWeight: 'bold' }}>SolaceID</Link>
-          <Link to='/' style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-          <Link to='/wallet' style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</Link>
-          <Link to='/dashboard' style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
-          <Link to='/hospital' style={{ color: 'white', textDecoration: 'none' }}>Hospital</Link>
+          {!isMobile && (
+            <>
+              <Link to='/' style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
+              <Link to='/wallet' style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</Link>
+              <Link to='/dashboard' style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
+              <Link to='/hospital' style={{ color: 'white', textDecoration: 'none' }}>Hospital</Link>
+            </>
+          )}
+          {isMobile && (
+            <button onClick={toggleMenu} style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px'
+            }}>
+              <div style={{ width: '20px', height: '2px', backgroundColor: 'white' }}></div>
+              <div style={{ width: '20px', height: '2px', backgroundColor: 'white' }}></div>
+              <div style={{ width: '20px', height: '2px', backgroundColor: 'white' }}></div>
+            </button>
+          )}
         </div>
         <button onClick={connectWallet} style={{
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
@@ -75,6 +107,27 @@ function Navbar() {
           {walletAddress || 'Connect Wallet'}
         </button>
       </nav>
+
+      {menuOpen && isMobile && (
+        <div style={{
+          position: 'fixed',
+          top: '70px',
+          left: 0,
+          right: 0,
+          backgroundColor: '#0a0f1e',
+          borderBottom: '1px solid rgba(124, 58, 237, 0.3)',
+          zIndex: 999,
+          padding: '1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          <Link to='/' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to='/wallet' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
+          <Link to='/dashboard' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Dashboard</Link>
+          <Link to='/hospital' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Hospital</Link>
+        </div>
+      )}
 
       {showInstallModal && (
         <div style={{
