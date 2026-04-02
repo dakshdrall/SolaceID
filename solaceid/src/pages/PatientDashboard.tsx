@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
+import QRCode from 'react-qr-code';
 
 function PatientDashboard() {
   const patientName = localStorage.getItem('patientName') || 'Patient';
-  const patientHash = localStorage.getItem('patientHash') || '0x0000000000000000000000000000000000000000';
+  const patientHash = localStorage.getItem('solaceIdHash') || '0x0000000000000000000000000000000000000000';
   const createdDate = localStorage.getItem('patientCreated') || new Date().toISOString();
 
   const [consents, setConsents] = useState<any[]>([]);
@@ -100,6 +101,10 @@ function PatientDashboard() {
             {patientHash}
           </div>
           <button onClick={copyHash} style={{ backgroundColor: '#7c3aed', color: 'white', border: 'none', padding: '10px 14px', borderRadius: '8px', cursor: 'pointer' }}>Copy</button>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '1rem' }}>
+            <QRCode value={patientHash || 'no-id'} size={160} bgColor="#0d1526" fgColor="#7c3aed" />
+            <p style={{ color: '#94a3b8', fontSize: '13px', marginTop: '8px' }}>Scan to verify identity</p>
+          </div>
         </div>
       </div>
     </div>
