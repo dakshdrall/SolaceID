@@ -3,6 +3,7 @@ import LandingPage from './pages/LandingPage';
 import PatientWallet from './pages/PatientWallet';
 import ConsentPage from './pages/ConsentPage';
 import HospitalDashboard from './pages/HospitalDashboard';
+import PatientDashboard from './pages/PatientDashboard';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/wallet" element={<PatientWallet />} />
         <Route path="/consent" element={<ConsentPage />} />
         <Route path="/hospital" element={<HospitalDashboard />} />
+        <Route path="/dashboard" element={<PatientDashboard />} />
       </Routes>
     </BrowserRouter>
   );

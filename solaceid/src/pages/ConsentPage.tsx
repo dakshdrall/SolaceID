@@ -69,6 +69,23 @@ function ConsentPage() {
       setTxHash(transaction);
       localStorage.setItem('consentData', JSON.stringify(consent));
       localStorage.setItem('consentTx', transaction);
+
+      const flatFields = {
+        bloodType: consent.bloodType,
+        vaccination: consent.vaccination,
+        allergies: consent.allergies
+      };
+
+      const consents = JSON.parse(localStorage.getItem('consents') || '[]');
+      consents.push({
+        hospital: 'City General Hospital',
+        purpose: consent.purpose,
+        date: new Date().toISOString(),
+        status: 'Active',
+        fields: flatFields
+      });
+      localStorage.setItem('consents', JSON.stringify(consents));
+
       setLoading(false);
       setSuccess(true);
     }, 2000);
@@ -107,6 +124,7 @@ function ConsentPage() {
           <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
           <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
           <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
+          <a href="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</a>
         </div>
         <button onClick={connectWallet} disabled={isConnecting} style={{
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',

@@ -69,13 +69,14 @@ function PatientWallet() {
       setHash(commitment);
       localStorage.setItem('patientData', JSON.stringify(form));
       localStorage.setItem('patientHash', commitment);
+      localStorage.setItem('patientCreated', new Date().toISOString());
       setLoading(false);
       setSuccess(true);
     }, 2500);
   };
 
   const handleProceed = () => {
-    navigate('/consent');
+    navigate('/dashboard');
   };
 
   return (
@@ -107,6 +108,7 @@ function PatientWallet() {
           <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
           <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
           <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
+          <a href="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</a>
         </div>
         <button onClick={connectWallet} disabled={isConnecting} style={{
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
