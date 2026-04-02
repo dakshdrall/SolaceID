@@ -1,100 +1,13 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 function LandingPage() {
   const navigate = useNavigate();
-  const [walletAddress, setWalletAddress] = useState<string>('');
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [isConnecting, setIsConnecting] = useState<boolean>(false);
-
-  const connectWallet = async () => {
-    try {
-      const lace = (window as any).midnight?.mnLace;
-
-      if (!lace) {
-        alert('Lace Midnight Preview not detected. Please make sure it is installed and enabled, then refresh the page.');
-        return;
-      }
-
-      setIsConnecting(true);
-
-      const serviceUriConfig = {
-        proverServerUri: 'https://proof-server.preprod.midnight.network',
-        indexerUri: 'https://indexer.preprod.midnight.network/api/v3/graphql',
-        indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v3/graphql',
-        nodeUri: 'https://rpc.preprod.midnight.network',
-      };
-
-      const enabledApi = await lace.enable(serviceUriConfig);
-      const state = await enabledApi.state();
-
-      const address = state?.address || state?.unshieldedAddress || state?.coinPublicKey || 'Wallet Connected';
-      const shortAddress = typeof address === 'string' ? address.slice(0, 10) + '...' + address.slice(-6) : 'Connected';
-
-      setWalletAddress(shortAddress);
-      setIsConnecting(false);
-      setIsConnected(true);
-    } catch (err: any) {
-      setIsConnecting(false);
-      console.error('Wallet error:', err);
-      if (err?.message?.includes('user rejected')) {
-        alert('Connection rejected. Please approve the connection in Lace wallet.');
-      } else {
-        alert('Connection failed: ' + (err?.message || 'Unknown error'));
-      }
-    }
-  };
-
-  const formatAddress = (address: string) => {
-    if (!address) {
-      return isConnected ? 'Connected' : 'Connect Wallet';
-    }
-    return `${address.slice(0, 8)}...${address.slice(-6)}`;
-  };
 
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        background: 'rgba(10,15,30,0.9)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid #7c3aed',
-        zIndex: 1000,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '1rem 2rem'
-      }}>
-        <div style={{
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          SolaceID
-        </div>
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
-          <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
-          <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
-          <a href="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</a>
-        </div>
-        <button onClick={connectWallet} disabled={isConnecting} style={{
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          color: 'white',
-          border: 'none',
-          padding: '0.5rem 1rem',
-          borderRadius: '5px',
-          cursor: isConnecting ? 'not-allowed' : 'pointer',
-          opacity: isConnecting ? 0.6 : 1
-        }}>
-          {isConnecting ? 'Connecting...' : formatAddress(walletAddress)}
-        </button>
-      </div>
+      <Navbar />
+
       <div style={{
         position: 'absolute',
         top: 0,
@@ -104,13 +17,13 @@ function LandingPage() {
         background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(6, 182, 212, 0.1))',
         zIndex: -1
       }}></div>
-      <header style={{ textAlign: 'center', padding: '20px 20px 40px' }}>
-  <p style={{ fontSize: '2rem', margin: '0 0 20px', color: '#ccc', fontWeight: '600' }}>The future of patient privacy on blockchain</p>
-        <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 20px', lineHeight: '1.6' }}>
-          SolaceID is a privacy-preserving patient identity and health record exchange built on Midnight Network blockchain.
-          Patients control their data, hospitals access only what they need, all verified with zero-knowledge proofs.
+
+      <header style={{ textAlign: 'center', padding: '40px 20px 60px' }}>
+        <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>The future of patient privacy on blockchain</h1>
+        <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 24px', lineHeight: '1.6', color: '#ccc' }}>
+          SolaceID is a privacy-preserving patient identity and health record exchange built on Midnight Network blockchain. Patients control their data, hospitals access only what they need, all verified with zero-knowledge proofs.
         </p>
-        <div style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+        <div style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
           <span style={{ background: 'rgba(124, 58, 237, 0.2)', padding: '10px 20px', borderRadius: '20px', border: '1px solid #7c3aed' }}>100% Private</span>
           <span style={{ background: 'rgba(6, 182, 212, 0.2)', padding: '10px 20px', borderRadius: '20px', border: '1px solid #06b6d4' }}>Zero Data On-Chain</span>
           <span style={{ background: 'rgba(16, 185, 129, 0.2)', padding: '10px 20px', borderRadius: '20px', border: '1px solid #10b981' }}>ZK Verified</span>
@@ -123,28 +36,35 @@ function LandingPage() {
             Hospital Login
           </button>
         </div>
+        <div style={{ marginTop: '28px' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#11182e', borderRadius: '999px', padding: '8px 14px', fontSize: '0.9rem', color: '#fff' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '999px', background: '#7c3aed', display: 'inline-block' }} />
+            Powered by Midnight Network
+          </span>
+        </div>
       </header>
 
-      <section style={{ padding: '80px 20px', textAlign: 'center' }}>
+      <section style={{ padding: '80px 20px 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
-          <div style={{ ...stepStyle, background: 'rgba(124, 58, 237, 0.1)', border: '1px solid #7c3aed' }}>
-            <div style={{ fontSize: '3rem', color: '#7c3aed', marginBottom: '20px' }}>1</div>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(124,58,237,0.1))', border: '1px solid #7c3aed' }}>
+            <div style={stepIcon}>1</div>
             <h3>Generate ZK Identity</h3>
-            <p>Create your cryptographic identity commitment on Midnight Network</p>
+            <p>Create your cryptographic identity commitment on Midnight Network.</p>
           </div>
-          <div style={{ ...stepStyle, background: 'rgba(6, 182, 212, 0.1)', border: '1px solid #06b6d4' }}>
-            <div style={{ fontSize: '3rem', color: '#06b6d4', marginBottom: '20px' }}>2</div>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1))', border: '1px solid #06b6d4' }}>
+            <div style={stepIcon}>2</div>
             <h3>Grant Consent</h3>
-            <p>Sign consent transactions for specific hospital data access</p>
+            <p>Sign consent transactions for specific hospital data access.</p>
           </div>
-          <div style={{ ...stepStyle, background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981' }}>
-            <div style={{ fontSize: '3rem', color: '#10b981', marginBottom: '20px' }}>3</div>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(16,185,129,0.1))', border: '1px solid #10b981' }}>
+            <div style={stepIcon}>3</div>
             <h3>Verify & Access</h3>
-            <p>Hospitals verify ZK proofs to access authorized health records</p>
+            <p>Hospitals verify ZK proofs to access authorized health records.</p>
           </div>
         </div>
       </section>
+
       <section style={{ padding: '40px 20px', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', maxWidth: '1000px', margin: '0 auto' }}>
           <div style={cardStyle}>
@@ -185,10 +105,25 @@ const buttonStyle: React.CSSProperties = {
 };
 
 const stepStyle: React.CSSProperties = {
-  padding: '30px',
-  borderRadius: '15px',
+  padding: '24px',
+  borderRadius: '14px',
   width: '250px',
-  textAlign: 'center'
+  textAlign: 'center',
+  boxShadow: '0 8px 20px rgba(0,0,0,0.2)'
+};
+
+const stepIcon: React.CSSProperties = {
+  width: '52px',
+  height: '52px',
+  borderRadius: '999px',
+  background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+  color: 'white',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '1.2rem',
+  fontWeight: 'bold',
+  margin: '0 auto 14px'
 };
 
 export default LandingPage;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Navbar from '../components/Navbar';
 
 function PatientDashboard() {
   const patientName = localStorage.getItem('patientName') || 'Patient';
@@ -38,40 +39,7 @@ function PatientDashboard() {
 
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        background: 'rgba(10,15,30,0.9)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid #7c3aed',
-        zIndex: 1000,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '1rem 2rem'
-      }}>
-        <div style={{
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          SolaceID
-        </div>
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
-          <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
-          <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
-          <a href="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</a>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <div style={{ background: '#10b981', padding: '0.2rem 0.65rem', borderRadius: '0.5rem', fontSize: '0.9rem' }}>Connected</div>
-        </div>
-      </div>
-
+      <Navbar />
       <div style={{ padding: '140px 20px 40px', margin: '0 auto', maxWidth: '1000px' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
 

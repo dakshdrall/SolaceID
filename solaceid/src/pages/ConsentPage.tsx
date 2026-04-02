@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 function ConsentPage() {
   const navigate = useNavigate();
   const patientHash = localStorage.getItem('patientHash') || '';
-  const [walletAddress, setWalletAddress] = useState<string>('');
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [consent, setConsent] = useState({
     bloodType: false,
     vaccination: false,
@@ -17,50 +15,7 @@ function ConsentPage() {
   const [success, setSuccess] = useState(false);
   const [txHash, setTxHash] = useState('');
 
-  const connectWallet = async () => {
-    try {
-      const lace = (window as any).midnight?.mnLace;
-
-      if (!lace) {
-        alert('Lace Midnight Preview not detected. Please make sure it is installed and enabled, then refresh the page.');
-        return;
-      }
-
-      setIsConnecting(true);
-
-      const serviceUriConfig = {
-        proverServerUri: 'https://proof-server.preprod.midnight.network',
-        indexerUri: 'https://indexer.preprod.midnight.network/api/v3/graphql',
-        indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v3/graphql',
-        nodeUri: 'https://rpc.preprod.midnight.network',
-      };
-
-      const enabledApi = await lace.enable(serviceUriConfig);
-      const state = await enabledApi.state();
-
-      const address = state?.address || state?.unshieldedAddress || state?.coinPublicKey || 'Wallet Connected';
-      const shortAddress = typeof address === 'string' ? address.slice(0, 10) + '...' + address.slice(-6) : 'Connected';
-
-      setWalletAddress(shortAddress);
-      setIsConnecting(false);
-      setIsConnected(true);
-    } catch (err: any) {
-      setIsConnecting(false);
-      console.error('Wallet error:', err);
-      if (err?.message?.includes('user rejected')) {
-        alert('Connection rejected. Please approve the connection in Lace wallet.');
-      } else {
-        alert('Connection failed: ' + (err?.message || 'Unknown error'));
-      }
-    }
-  };
-
-  const formatAddress = (address: string) => {
-    if (!address) {
-      return isConnected ? 'Connected' : 'Connect Wallet';
-    }
-    return `${address.slice(0, 8)}...${address.slice(-6)}`;
-  };
+  // Navbar handles wallet connection now.
 
   const handleSign = () => {
     setLoading(true);
@@ -97,47 +52,7 @@ function ConsentPage() {
 
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', padding: '20px', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        background: 'rgba(10,15,30,0.9)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid #7c3aed',
-        zIndex: 1000,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '1rem 2rem'
-      }}>
-        <div style={{
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          SolaceID
-        </div>
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
-          <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
-          <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
-          <a href="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</a>
-        </div>
-        <button onClick={connectWallet} disabled={isConnecting} style={{
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          color: 'white',
-          border: 'none',
-          padding: '0.5rem 1rem',
-          borderRadius: '5px',
-          cursor: isConnecting ? 'not-allowed' : 'pointer',
-          opacity: isConnecting ? 0.6 : 1
-        }}>
-          {isConnecting ? 'Connecting...' : formatAddress(walletAddress)}
-        </button>
-      </div>
+      <Navbar />
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1 style={{
           fontSize: '48px',
