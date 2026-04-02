@@ -18,21 +18,24 @@ function ConsentPage() {
 
   const connectWallet = async () => {
     try {
-      if (!window.midnight?.mnLace) {
-        alert('Please install Lace Midnight Preview wallet from Chrome Web Store');
+      const lace = (window as any).midnight?.mnLace
+        || (window as any).lace
+        || (window as any).cardano?.lace
+        || (window as any).midnight;
+
+      if (!lace) {
+        alert('Please make sure Lace Midnight Preview is installed, enabled, and you are on the correct network (Preprod). Try refreshing the page after enabling the extension.');
         return;
       }
 
-      await window.midnight.mnLace.enable();
-      const state = await window.midnight.mnLace.state();
-      
-      if (state.address) {
-        setWalletAddress(state.address);
-        setIsConnected(true);
-      }
+      const api = await lace.enable();
+      const state = await api.state();
+      const address = state?.address || state?.unshieldedAddress || 'Connected';
+      setWalletAddress(address);
+      setIsConnected(true);
     } catch (error) {
       console.error('Wallet connection error:', error);
-      alert('Failed to connect wallet');
+      alert('Connection failed. Make sure Lace Midnight Preview is unlocked and on Preprod network.');
     }
   };
 
