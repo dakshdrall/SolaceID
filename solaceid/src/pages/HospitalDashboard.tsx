@@ -17,7 +17,8 @@ interface AuditTrail {
 
 function HospitalDashboard() {
   const [walletAddress, setWalletAddress] = useState<string>('');
-  const [_isConnected, setIsConnected] = useState<boolean>(false);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [patientHash, setPatientHash] = useState('');
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -26,29 +27,46 @@ function HospitalDashboard() {
 
   const connectWallet = async () => {
     try {
-      const lace = (window as any).midnight?.mnLace
-        || (window as any).lace
-        || (window as any).cardano?.lace
-        || (window as any).midnight;
+      const lace = (window as any).midnight?.mnLace;
 
       if (!lace) {
-        alert('Please make sure Lace Midnight Preview is installed, enabled, and you are on the correct network (Preprod). Try refreshing the page after enabling the extension.');
+        alert('Lace Midnight Preview not detected. Please make sure it is installed and enabled, then refresh the page.');
         return;
       }
 
-      const api = await lace.enable();
-      const state = await api.state();
-      const address = state?.address || state?.unshieldedAddress || 'Connected';
-      setWalletAddress(address);
+      setIsConnecting(true);
+
+      const serviceUriConfig = {
+        proverServerUri: 'https://proof-server.preprod.midnight.network',
+        indexerUri: 'https://indexer.preprod.midnight.network/api/v3/graphql',
+        indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v3/graphql',
+        nodeUri: 'https://rpc.preprod.midnight.network',
+      };
+
+      const enabledApi = await lace.enable(serviceUriConfig);
+      const state = await enabledApi.state();
+
+      const address = state?.address || state?.unshieldedAddress || state?.coinPublicKey || 'Wallet Connected';
+      const shortAddress = typeof address === 'string' ? address.slice(0, 10) + '...' + address.slice(-6) : 'Connected';
+
+      setWalletAddress(shortAddress);
+      setIsConnecting(false);
       setIsConnected(true);
-    } catch (error) {
-      console.error('Wallet connection error:', error);
-      alert('Connection failed. Make sure Lace Midnight Preview is unlocked and on Preprod network.');
+    } catch (err: any) {
+      setIsConnecting(false);
+      console.error('Wallet error:', err);
+      if (err?.message?.includes('user rejected')) {
+        alert('Connection rejected. Please approve the connection in Lace wallet.');
+      } else {
+        alert('Connection failed: ' + (err?.message || 'Unknown error'));
+      }
     }
   };
 
   const formatAddress = (address: string) => {
-    if (!address) return 'Connect Wallet';
+    if (!address) {
+      return isConnected ? 'Connected' : 'Connect Wallet';
+    }
     return `${address.slice(0, 8)}...${address.slice(-6)}`;
   };
 
@@ -105,15 +123,16 @@ function HospitalDashboard() {
           <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
           <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
         </div>
-        <button onClick={connectWallet} style={{
+        <button onClick={connectWallet} disabled={isConnecting} style={{
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
           color: 'white',
           border: 'none',
           padding: '0.5rem 1rem',
           borderRadius: '5px',
-          cursor: 'pointer'
+          cursor: isConnecting ? 'not-allowed' : 'pointer',
+          opacity: isConnecting ? 0.6 : 1
         }}>
-          {formatAddress(walletAddress)}
+          {isConnecting ? 'Connecting...' : formatAddress(walletAddress)}
         </button>
       </div>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
