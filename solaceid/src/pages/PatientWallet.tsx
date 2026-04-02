@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 function PatientWallet() {
   const navigate = useNavigate();
+  const [walletAddress, setWalletAddress] = useState<string>('');
+  const [_isConnected, setIsConnected] = useState<boolean>(false);
   const [form, setForm] = useState({
     name: '',
     dob: '',
@@ -13,6 +15,31 @@ function PatientWallet() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [hash, setHash] = useState('');
+
+  const connectWallet = async () => {
+    try {
+      if (!window.midnight?.mnLace) {
+        alert('Please install Lace Midnight Preview wallet from Chrome Web Store');
+        return;
+      }
+
+      await window.midnight.mnLace.enable();
+      const state = await window.midnight.mnLace.state();
+      
+      if (state.address) {
+        setWalletAddress(state.address);
+        setIsConnected(true);
+      }
+    } catch (error) {
+      console.error('Wallet connection error:', error);
+      alert('Failed to connect wallet');
+    }
+  };
+
+  const formatAddress = (address: string) => {
+    if (!address) return 'Connect Wallet';
+    return `${address.slice(0, 8)}...${address.slice(-6)}`;
+  };
 
   const handleGenerate = () => {
     setLoading(true);
@@ -60,7 +87,7 @@ function PatientWallet() {
           <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
           <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
         </div>
-        <button style={{
+        <button onClick={connectWallet} style={{
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
           color: 'white',
           border: 'none',
@@ -68,7 +95,7 @@ function PatientWallet() {
           borderRadius: '5px',
           cursor: 'pointer'
         }}>
-          Connect Wallet
+          {formatAddress(walletAddress)}
         </button>
       </div>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>

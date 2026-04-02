@@ -1,7 +1,35 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
   const navigate = useNavigate();
+  const [walletAddress, setWalletAddress] = useState<string>('');
+  const [_isConnected, setIsConnected] = useState<boolean>(false);
+
+  const connectWallet = async () => {
+    try {
+      if (!window.midnight?.mnLace) {
+        alert('Please install Lace Midnight Preview wallet from Chrome Web Store');
+        return;
+      }
+
+      await window.midnight.mnLace.enable();
+      const state = await window.midnight.mnLace.state();
+      
+      if (state.address) {
+        setWalletAddress(state.address);
+        setIsConnected(true);
+      }
+    } catch (error) {
+      console.error('Wallet connection error:', error);
+      alert('Failed to connect wallet');
+    }
+  };
+
+  const formatAddress = (address: string) => {
+    if (!address) return 'Connect Wallet';
+    return `${address.slice(0, 8)}...${address.slice(-6)}`;
+  };
 
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
@@ -33,7 +61,7 @@ function LandingPage() {
           <a href="/wallet" style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</a>
           <a href="/hospital" style={{ color: 'white', textDecoration: 'none' }}>Hospital Dashboard</a>
         </div>
-        <button style={{
+        <button onClick={connectWallet} style={{
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
           color: 'white',
           border: 'none',
@@ -41,7 +69,7 @@ function LandingPage() {
           borderRadius: '5px',
           cursor: 'pointer'
         }}>
-          Connect Wallet
+          {formatAddress(walletAddress)}
         </button>
       </div>
       <div style={{
