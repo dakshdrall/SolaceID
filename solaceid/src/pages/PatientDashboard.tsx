@@ -43,20 +43,24 @@ function PatientDashboard() {
       <div style={{ padding: '140px 20px 40px', margin: '0 auto', maxWidth: '1000px' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '30px' }}>
-          <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '20px' }}>
+          <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
             <h3 style={{ margin: '0 0 10px', color: '#7c3aed' }}>Consents Given</h3>
             <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{consents.length}</div>
           </div>
-          <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
+          <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
             <h3 style={{ margin: '0 0 10px', color: '#7c3aed' }}>Active Consents</h3>
             <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{activeConsents}</div>
           </div>
-          <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
+          <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
             <h3 style={{ margin: '0 0 10px', color: '#7c3aed' }}>Hospitals Accessed</h3>
             <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{uniqueHospitals}</div>
           </div>
         </div>
+
+        <button onClick={() => window.location.assign('/consent')} style={{ marginBottom: '24px', background: 'linear-gradient(to right, #7c3aed, #06b6d4)', border: 'none', color: 'white', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer' }}>
+          New Consent
+        </button>
 
         <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '20px', marginBottom: '30px' }}>
           <h2 style={{ margin: '0 0 10px' }}>ZK Identity</h2>

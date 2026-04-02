@@ -6,9 +6,9 @@ function ConsentPage() {
   const navigate = useNavigate();
   const patientHash = localStorage.getItem('patientHash') || '';
   const [consent, setConsent] = useState({
-    bloodType: false,
-    vaccination: false,
-    allergies: false,
+    bloodType: true,
+    vaccination: true,
+    allergies: true,
     purpose: ''
   });
   const [loading, setLoading] = useState(false);
@@ -135,8 +135,13 @@ function ConsentPage() {
             </div>
           )}
           {success && (
-            <button onClick={handleProceed} style={{ ...buttonStyle, background: '#10b981', marginTop: '20px' }}>
-              Proceed to Hospital
+            <button onClick={() => navigate('/dashboard')} style={{ ...buttonStyle, background: '#7c3aed', marginTop: '20px' }}>
+              View Dashboard
+            </button>
+          )}
+          {success && (
+            <button onClick={handleProceed} style={{ ...buttonStyle, background: '#10b981', marginTop: '12px' }}>
+              View Hospital Dashboard
             </button>
           )}
         </div>

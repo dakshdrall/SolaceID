@@ -85,6 +85,17 @@ function HospitalDashboard() {
             {loading ? 'Verifying...' : verified ? 'Verified' : 'Verify on Midnight'}
           </button>
         </div>
+        <div style={{ marginBottom: '20px' }}>
+          <button
+            onClick={() => {
+              const demoHash = localStorage.getItem('solaceIdHash') || '';
+              setPatientHash(demoHash);
+            }}
+            style={{ ...buttonStyle, background: 'linear-gradient(to right, #06b6d4, #7c3aed)' }}
+          >
+            Use Demo Hash
+          </button>
+        </div>
         <div style={{ marginBottom: '30px' }}>
           <h3>Recent Verifications</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
