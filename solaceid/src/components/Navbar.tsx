@@ -80,6 +80,7 @@ function Navbar() {
               <Link to='/wallet' style={{ color: hoveredLink === 'wallet' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('wallet')} onMouseLeave={() => setHoveredLink(null)}>Patient Portal</Link>
               <Link to='/dashboard' style={{ color: hoveredLink === 'dashboard' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('dashboard')} onMouseLeave={() => setHoveredLink(null)}>Dashboard</Link>
               <Link to='/hospital' style={{ color: hoveredLink === 'hospital' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('hospital')} onMouseLeave={() => setHoveredLink(null)}>Hospital</Link>
+              <Link to='/about' style={{ color: hoveredLink === 'about' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('about')} onMouseLeave={() => setHoveredLink(null)}>About</Link>
             </>
           )}
           {isMobile && (
@@ -128,6 +129,7 @@ function Navbar() {
           <Link to='/wallet' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
           <Link to='/dashboard' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Dashboard</Link>
           <Link to='/hospital' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Hospital</Link>
+          <Link to='/about' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>About</Link>
         </div>
       )}
 

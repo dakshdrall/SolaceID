@@ -4,6 +4,7 @@ import PatientWallet from './pages/PatientWallet';
 import ConsentPage from './pages/ConsentPage';
 import HospitalDashboard from './pages/HospitalDashboard';
 import PatientDashboard from './pages/PatientDashboard';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/consent" element={<ConsentPage />} />
         <Route path="/hospital" element={<HospitalDashboard />} />
         <Route path="/dashboard" element={<PatientDashboard />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
   );
