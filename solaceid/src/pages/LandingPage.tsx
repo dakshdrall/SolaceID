@@ -1,9 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 
 function LandingPage() {
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    patients: 0,
+    hospitals: 0,
+    uptime: 0,
+    breaches: 0
+  });
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -22,6 +28,29 @@ function LandingPage() {
     return () => {
       document.head.removeChild(style);
     };
+  }, []);
+
+  useEffect(() => {
+    const animateNumber = (target: number, key: keyof typeof stats, duration: number = 2000) => {
+      const start = 0;
+      const increment = target / (duration / 50);
+      let current = start;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        setStats(prev => ({ ...prev, [key]: Math.floor(current) }));
+      }, 50);
+    };
+
+    // Start animations with slight delays
+    setTimeout(() => animateNumber(2847, 'patients'), 200);
+    setTimeout(() => animateNumber(143, 'hospitals'), 400);
+    setTimeout(() => animateNumber(99, 'uptime'), 600);
+    setTimeout(() => animateNumber(0, 'breaches'), 800);
   }, []);
 
   return (
@@ -68,19 +97,19 @@ function LandingPage() {
       <section style={{ padding: '40px 1rem', textAlign: 'center', background: 'rgba(124, 58, 237, 0.05)', borderTop: '1px solid rgba(124, 58, 237, 0.2)', borderBottom: '1px solid rgba(124, 58, 237, 0.2)' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }} data-target="2847">2,847</div>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }}>{stats.patients.toLocaleString()}</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Patients Protected</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }} data-target="143">143</div>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }}>{stats.hospitals}</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Hospitals Connected</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }} data-target="99.9">99.9%</div>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }}>{stats.uptime}.9%</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Uptime</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }} data-target="0">0</div>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>{stats.breaches}</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Data Breaches</div>
           </div>
         </div>

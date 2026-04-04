@@ -103,11 +103,22 @@ function PatientWallet() {
               <span>Your data never leaves this device until you consent</span>
             </div>
           </div>
+          <div style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <span style={{ fontSize: '14px', color: '#94a3b8' }}>Step 1 of 3</span>
+              <span style={{ fontSize: '12px', color: '#94a3b8' }}>Identity Creation</span>
+            </div>
+            <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>
+              <div style={{ flex: 1, height: '4px', backgroundColor: '#7c3aed', borderRadius: '2px' }}></div>
+              <div style={{ flex: 1, height: '4px', backgroundColor: '#374151', borderRadius: '2px' }}></div>
+              <div style={{ flex: 1, height: '4px', backgroundColor: '#374151', borderRadius: '2px' }}></div>
+            </div>
+          </div>
           <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Patient Onboarding</h2>
           <form style={{ marginBottom: '20px' }}>
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder="e.g. Daksh Drall"
               value={form.name}
               onChange={e => setForm({ ...form, name: e.target.value })}
               style={inputStyle}
@@ -136,7 +147,7 @@ function PatientWallet() {
             </select>
             <input
               type="text"
-              placeholder="Allergies"
+              placeholder="e.g. Penicillin, Peanuts"
               value={form.allergies}
               onChange={e => setForm({ ...form, allergies: e.target.value })}
               style={inputStyle}

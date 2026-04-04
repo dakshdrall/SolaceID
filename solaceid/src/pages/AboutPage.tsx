@@ -104,25 +104,25 @@ function AboutPage() {
               </tr>
             </thead>
             <tbody>
-              <tr style={{ borderBottom: '1px solid rgba(124, 58, 237, 0.3)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(124, 58, 237, 0.3)', backgroundColor: '#0a0f1e' }}>
                 <td style={{ padding: '15px', fontWeight: 'bold' }}>Private State</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#ef4444', fontSize: '20px' }}>❌</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#ef4444', fontSize: '20px' }}>❌</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#10b981', fontSize: '20px' }}>✅</td>
               </tr>
-              <tr style={{ borderBottom: '1px solid rgba(124, 58, 237, 0.3)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(124, 58, 237, 0.3)', backgroundColor: '#0d1526' }}>
                 <td style={{ padding: '15px', fontWeight: 'bold' }}>Native ZK Proofs</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#ef4444', fontSize: '20px' }}>❌</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#ef4444', fontSize: '20px' }}>❌</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#10b981', fontSize: '20px' }}>✅</td>
               </tr>
-              <tr style={{ borderBottom: '1px solid rgba(124, 58, 237, 0.3)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(124, 58, 237, 0.3)', backgroundColor: '#0a0f1e' }}>
                 <td style={{ padding: '15px', fontWeight: 'bold' }}>Shielded Computation</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#ef4444', fontSize: '20px' }}>❌</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#ef4444', fontSize: '20px' }}>❌</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#10b981', fontSize: '20px' }}>✅</td>
               </tr>
-              <tr>
+              <tr style={{ backgroundColor: '#0d1526' }}>
                 <td style={{ padding: '15px', fontWeight: 'bold' }}>Public Auditability</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#10b981', fontSize: '20px' }}>✅</td>
                 <td style={{ padding: '15px', textAlign: 'center', color: '#10b981', fontSize: '20px' }}>✅</td>

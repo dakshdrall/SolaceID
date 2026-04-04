@@ -112,7 +112,15 @@ function HospitalDashboard() {
               const demoHash = localStorage.getItem('solaceIdHash') || '';
               setPatientHash(demoHash);
             }}
-            style={{ ...buttonStyle, background: 'linear-gradient(to right, #06b6d4, #7c3aed)' }}
+            style={{
+              ...buttonStyle,
+              background: 'transparent',
+              border: '2px solid #7c3aed',
+              color: 'white',
+              width: '100%',
+              padding: '12px',
+              cursor: 'pointer'
+            }}
           >
             Use Demo Hash
           </button>

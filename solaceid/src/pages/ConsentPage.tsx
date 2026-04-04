@@ -67,6 +67,17 @@ function ConsentPage() {
           <h2>Patient Consent</h2>
         </div>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '30px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <span style={{ fontSize: '14px', color: '#94a3b8' }}>Step 2 of 3</span>
+            <span style={{ fontSize: '12px', color: '#94a3b8' }}>Patient Consent</span>
+          </div>
+          <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>
+            <div style={{ flex: 1, height: '4px', backgroundColor: '#10b981', borderRadius: '2px' }}></div>
+            <div style={{ flex: 1, height: '4px', backgroundColor: '#7c3aed', borderRadius: '2px' }}></div>
+            <div style={{ flex: 1, height: '4px', backgroundColor: '#374151', borderRadius: '2px' }}></div>
+          </div>
+        </div>
         <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #7c3aed', borderRadius: '10px' }}>
           <p><strong>Patient Hash:</strong> {patientHash}</p>
         </div>
