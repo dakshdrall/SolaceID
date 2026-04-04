@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
@@ -13,9 +13,23 @@ function PatientWallet() {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [flash, setFlash] = useState(false);
   const [hash, setHash] = useState('');
 
-  // Navbar handles wallet connection now.
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes flash {
+        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   const handleGenerate = () => {
     setLoading(true);
@@ -27,6 +41,8 @@ function PatientWallet() {
       localStorage.setItem('patientCreated', new Date().toISOString());
       setLoading(false);
       setSuccess(true);
+      setFlash(true);
+      setTimeout(() => setFlash(false), 1000);
     }, 2500);
   };
 
@@ -57,7 +73,8 @@ function PatientWallet() {
           border: '1px solid rgba(255, 255, 255, 0.2)',
           borderRadius: '15px',
           padding: '30px',
-          marginBottom: '20px'
+          marginBottom: '20px',
+          ...(flash ? { animation: 'flash 1s ease-out' } : {})
         }}>
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <div style={{

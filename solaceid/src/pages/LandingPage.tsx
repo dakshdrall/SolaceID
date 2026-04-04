@@ -1,8 +1,29 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 
 function LandingPage() {
   const navigate = useNavigate();
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
@@ -18,7 +39,7 @@ function LandingPage() {
         zIndex: -1
       }}></div>
 
-      <header style={{ textAlign: 'center', padding: '40px 1rem 60px' }}>
+      <header style={{ textAlign: 'center', padding: '40px 1rem 60px', background: 'linear-gradient(-45deg, #0a0f1e, #0d1a3a, #1a0a2e, #0a1a1a)', backgroundSize: '400% 400%', animation: 'gradientShift 8s ease infinite' }}>
         <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>The future of patient privacy on blockchain</h1>
         <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 24px', lineHeight: '1.6', color: '#ccc' }}>
           SolaceID is a privacy-preserving patient identity and health record exchange built on Midnight Network blockchain. Patients control their data, hospitals access only what they need, all verified with zero-knowledge proofs.
@@ -38,8 +59,8 @@ function LandingPage() {
         </div>
         <div style={{ marginTop: '28px' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#11182e', borderRadius: '999px', padding: '8px 14px', fontSize: '0.9rem', color: '#fff' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '999px', background: '#7c3aed', display: 'inline-block' }} />
-            Powered by Midnight Network
+            <span style={{ width: '8px', height: '8px', borderRadius: '999px', background: '#7c3aed', animation: 'pulse 2s infinite' }} />
+            Built on Midnight Network
           </span>
         </div>
       </header>
@@ -47,17 +68,17 @@ function LandingPage() {
       <section style={{ padding: '80px 1rem 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
-          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(124,58,237,0.1))', border: '1px solid #7c3aed' }}>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(124,58,237,0.1))', border: hoveredCard === 0 ? '1px solid #7c3aed' : '1px solid #7c3aed' }} onMouseEnter={() => setHoveredCard(0)} onMouseLeave={() => setHoveredCard(null)}>
             <div style={stepIcon}>1</div>
             <h3>Generate ZK Identity</h3>
             <p>Create your cryptographic identity commitment on Midnight Network.</p>
           </div>
-          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1))', border: '1px solid #06b6d4' }}>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1))', border: hoveredCard === 1 ? '1px solid #7c3aed' : '1px solid #06b6d4' }} onMouseEnter={() => setHoveredCard(1)} onMouseLeave={() => setHoveredCard(null)}>
             <div style={stepIcon}>2</div>
             <h3>Grant Consent</h3>
             <p>Sign consent transactions for specific hospital data access.</p>
           </div>
-          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(16,185,129,0.1))', border: '1px solid #10b981' }}>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(16,185,129,0.1))', border: hoveredCard === 2 ? '1px solid #7c3aed' : '1px solid #10b981' }} onMouseEnter={() => setHoveredCard(2)} onMouseLeave={() => setHoveredCard(null)}>
             <div style={stepIcon}>3</div>
             <h3>Verify & Access</h3>
             <p>Hospitals verify ZK proofs to access authorized health records.</p>
