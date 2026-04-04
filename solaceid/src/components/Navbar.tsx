@@ -6,6 +6,7 @@ function Navbar() {
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress') || '';
@@ -61,7 +62,8 @@ function Navbar() {
         left: 0,
         right: 0,
         height: '70px',
-        backgroundColor: '#0a0f1e',
+        background: 'rgba(10, 15, 30, 0.95)',
+        backdropFilter: 'blur(10px)',
         borderBottom: '1px solid rgba(124, 58, 237, 0.3)',
         zIndex: 1000,
         display: 'flex',
@@ -71,13 +73,13 @@ function Navbar() {
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Link to='/' style={{ color: 'white', textDecoration: 'none', fontSize: '1.4rem', fontWeight: 'bold' }}>SolaceID</Link>
+          <Link to='/' style={{ color: '#7c3aed', textDecoration: 'none', fontSize: '1.5rem', fontWeight: 700 }}>SolaceID</Link>
           {!isMobile && (
             <>
-              <Link to='/' style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-              <Link to='/wallet' style={{ color: 'white', textDecoration: 'none' }}>Patient Portal</Link>
-              <Link to='/dashboard' style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
-              <Link to='/hospital' style={{ color: 'white', textDecoration: 'none' }}>Hospital</Link>
+              <Link to='/' style={{ color: hoveredLink === 'home' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('home')} onMouseLeave={() => setHoveredLink(null)}>Home</Link>
+              <Link to='/wallet' style={{ color: hoveredLink === 'wallet' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('wallet')} onMouseLeave={() => setHoveredLink(null)}>Patient Portal</Link>
+              <Link to='/dashboard' style={{ color: hoveredLink === 'dashboard' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('dashboard')} onMouseLeave={() => setHoveredLink(null)}>Dashboard</Link>
+              <Link to='/hospital' style={{ color: hoveredLink === 'hospital' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('hospital')} onMouseLeave={() => setHoveredLink(null)}>Hospital</Link>
             </>
           )}
           {isMobile && (
@@ -122,10 +124,10 @@ function Navbar() {
           flexDirection: 'column',
           gap: '10px'
         }}>
-          <Link to='/' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to='/wallet' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
-          <Link to='/dashboard' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Dashboard</Link>
-          <Link to='/hospital' style={{ color: 'white', textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>Hospital</Link>
+          <Link to='/' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to='/wallet' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
+          <Link to='/dashboard' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Dashboard</Link>
+          <Link to='/hospital' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Hospital</Link>
         </div>
       )}
 
