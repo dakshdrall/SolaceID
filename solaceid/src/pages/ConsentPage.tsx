@@ -117,6 +117,28 @@ function ConsentPage() {
             </select>
           </label>
         </div>
+        <div style={{ marginBottom: '30px', padding: '20px', background: 'rgba(124, 58, 237, 0.1)', border: '1px solid #7c3aed', borderRadius: '10px' }}>
+          <h3 style={{ marginTop: '0', color: '#7c3aed' }}>Consent Preview</h3>
+          <div style={{ marginBottom: '15px' }}>
+            <h4 style={{ color: 'white', margin: '0 0 10px 0' }}>Will be shared:</h4>
+            <ul style={{ margin: '0', paddingLeft: '20px', color: '#10b981' }}>
+              {consent.bloodType && <li>Blood Type</li>}
+              {consent.vaccination && <li>Vaccination Status</li>}
+              {consent.allergies && <li>Allergies</li>}
+            </ul>
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <h4 style={{ color: 'white', margin: '0 0 10px 0' }}>Will NOT be shared:</h4>
+            <ul style={{ margin: '0', paddingLeft: '20px', color: '#ef4444' }}>
+              {!consent.bloodType && <li>🚫 Blood Type</li>}
+              {!consent.vaccination && <li>🚫 Vaccination Status</li>}
+              {!consent.allergies && <li>🚫 Allergies</li>}
+            </ul>
+          </div>
+          <p style={{ margin: '0', fontSize: '14px', color: '#94a3b8', fontStyle: 'italic' }}>
+            This is the minimum necessary disclosure for {consent.purpose || 'the selected purpose'}.
+          </p>
+        </div>
         <div style={{ textAlign: 'center' }}>
           <button
             onClick={handleSign}

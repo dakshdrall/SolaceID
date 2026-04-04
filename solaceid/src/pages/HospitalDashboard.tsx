@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 
 interface PatientData {
@@ -22,6 +22,26 @@ function HospitalDashboard() {
   const [verified, setVerified] = useState(false);
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [auditTrail, setAuditTrail] = useState<AuditTrail | null>(null);
+
+  // Add CSS animations
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes checkmarkScale {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes checkmarkDraw {
+        0% { opacity: 0; transform: rotate(45deg) scale(0); }
+        100% { opacity: 1; transform: rotate(45deg) scale(1); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   // Navbar handles wallet connection now.
 
@@ -149,22 +169,24 @@ function HospitalDashboard() {
             }}>
               <div style={{
                 display: 'inline-block',
-                width: '60px',
-                height: '60px',
+                width: '80px',
+                height: '80px',
                 border: '4px solid white',
                 borderRadius: '50%',
                 position: 'relative',
-                marginBottom: '15px'
+                marginBottom: '15px',
+                animation: 'checkmarkScale 0.6s ease-out'
               }}>
                 <div style={{
                   position: 'absolute',
-                  top: '15px',
-                  left: '20px',
-                  width: '20px',
-                  height: '30px',
+                  top: '20px',
+                  left: '28px',
+                  width: '24px',
+                  height: '40px',
                   border: 'solid white',
-                  borderWidth: '0 4px 4px 0',
-                  transform: 'rotate(45deg)'
+                  borderWidth: '0 6px 6px 0',
+                  transform: 'rotate(45deg)',
+                  animation: 'checkmarkDraw 0.4s ease-out 0.2s both'
                 }}></div>
               </div>
               <br />
@@ -178,7 +200,7 @@ function HospitalDashboard() {
                 borderRadius: '10px',
                 display: 'inline-block'
               }}>
-                Midnight Network
+                Verified by Midnight Network
               </div>
             </div>
             <div style={{ marginBottom: '30px', textAlign: 'center' }}>
@@ -251,6 +273,10 @@ function HospitalDashboard() {
               <p><strong>Timestamp:</strong> {auditTrail?.timestamp}</p>
               <p><strong>Network:</strong> {auditTrail?.network}</p>
               <p><strong>Purpose:</strong> {auditTrail?.purpose}</p>
+              <div style={{ marginTop: '15px', padding: '10px', background: 'rgba(124, 58, 237, 0.1)', borderRadius: '8px', border: '1px solid #7c3aed' }}>
+                <p style={{ margin: '0', fontSize: '14px' }}><strong>Blockchain Transaction:</strong> 0x8f7e6d5c4b3a2910...fedcba9876543210</p>
+                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#94a3b8' }}>Verified on Midnight Network - Block #1,247,893</p>
+              </div>
             </div>
             <footer style={{
               textAlign: 'center',

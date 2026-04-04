@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 
 function LandingPage() {
   const navigate = useNavigate();
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -67,21 +66,23 @@ function LandingPage() {
 
       <section style={{ padding: '80px 1rem 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
-          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(124,58,237,0.1))', border: hoveredCard === 0 ? '1px solid #7c3aed' : '1px solid #7c3aed' }} onMouseEnter={() => setHoveredCard(0)} onMouseLeave={() => setHoveredCard(null)}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.1), rgba(124,58,237,0.05))', border: '1px solid rgba(124,58,237,0.3)' }}>
             <div style={stepIcon}>1</div>
-            <h3>Generate ZK Identity</h3>
-            <p>Create your cryptographic identity commitment on Midnight Network.</p>
+            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '0 0 10px 0' }}>Generate ZK Identity</h3>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Create your cryptographic identity commitment on Midnight Network.</p>
           </div>
-          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1))', border: hoveredCard === 1 ? '1px solid #7c3aed' : '1px solid #06b6d4' }} onMouseEnter={() => setHoveredCard(1)} onMouseLeave={() => setHoveredCard(null)}>
+          <div style={{ fontSize: '24px', color: '#7c3aed', display: 'flex', alignItems: 'center' }}>→</div>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.1), rgba(6,182,212,0.05))', border: '1px solid rgba(6,182,212,0.3)' }}>
             <div style={stepIcon}>2</div>
-            <h3>Grant Consent</h3>
-            <p>Sign consent transactions for specific hospital data access.</p>
+            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '0 0 10px 0' }}>Grant Consent</h3>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Sign consent transactions for specific hospital data access.</p>
           </div>
-          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.2), rgba(16,185,129,0.1))', border: hoveredCard === 2 ? '1px solid #7c3aed' : '1px solid #10b981' }} onMouseEnter={() => setHoveredCard(2)} onMouseLeave={() => setHoveredCard(null)}>
+          <div style={{ fontSize: '24px', color: '#7c3aed', display: 'flex', alignItems: 'center' }}>→</div>
+          <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.1), rgba(16,185,129,0.05))', border: '1px solid rgba(16,185,129,0.3)' }}>
             <div style={stepIcon}>3</div>
-            <h3>Verify & Access</h3>
-            <p>Hospitals verify ZK proofs to access authorized health records.</p>
+            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '0 0 10px 0' }}>Verify & Access</h3>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Hospitals verify ZK proofs to access authorized health records.</p>
           </div>
         </div>
       </section>
@@ -159,17 +160,18 @@ const stepStyle: React.CSSProperties = {
 };
 
 const stepIcon: React.CSSProperties = {
-  width: '52px',
-  height: '52px',
+  width: '70px',
+  height: '70px',
   borderRadius: '999px',
-  background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+  background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
   color: 'white',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: '1.2rem',
+  fontSize: '1.5rem',
   fontWeight: 'bold',
-  margin: '0 auto 14px'
+  margin: '0 auto 16px',
+  boxShadow: '0 4px 12px rgba(124, 58, 237, 0.3)'
 };
 
 export default LandingPage;

@@ -88,6 +88,21 @@ function PatientWallet() {
               Your Privacy Score: 100%
             </div>
           </div>
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: '#1a1f2e',
+              borderRadius: '20px',
+              padding: '8px 16px',
+              fontSize: '14px',
+              color: '#94a3b8'
+            }}>
+              <span>🔒</span>
+              <span>Your data never leaves this device until you consent</span>
+            </div>
+          </div>
           <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Patient Onboarding</h2>
           <form style={{ marginBottom: '20px' }}>
             <input
