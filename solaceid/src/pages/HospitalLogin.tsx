@@ -28,18 +28,17 @@ function HospitalLogin() {
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       <Navbar />
-      <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
+      <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{
-            fontSize: '48px',
+            fontSize: '2.5rem',
             background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             margin: '0'
           }}>
-            SolaceID
+            Hospital Portal
           </h1>
-          <h2>Hospital Portal</h2>
           <p style={{ color: '#94a3b8', fontSize: '16px', margin: '10px 0 0 0' }}>
             Secure access for verified healthcare institutions
           </p>

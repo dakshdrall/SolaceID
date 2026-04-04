@@ -50,9 +50,9 @@ function PatientDashboard() {
   };
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px' }}>
       <Navbar />
-      <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
         <button
           onClick={() => {

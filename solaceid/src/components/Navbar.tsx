@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [walletAddress, setWalletAddress] = useState('');
-  const [showInstallModal, setShowInstallModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -40,7 +39,15 @@ function Navbar() {
     const lace = (window as any).midnight?.mnLace;
 
     if (!lace) {
-      setShowInstallModal(true);
+      // Temporarily change button text
+      const button = document.querySelector('button[onclick*="connectWallet"]') as HTMLButtonElement;
+      if (button) {
+        const originalText = button.textContent;
+        button.textContent = 'Wallet Not Found';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 3000);
+      }
       return;
     }
 
@@ -55,12 +62,16 @@ function Navbar() {
       }
     } catch (err) {
       console.error('Wallet connection error:', err);
-      setShowInstallModal(true);
+      // Temporarily change button text on error too
+      const button = document.querySelector('button[onclick*="connectWallet"]') as HTMLButtonElement;
+      if (button) {
+        const originalText = button.textContent;
+        button.textContent = 'Wallet Not Found';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 3000);
+      }
     }
-  };
-
-  const handleCloseModal = () => {
-    setShowInstallModal(false);
   };
 
   const toggleMenu = () => {
@@ -164,36 +175,6 @@ function Navbar() {
         </div>
       )}
 
-      {showInstallModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: 'rgba(0,0,0,0.45)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 2000
-        }}>
-          <div style={{
-            maxWidth: '450px',
-            background: '#10162a',
-            border: '1px solid rgba(124, 58, 237, 0.6)',
-            borderRadius: '12px',
-            padding: '20px',
-            color: 'white'
-          }}>
-            <h3 style={{ marginTop: 0 }}>Install Lace Wallet to connect</h3>
-            <p>To connect your wallet, please install Lace Midnight Preview and refresh the page.</p>
-            <a href='https://chrome.google.com/webstore' target='_blank' rel='noreferrer' style={{ color: '#7c3aed', display: 'inline-block', marginBottom: '12px' }}>Go to Chrome Web Store</a>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-              <button onClick={handleCloseModal} style={{ backgroundColor: '#444a70', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer' }}>Close</button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

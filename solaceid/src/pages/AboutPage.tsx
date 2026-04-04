@@ -21,13 +21,13 @@ function AboutPage() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '120px', scrollPaddingTop: '3rem' }}>
       <Navbar />
 
       {/* Header Section */}
       <header style={{ textAlign: 'center', padding: '60px 1rem 40px', background: 'linear-gradient(-45deg, #0a0f1e, #0d1a3a, #1a0a2e, #0a1a1a)', backgroundSize: '400% 400%', animation: 'gradientShift 8s ease infinite' }}>
         <h1 style={{
-          fontSize: '3rem',
+          fontSize: '2.5rem',
           background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',

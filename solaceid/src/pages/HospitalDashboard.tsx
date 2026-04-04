@@ -71,18 +71,17 @@ function HospitalDashboard() {
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       <Navbar />
-      <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
+      <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{
-            fontSize: '48px',
+            fontSize: '2.5rem',
             background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             margin: '0'
           }}>
-            SolaceID
+            Hospital Dashboard
           </h1>
-          <h2>Hospital Dashboard</h2>
         </div>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ marginBottom: '30px' }}>

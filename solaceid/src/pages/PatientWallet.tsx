@@ -60,18 +60,17 @@ function PatientWallet() {
           </span>
         </div>
       )}
-      <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
+      <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{
-            fontSize: '48px',
+            fontSize: '2.5rem',
             background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             margin: '0'
           }}>
-            SolaceID
+            Patient Portal
           </h1>
-          <h2>Patient Portal</h2>
         </div>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
         <div style={{
