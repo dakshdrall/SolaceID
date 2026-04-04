@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import QRCode from 'react-qr-code';
 
 function PatientDashboard() {
+  const navigate = useNavigate();
   const patientName = localStorage.getItem('patientName') || 'Patient';
   const patientHash = localStorage.getItem('solaceIdHash') || '0x0000000000000000000000000000000000000000';
   const createdDate = localStorage.getItem('patientCreated') || new Date().toISOString();
@@ -52,6 +54,30 @@ function PatientDashboard() {
       <Navbar />
       <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
+        <button
+          onClick={() => {
+            localStorage.removeItem('solaceIdHash');
+            localStorage.removeItem('patientName');
+            localStorage.removeItem('ehrData');
+            localStorage.removeItem('consents');
+            localStorage.removeItem('consentTx');
+            navigate('/patient-login');
+          }}
+          style={{
+            position: 'absolute',
+            top: '120px',
+            right: '1rem',
+            background: 'transparent',
+            border: '1px solid #dc2626',
+            color: '#dc2626',
+            padding: '8px 16px',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px'
+          }}
+        >
+          Sign Out
+        </button>
 
         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', flexWrap: 'wrap', gap: '20px', marginBottom: '20px' }}>
           <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>

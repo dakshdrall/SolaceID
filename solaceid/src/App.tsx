@@ -6,6 +6,7 @@ import HospitalDashboard from './pages/HospitalDashboard';
 import PatientDashboard from './pages/PatientDashboard';
 import AboutPage from './pages/AboutPage';
 import HospitalLogin from './pages/HospitalLogin';
+import PatientLogin from './pages/PatientLogin';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/patient-login" element={<PatientLogin />} />
         <Route path="/wallet" element={<PatientWallet />} />
         <Route path="/consent" element={<ConsentPage />} />
         <Route path="/hospital" element={<HospitalDashboard />} />

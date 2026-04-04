@@ -90,7 +90,7 @@ function Navbar() {
           {!isMobile && (
             <>
               <Link to='/' style={{ color: hoveredLink === 'home' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('home')} onMouseLeave={() => setHoveredLink(null)}>Home</Link>
-              <Link to='/wallet' style={{ color: hoveredLink === 'wallet' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('wallet')} onMouseLeave={() => setHoveredLink(null)}>Patient Portal</Link>
+              <Link to='/patient-login' style={{ color: hoveredLink === 'wallet' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('wallet')} onMouseLeave={() => setHoveredLink(null)}>Patient Portal</Link>
               <Link to='/dashboard' style={{ color: hoveredLink === 'dashboard' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('dashboard')} onMouseLeave={() => setHoveredLink(null)}>Dashboard</Link>
               <Link to='/hospital-login' style={{ color: hoveredLink === 'hospital' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('hospital')} onMouseLeave={() => setHoveredLink(null)}>Hospital</Link>
               <Link to='/about' style={{ color: hoveredLink === 'about' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('about')} onMouseLeave={() => setHoveredLink(null)}>About</Link>
@@ -155,7 +155,7 @@ function Navbar() {
           gap: '10px'
         }}>
           <Link to='/' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to='/wallet' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
+          <Link to='/patient-login' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
           <Link to='/dashboard' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Dashboard</Link>
           <Link to='/hospital-login' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Hospital</Link>
           <Link to='/about' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>About</Link>

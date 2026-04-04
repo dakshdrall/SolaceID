@@ -53,6 +53,13 @@ function PatientWallet() {
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       <Navbar />
+      {localStorage.getItem('patientName') && (
+        <div style={{ textAlign: 'center', margin: '20px 0', padding: '0 1rem' }}>
+          <span style={{ background: '#10b981', color: 'white', padding: '8px 16px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold' }}>
+            Welcome back, {localStorage.getItem('patientName')}
+          </span>
+        </div>
+      )}
       <div style={{ padding: '140px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{
