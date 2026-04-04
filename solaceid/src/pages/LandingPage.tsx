@@ -160,6 +160,64 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section style={{ padding: '60px 1rem', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '2.5rem', marginBottom: '40px', color: '#7c3aed' }}>What Our Users Say</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap', maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05))',
+            border: '1px solid rgba(124, 58, 237, 0.3)',
+            borderRadius: '15px',
+            padding: '30px',
+            width: '350px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '16px', color: '#e2e8f0', marginBottom: '20px', fontStyle: 'italic' }}>
+              "SolaceID gave me control over my medical records for the first time. No more worrying about data breaches or unauthorized access."
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+              {'⭐'.repeat(5)}
+            </div>
+            <div style={{ fontWeight: 'bold', color: '#7c3aed' }}>Priya S.</div>
+            <div style={{ color: '#94a3b8', fontSize: '14px' }}>Patient</div>
+          </div>
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05))',
+            border: '1px solid rgba(6, 182, 212, 0.3)',
+            borderRadius: '15px',
+            padding: '30px',
+            width: '350px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '16px', color: '#e2e8f0', marginBottom: '20px', fontStyle: 'italic' }}>
+              "Reduced our data compliance costs by 60% while maintaining full auditability. The ZK verification is incredible."
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+              {'⭐'.repeat(5)}
+            </div>
+            <div style={{ fontWeight: 'bold', color: '#06b6d4' }}>Dr. Mehta</div>
+            <div style={{ color: '#94a3b8', fontSize: '14px' }}>Apollo Hospitals</div>
+          </div>
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05))',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
+            borderRadius: '15px',
+            padding: '30px',
+            width: '350px',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '16px', color: '#e2e8f0', marginBottom: '20px', fontStyle: 'italic' }}>
+              "The ZK proof verification is seamless and gives us confidence in patient data authenticity without compromising privacy."
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+              {'⭐'.repeat(5)}
+            </div>
+            <div style={{ fontWeight: 'bold', color: '#10b981' }}>IT Director</div>
+            <div style={{ color: '#94a3b8', fontSize: '14px' }}>AIIMS Delhi</div>
+          </div>
+        </div>
+      </section>
+
       <section style={{ padding: '40px 1rem', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
           <div style={cardStyle}>

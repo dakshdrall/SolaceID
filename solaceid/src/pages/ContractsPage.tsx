@@ -1,6 +1,23 @@
 import Navbar from '../components/Navbar';
 
 function ContractsPage() {
+  const highlightCode = (code: string) => {
+    return code
+      .replace(/\b(export|circuit|ledger|witness|import|pragma|language_version)\b/g, '<span style="color: #7c3aed">$1</span>')
+      .replace(/\b(Field|Boolean|Cell|Map|Option|List)\b/g, '<span style="color: #06b6d4">$1</span>')
+      .replace(/\b(commitIdentity|verifyIdentity|grantConsent|checkConsent|revokeConsent|recordExchange|verifyExchange|getReceipt|persistentHash|unwrap_or|contains_key|values|find|set|get)\b/g, '<span style="color: #e2e8f0">$1</span>')
+      .replace(/(\/\/.*$)/gm, '<span style="color: #94a3b8">$1</span>');
+  };
+
+  const copyToClipboard = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      alert('Contract code copied to clipboard!');
+    } catch (err) {
+      console.error('Copy failed', err);
+      alert('Failed to copy code');
+    }
+  };
 
   const contracts = [
     {
@@ -147,16 +164,32 @@ export circuits {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                 <h3 style={{ margin: '0', color: '#7c3aed', fontSize: '1.2rem' }}>{contract.name}</h3>
-                <span style={{
-                  background: '#10b981',
-                  color: 'white',
-                  padding: '4px 10px',
-                  borderRadius: '12px',
-                  fontSize: '0.8rem',
-                  fontWeight: 'bold'
-                }}>
-                  Preprod
-                </span>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <button
+                    onClick={() => copyToClipboard(contract.code)}
+                    style={{
+                      background: '#06b6d4',
+                      color: 'white',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      fontSize: '0.8rem',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Copy Code
+                  </button>
+                  <span style={{
+                    background: '#10b981',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '12px',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold'
+                  }}>
+                    Preprod
+                  </span>
+                </div>
               </div>
 
               <div style={{
@@ -167,13 +200,12 @@ export circuits {
                 marginBottom: '15px',
                 fontFamily: 'monospace',
                 fontSize: '0.85rem',
-                color: '#e2e8f0',
                 whiteSpace: 'pre-wrap',
                 maxHeight: '200px',
                 overflowY: 'auto'
-              }}>
-                {contract.code}
-              </div>
+              }}
+              dangerouslySetInnerHTML={{ __html: highlightCode(contract.code) }}
+              ></div>
 
               <div>
                 <h4 style={{ margin: '0 0 10px', color: '#06b6d4', fontSize: '1rem' }}>Circuits</h4>

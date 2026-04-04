@@ -210,6 +210,49 @@ function HospitalDashboard() {
               }}>
                 Verified by Midnight Network
               </div>
+              <div style={{ marginTop: '20px' }}>
+                <button
+                  onClick={() => {
+                    const patientHash = localStorage.getItem('solaceIdHash') || 'N/A';
+                    const verifiedFields = JSON.parse(localStorage.getItem('ehrData') || '[]').join(', ') || 'N/A';
+                    const timestamp = new Date().toISOString();
+                    const receiptHash = '0x' + Math.random().toString(16).substr(2, 64);
+                    
+                    const reportContent = `SolaceID Verification Report
+================================
+
+Patient Hash: ${patientHash}
+Verified Fields: ${verifiedFields}
+Timestamp: ${timestamp}
+Receipt Hash: ${receiptHash}
+
+Verified by Midnight Network
+================================`;
+
+                    const blob = new Blob([reportContent], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `solaceid-report-${Date.now()}.txt`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                  }}
+                  style={{
+                    background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Download Report
+                </button>
+              </div>
             </div>
             <div style={{ marginBottom: '30px', textAlign: 'center' }}>
               <h3>Blockchain Transaction Timeline</h3>

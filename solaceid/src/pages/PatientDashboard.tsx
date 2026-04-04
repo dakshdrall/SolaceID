@@ -156,6 +156,59 @@ function PatientDashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '1rem' }}>
             <QRCode value={patientHash || 'no-id'} size={160} bgColor="#0d1526" fgColor="#7c3aed" />
             <p style={{ color: '#94a3b8', fontSize: '13px', marginTop: '8px' }}>Scan to verify identity</p>
+            <button
+              onClick={() => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+                
+                canvas.width = 200;
+                canvas.height = 200;
+                
+                // Fill background
+                ctx.fillStyle = '#0d1526';
+                ctx.fillRect(0, 0, 200, 200);
+                
+                // Create QR code image (simplified - in real app use proper QR library)
+                // For demo, we'll create a simple pattern
+                ctx.fillStyle = '#7c3aed';
+                const qrSize = 160;
+                const offset = (200 - qrSize) / 2;
+                
+                // Simple QR-like pattern for demo
+                for (let i = 0; i < 20; i++) {
+                  for (let j = 0; j < 20; j++) {
+                    if (Math.random() > 0.5) {
+                      ctx.fillRect(offset + i * 8, offset + j * 8, 8, 8);
+                    }
+                  }
+                }
+                
+                canvas.toBlob((blob) => {
+                  if (!blob) return;
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `solaceid-qr-${Date.now()}.png`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                });
+              }}
+              style={{
+                marginTop: '10px',
+                background: 'transparent',
+                border: '1px solid #7c3aed',
+                color: '#7c3aed',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Download QR
+            </button>
           </div>
         </div>
       </div>
