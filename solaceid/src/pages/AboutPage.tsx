@@ -150,6 +150,22 @@ function AboutPage() {
             <div style={{ fontSize: '14px', color: '#94a3b8' }}>Confidential data exchange circuit</div>
           </div>
         </div>
+        <div style={{ marginTop: '30px' }}>
+          <button onClick={() => navigate('/contracts')} style={{
+            background: 'transparent',
+            border: '1px solid #06b6d4',
+            color: '#06b6d4',
+            padding: '12px 24px',
+            borderRadius: '6px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            View Contracts →
+          </button>
+        </div>
       </section>
 
       {/* Call to Action */}
