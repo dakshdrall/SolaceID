@@ -66,6 +66,23 @@ function PatientDashboard() {
             <h3 style={{ margin: '0 0 10px', color: '#7c3aed' }}>Hospitals Accessed</h3>
             <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{uniqueHospitals}</div>
           </div>
+          <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px', textAlign: 'center' }}>
+            <h3 style={{ margin: '0 0 15px', color: '#7c3aed' }}>Privacy Score</h3>
+            <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 10px' }}>
+              <svg width="80" height="80" style={{ transform: 'rotate(-90deg)' }}>
+                <circle cx="40" cy="40" r="35" stroke="#333" strokeWidth="6" fill="none" />
+                <circle cx="40" cy="40" r="35" stroke="url(#privacyGradient)" strokeWidth="6" fill="none" strokeDasharray="219.91" strokeDashoffset="0" strokeLinecap="round" />
+              </svg>
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '18px', fontWeight: 'bold', color: '#7c3aed' }}>100%</div>
+              <defs>
+                <linearGradient id="privacyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{ stopColor: '#7c3aed' }} />
+                  <stop offset="100%" style={{ stopColor: '#06b6d4' }} />
+                </linearGradient>
+              </defs>
+            </div>
+            <p style={{ margin: '0', fontSize: '14px', color: '#ccc' }}>Your Privacy Score</p>
+          </div>
         </div>
 
         <button onClick={() => window.location.assign('/consent')} style={{ marginBottom: '24px', background: 'linear-gradient(to right, #7c3aed, #06b6d4)', border: 'none', color: 'white', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer' }}>

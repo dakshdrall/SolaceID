@@ -86,6 +86,28 @@ function LandingPage() {
         </div>
       </section>
 
+      <section style={{ padding: '60px 1rem', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>Trusted by Leading Hospitals</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}>
+          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
+            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>Apollo Hospitals</h3>
+            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
+          </div>
+          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
+            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>AIIMS Delhi</h3>
+            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
+          </div>
+          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
+            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>Fortis Healthcare</h3>
+            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
+          </div>
+          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
+            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>Max Hospital</h3>
+            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
+          </div>
+        </div>
+      </section>
+
       <section style={{ padding: '40px 1rem', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
           <div style={cardStyle}>

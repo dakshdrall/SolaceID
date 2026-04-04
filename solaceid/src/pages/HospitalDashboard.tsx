@@ -100,26 +100,38 @@ function HospitalDashboard() {
         <div style={{ marginBottom: '30px' }}>
           <h3>Recent Verifications</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ padding: '10px', border: '1px solid #7c3aed', borderRadius: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <p><strong>Patient Hash:</strong> 0x1a2b3c4d5e6f7890...</p>
-                <p><strong>Timestamp:</strong> 2024-04-01T10:30:00Z</p>
+            <div style={{ padding: '15px', border: '1px solid #7c3aed', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.05)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '14px', color: '#ccc' }}>Patient: 0x1a2b3c...def456</span>
+                <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
               </div>
-              <span style={{ backgroundColor: '#10b981', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '14px' }}>Verified</span>
+              <div style={{ fontSize: '14px', color: '#ddd' }}>
+                <p style={{ margin: '4px 0' }}><strong>Hospital:</strong> Apollo Hospital, Delhi</p>
+                <p style={{ margin: '4px 0' }}><strong>Purpose:</strong> Emergency Admission</p>
+                <p style={{ margin: '4px 0' }}><strong>Timestamp:</strong> 2 hours ago</p>
+              </div>
             </div>
-            <div style={{ padding: '10px', border: '1px solid #7c3aed', borderRadius: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <p><strong>Patient Hash:</strong> 0x9f8e7d6c5b4a3210...</p>
-                <p><strong>Timestamp:</strong> 2024-03-31T14:15:00Z</p>
+            <div style={{ padding: '15px', border: '1px solid #7c3aed', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.05)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '14px', color: '#ccc' }}>Patient: 0x4d5e6f...abc789</span>
+                <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
               </div>
-              <span style={{ backgroundColor: '#10b981', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '14px' }}>Verified</span>
+              <div style={{ fontSize: '14px', color: '#ddd' }}>
+                <p style={{ margin: '4px 0' }}><strong>Hospital:</strong> Apollo Hospital, Delhi</p>
+                <p style={{ margin: '4px 0' }}><strong>Purpose:</strong> Routine Transfer</p>
+                <p style={{ margin: '4px 0' }}><strong>Timestamp:</strong> 1 day ago</p>
+              </div>
             </div>
-            <div style={{ padding: '10px', border: '1px solid #7c3aed', borderRadius: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <p><strong>Patient Hash:</strong> 0x5f4e3d2c1b0a9876...</p>
-                <p><strong>Timestamp:</strong> 2024-03-30T09:45:00Z</p>
+            <div style={{ padding: '15px', border: '1px solid #7c3aed', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.05)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '14px', color: '#ccc' }}>Patient: 0x7h8i9j...xyz012</span>
+                <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
               </div>
-              <span style={{ backgroundColor: '#10b981', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '14px' }}>Verified</span>
+              <div style={{ fontSize: '14px', color: '#ddd' }}>
+                <p style={{ margin: '4px 0' }}><strong>Hospital:</strong> Apollo Hospital, Delhi</p>
+                <p style={{ margin: '4px 0' }}><strong>Purpose:</strong> Specialist Referral</p>
+                <p style={{ margin: '4px 0' }}><strong>Timestamp:</strong> 3 days ago</p>
+              </div>
             </div>
           </div>
         </div>
