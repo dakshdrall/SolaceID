@@ -50,8 +50,9 @@ function PatientDashboard() {
   };
 
   return (
+    <>
+    <Navbar />
     <div style={{ background: '#0a0f1e', minHeight: "100vh", color: "#fff", paddingTop: "100px" }}>
-      <Navbar />
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
         <button
@@ -213,6 +214,7 @@ function PatientDashboard() {
         </div>
       </div>
     </div>
+  </>
   );
 }
 
