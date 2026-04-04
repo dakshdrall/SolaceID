@@ -14,13 +14,26 @@ function Navbar() {
       setWalletAddress(savedAddress);
     }
 
+    // Add pulse animation for connected wallet indicator
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+    `;
+    document.head.appendChild(style);
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.head.removeChild(style);
+    };
   }, []);
 
   const connectWallet = async () => {
@@ -99,15 +112,31 @@ function Navbar() {
           )}
         </div>
         <button onClick={connectWallet} style={{
-          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          color: '#fff',
-          border: 'none',
+          background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          color: walletAddress ? '#10b981' : '#fff',
+          border: walletAddress ? '1px solid #10b981' : 'none',
           borderRadius: '6px',
           padding: '8px 14px',
           cursor: 'pointer',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
         }}>
-          {walletAddress || 'Connect Wallet'}
+          {walletAddress ? (
+            <>
+              <span style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: '#10b981',
+                animation: 'pulse 2s infinite'
+              }}></span>
+              {walletAddress}
+            </>
+          ) : (
+            'Connect Wallet'
+          )}
         </button>
       </nav>
 

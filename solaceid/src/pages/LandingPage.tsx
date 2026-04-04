@@ -64,6 +64,28 @@ function LandingPage() {
         </div>
       </header>
 
+      {/* Live Stats Section */}
+      <section style={{ padding: '40px 1rem', textAlign: 'center', background: 'rgba(124, 58, 237, 0.05)', borderTop: '1px solid rgba(124, 58, 237, 0.2)', borderBottom: '1px solid rgba(124, 58, 237, 0.2)' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'center', minWidth: '200px' }}>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }} data-target="2847">2,847</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Patients Protected</div>
+          </div>
+          <div style={{ textAlign: 'center', minWidth: '200px' }}>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }} data-target="143">143</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Hospitals Connected</div>
+          </div>
+          <div style={{ textAlign: 'center', minWidth: '200px' }}>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }} data-target="99.9">99.9%</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Uptime</div>
+          </div>
+          <div style={{ textAlign: 'center', minWidth: '200px' }}>
+            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }} data-target="0">0</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Data Breaches</div>
+          </div>
+        </div>
+      </section>
+
       <section style={{ padding: '80px 1rem 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
@@ -122,6 +144,22 @@ function LandingPage() {
           <div style={cardStyle}>
             <h3>Patient-Controlled Consent</h3>
             <p>Grant and revoke consent for data sharing on your terms, with full transparency and control.</p>
+          </div>
+        </div>
+      </section>
+      <section style={{ padding: '60px 1rem', textAlign: 'center' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto', background: '#1a1f2e', border: '1px solid #7c3aed', borderRadius: '15px', padding: '40px' }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '20px', color: 'white' }}>Ready to take control of your health data?</h2>
+          <p style={{ color: '#94a3b8', marginBottom: '30px', fontSize: '16px' }}>
+            Join thousands of patients who have taken back control of their medical privacy.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+            <button onClick={() => navigate('/wallet')} style={{ ...buttonStyle, background: 'linear-gradient(to right, #7c3aed, #06b6d4)', padding: '15px 30px' }}>
+              Get Started as Patient
+            </button>
+            <button onClick={() => navigate('/about')} style={{ ...buttonStyle, background: 'transparent', border: '1px solid #7c3aed', color: '#7c3aed', padding: '15px 30px' }}>
+              Partner with Us
+            </button>
           </div>
         </div>
       </section>
