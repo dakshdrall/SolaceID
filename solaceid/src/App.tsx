@@ -5,6 +5,8 @@ import ConsentPage from './pages/ConsentPage';
 import HospitalDashboard from './pages/HospitalDashboard';
 import PatientDashboard from './pages/PatientDashboard';
 import AboutPage from './pages/AboutPage';
+import HospitalLogin from './pages/HospitalLogin';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/hospital" element={<HospitalDashboard />} />
         <Route path="/dashboard" element={<PatientDashboard />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/hospital-login" element={<HospitalLogin />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

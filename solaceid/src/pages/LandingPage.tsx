@@ -81,7 +81,7 @@ function LandingPage() {
           <button onClick={() => navigate('/wallet')} style={{ ...buttonStyle, background: 'linear-gradient(to right, #7c3aed, #06b6d4)', padding: '15px 40px', fontSize: '18px' }}>
             Get Started as Patient
           </button>
-          <button onClick={() => navigate('/hospital')} style={{ ...buttonStyle, background: '#06b6d4', padding: '15px 40px', fontSize: '18px' }}>
+          <button onClick={() => navigate('/hospital-login')} style={{ ...buttonStyle, background: '#06b6d4', padding: '15px 40px', fontSize: '18px' }}>
             Hospital Login
           </button>
         </div>
