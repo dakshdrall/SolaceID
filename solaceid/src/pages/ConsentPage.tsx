@@ -16,8 +16,6 @@ function ConsentPage() {
   const [success, setSuccess] = useState(false);
   const [txHash, setTxHash] = useState('');
 
-  // Navbar handles wallet connection now.
-
   const handleSign = () => {
     setLoading(true);
     setTimeout(() => {
@@ -47,237 +45,145 @@ function ConsentPage() {
     }, 2000);
   };
 
-  const handleProceed = () => {
-    navigate('/hospital');
-  };
-
   return (
     <>
-    <Navbar />
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: "140px", scrollPaddingTop: '3rem' }}>
-      <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
-        {!hasIdentity ? (
-          <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{
-              background: '#1a1f2e',
-              border: '1px solid #ef4444',
-              borderRadius: '10px',
-              padding: '30px',
-              marginBottom: '30px'
-            }}>
-              <div style={{ fontSize: '48px', marginBottom: '20px' }}>⚠️</div>
-              <h2 style={{ color: '#ef4444', marginBottom: '15px' }}>No ZK Identity Found</h2>
-              <p style={{ color: '#94a3b8', marginBottom: '25px', lineHeight: '1.6' }}>
-                Please create your identity first before granting consent.
-              </p>
-              <button
-                onClick={() => navigate('/wallet')}
-                style={{
-                  background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-                  border: 'none',
-                  color: 'white',
-                  padding: '12px 24px',
-                  borderRadius: '6px',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer'
-                }}
-              >
-                Create Identity →
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h1 style={{
-                fontSize: "2rem",
-                background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                margin: '0'
-              }}>
-                Patient Consent
-              </h1>
-            </div>
-            <div style={{ marginBottom: '30px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <span style={{ fontSize: '14px', color: '#94a3b8' }}>Step 2 of 3</span>
-                <span style={{ fontSize: '12px', color: '#94a3b8' }}>Patient Consent</span>
-              </div>
-              <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>
-                <div style={{ flex: 1, height: '4px', backgroundColor: '#10b981', borderRadius: '2px' }}></div>
-                <div style={{ flex: 1, height: '4px', backgroundColor: '#7c3aed', borderRadius: '2px' }}></div>
-                <div style={{ flex: 1, height: '4px', backgroundColor: '#374151', borderRadius: '2px' }}></div>
-              </div>
-            </div>
-            <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #7c3aed', borderRadius: '10px' }}>
-              <p><strong>Patient Hash:</strong> {patientHash}</p>
-            </div>
-            <div style={{ marginBottom: '20px', padding: '20px', border: '1px solid #06b6d4', borderRadius: '10px' }}>
-              <h3>Hospital</h3>
-              <p>City General Hospital, Mumbai</p>
-            </div>
-            <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-              <div style={{
-                background: '#0a1a0a',
-                border: '1px solid #1d9e75',
-                borderRadius: '8px',
-                padding: '12px',
-                display: 'inline-block'
-              }}>
-                🔒 This consent is cryptographically secured on Midnight Network
-              </div>
-            </div>
-            <div style={{ marginBottom: '20px' }}>
-              <h3>Fields to Share</h3>
-              <div style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                <button
-                  onClick={() => setConsent({ ...consent, bloodType: true, vaccination: true, allergies: true })}
-                  style={{
-                    background: '#7c3aed',
-                    border: 'none',
-                    color: 'white',
-                    padding: '8px 16px',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '14px'
-                  }}
-                >
-                  Select All
-                </button>
-                <button
-                  onClick={() => setConsent({ ...consent, bloodType: false, vaccination: false, allergies: false })}
-                  style={{
-                    background: '#374151',
-                    border: 'none',
-                    color: 'white',
-                    padding: '8px 16px',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '14px'
-                  }}
-                >
-                  Deselect All
-                </button>
-              </div>
-              <div style={{ marginBottom: '15px', fontSize: '14px', color: '#94a3b8' }}>
-                You are sharing {Object.values(consent).filter(v => typeof v === 'boolean' && v).length} of 3 fields
-              </div>
-              <label style={{ display: 'block', margin: '10px 0' }}>
-                <input
-                  type="checkbox"
-                  checked={consent.bloodType}
-                  onChange={e => setConsent({ ...consent, bloodType: e.target.checked })}
-                /> Blood Type
-              </label>
-              <label style={{ display: 'block', margin: '10px 0' }}>
-                <input
-                  type="checkbox"
-                  checked={consent.vaccination}
-                  onChange={e => setConsent({ ...consent, vaccination: e.target.checked })}
-                /> Vaccination Status
-              </label>
-              <label style={{ display: 'block', margin: '10px 0' }}>
-                <input
-                  type="checkbox"
-                  checked={consent.allergies}
-                  onChange={e => setConsent({ ...consent, allergies: e.target.checked })}
-                /> Allergies
-              </label>
-            </div>
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '10px' }}>
-                Purpose
-                <select
-                  value={consent.purpose}
-                  onChange={e => setConsent({ ...consent, purpose: e.target.value })}
-                  style={inputStyle}
-                >
-                  <option value="">Select Purpose</option>
-                  <option>Emergency Admission</option>
-                  <option>Routine Transfer</option>
-                  <option>Specialist Referral</option>
-                </select>
-              </label>
-            </div>
-            <div style={{ marginBottom: '30px', padding: '20px', background: 'rgba(124, 58, 237, 0.1)', border: '1px solid #7c3aed', borderRadius: '10px' }}>
-              <h3 style={{ marginTop: '0', color: '#7c3aed' }}>Consent Preview</h3>
-              <div style={{ marginBottom: '15px' }}>
-                <h4 style={{ color: 'white', margin: '0 0 10px 0' }}>Will be shared:</h4>
-                <ul style={{ margin: '0', paddingLeft: '20px', color: '#10b981' }}>
-                  {consent.bloodType && <li>Blood Type</li>}
-                  {consent.vaccination && <li>Vaccination Status</li>}
-                  {consent.allergies && <li>Allergies</li>}
-                </ul>
-              </div>
-              <div style={{ marginBottom: '15px' }}>
-                <h4 style={{ color: 'white', margin: '0 0 10px 0' }}>Will NOT be shared:</h4>
-                <ul style={{ margin: '0', paddingLeft: '20px', color: '#ef4444' }}>
-                  {!consent.bloodType && <li>🚫 Blood Type</li>}
-                  {!consent.vaccination && <li>🚫 Vaccination Status</li>}
-                  {!consent.allergies && <li>🚫 Allergies</li>}
-                </ul>
-              </div>
-              <p style={{ margin: '0', fontSize: '14px', color: '#94a3b8', fontStyle: 'italic' }}>
-                This is the minimum necessary disclosure for {consent.purpose || 'the selected purpose'}.
-              </p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <button
-                onClick={handleSign}
-                disabled={loading || success}
-                style={{
-                  ...buttonStyle,
-                  background: loading ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-                  opacity: loading || success ? 0.6 : 1
-                }}
-              >
-                {loading ? 'Signing Consent...' : success ? 'Consent Signed' : 'Sign Consent on Midnight'}
-              </button>
-              {loading && <div style={{ marginTop: '10px', fontSize: '14px' }}>Processing...</div>}
-              {success && (
-                <div style={{ marginTop: '20px', color: '#10b981', fontSize: '18px' }}>
-                  Success! Transaction Hash: {txHash}
+      <Navbar />
+      <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)', paddingTop: '140px', paddingBottom: '60px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 1rem' }}>
+          {!hasIdentity ? (
+            <div style={{ maxWidth: '620px', margin: '0 auto' }}>
+              <div className='surface-card' style={{ padding: '2.5rem', borderColor: 'rgba(244, 71, 110, 0.18)' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
+                  <h2 style={{ color: '#f87171', marginBottom: '1rem' }}>No ZK Identity Found</h2>
+                  <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '1.75rem' }}>Please create your identity before granting consent.</p>
+                  <button onClick={() => navigate('/wallet')} className='button-primary' style={{ minWidth: '200px' }}>
+                    Create Identity →
+                  </button>
                 </div>
-              )}
-              {success && (
-                <button onClick={() => navigate('/dashboard')} style={{ ...buttonStyle, background: '#7c3aed', marginTop: '20px' }}>
-                  View Dashboard
-                </button>
-              )}
-              {success && (
-                <button onClick={handleProceed} style={{ ...buttonStyle, background: '#10b981', marginTop: '12px' }}>
-                  View Hospital Dashboard
-                </button>
-              )}
+              </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className='surface-card' style={{ padding: '2.5rem', borderColor: 'rgba(124, 58, 237, 0.14)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', alignItems: 'flex-end', marginBottom: '2rem' }}>
+                <div>
+                  <h1 style={{ fontSize: '2.3rem', margin: 0 }}>Patient Consent</h1>
+                  <p style={{ color: 'var(--text-muted)', marginTop: '0.75rem' }}>Grant hospitals access to the minimum required health data, secured by ZK proofs.</p>
+                </div>
+                <span className='status-chip success' style={{ alignSelf: 'flex-start' }}>Patient Verified</span>
+              </div>
+
+              <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'grid', gap: '0.5rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Patient Hash</span>
+                  <div className='panel-card' style={{ padding: '1rem', borderColor: 'rgba(124, 58, 237, 0.18)' }}>{patientHash}</div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Hospital</span>
+                  <div className='panel-card' style={{ padding: '1rem', borderColor: 'rgba(6, 182, 212, 0.18)' }}>
+                    <h3 style={{ margin: '0 0 0.5rem 0' }}>City General Hospital</h3>
+                    <p style={{ margin: 0, color: 'var(--text-muted)' }}>Mumbai Care Network</p>
+                  </div>
+                </div>
+              </div>
+
+              <section style={{ margin: '2rem 0' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <span className='status-chip primary'>Secure on Midnight</span>
+                  <span className='status-chip info'>Auditable Consent</span>
+                </div>
+              </section>
+
+              <div style={{ display: 'grid', gap: '1rem' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <button onClick={() => setConsent({ ...consent, bloodType: true, vaccination: true, allergies: true })} className='button-secondary'>Select All</button>
+                  <button onClick={() => setConsent({ ...consent, bloodType: false, vaccination: false, allergies: false })} className='button-secondary'>Deselect All</button>
+                </div>
+                <span style={{ color: 'var(--text-muted)' }}>You are sharing {Object.values(consent).filter(v => typeof v === 'boolean' && v).length} of 3 fields.</span>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text)' }}>
+                  <input type='checkbox' checked={consent.bloodType} onChange={e => setConsent({ ...consent, bloodType: e.target.checked })} /> Blood Type
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text)' }}>
+                  <input type='checkbox' checked={consent.vaccination} onChange={e => setConsent({ ...consent, vaccination: e.target.checked })} /> Vaccination Status
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text)' }}>
+                  <input type='checkbox' checked={consent.allergies} onChange={e => setConsent({ ...consent, allergies: e.target.checked })} /> Allergies
+                </label>
+              </div>
+
+              <div style={{ margin: '2rem 0', display: 'grid', gap: '1rem' }}>
+                <label style={{ display: 'grid', gap: '0.5rem', color: 'var(--text)' }}>
+                  Purpose
+                  <select value={consent.purpose} onChange={e => setConsent({ ...consent, purpose: e.target.value })} style={{ ...inputStyle, margin: 0 }}>
+                    <option value=''>Select Purpose</option>
+                    <option>Emergency Admission</option>
+                    <option>Routine Transfer</option>
+                    <option>Specialist Referral</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className='surface-card' style={{ padding: '1.5rem', borderColor: 'rgba(124, 58, 237, 0.12)' }}>
+                <h3 style={{ margin: '0 0 0.75rem 0' }}>Consent Preview</h3>
+                <div style={{ display: 'grid', gap: '0.75rem', color: 'var(--text-muted)' }}>
+                  <div>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--text)' }}>Will be shared:</h4>
+                    <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                      {consent.bloodType && <li>Blood Type</li>}
+                      {consent.vaccination && <li>Vaccination Status</li>}
+                      {consent.allergies && <li>Allergies</li>}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--text)' }}>Will NOT be shared:</h4>
+                    <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                      {!consent.bloodType && <li>Blood Type</li>}
+                      {!consent.vaccination && <li>Vaccination Status</li>}
+                      {!consent.allergies && <li>Allergies</li>}
+                    </ul>
+                  </div>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                    This is the minimum necessary disclosure for {consent.purpose || 'the selected purpose'}.
+                  </p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '1.5rem' }}>
+                <button onClick={handleSign} disabled={loading || success} className='button-primary' style={{ minWidth: '220px' }}>
+                  {loading ? 'Signing Consent…' : success ? 'Consent Signed' : 'Sign Consent on Midnight'}
+                </button>
+                {success && (
+                  <button onClick={() => navigate('/dashboard')} className='button-secondary' style={{ minWidth: '220px' }}>
+                    View Dashboard
+                  </button>
+                )}
+                {success && (
+                  <button onClick={() => navigate('/hospital')} className='button-secondary' style={{ minWidth: '220px' }}>
+                    Hospital Dashboard
+                  </button>
+                )}
+              </div>
+
+              {loading && <p style={{ color: 'var(--text-muted)', marginTop: '1rem' }}>Processing…</p>}
+              {success && <p style={{ color: '#10b981', marginTop: '1rem' }}>Success! Transaction Hash: {txHash}</p>}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  padding: '12px',
-  margin: '10px 0',
-  border: 'none',
-  borderRadius: '5px',
+  padding: '14px',
+  margin: 0,
+  border: '1px solid var(--border)',
+  borderRadius: '14px',
   fontSize: '16px',
+  background: 'var(--surface-3)',
+  color: 'var(--text)',
   boxSizing: 'border-box'
-};
-
-const buttonStyle: React.CSSProperties = {
-  padding: '12px 24px',
-  border: 'none',
-  borderRadius: '5px',
-  color: 'white',
-  cursor: 'pointer',
-  fontSize: '16px',
-  fontWeight: 'bold'
 };
 
 export default ConsentPage;

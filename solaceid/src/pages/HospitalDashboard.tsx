@@ -23,7 +23,6 @@ function HospitalDashboard() {
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [auditTrail, setAuditTrail] = useState<AuditTrail | null>(null);
 
-  // Add CSS animations
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
@@ -42,8 +41,6 @@ function HospitalDashboard() {
       document.head.removeChild(style);
     };
   }, []);
-
-  // Navbar handles wallet connection now.
 
   const handleVerify = () => {
     setLoading(true);
@@ -70,358 +67,135 @@ function HospitalDashboard() {
 
   return (
     <>
-    <Navbar />
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: "140px", scrollPaddingTop: '3rem' }}>
-      <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{
-            fontSize: "2rem",
-            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            margin: '0'
-          }}>
-            Hospital Dashboard
-          </h1>
-          <p style={{ color: '#94a3b8', fontSize: '16px', margin: '10px 0 0 0' }}>
-            Demo Environment — Midnight Network Preprod
-          </p>
-        </div>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <div style={{ marginBottom: '30px' }}>
-          <input
-            type="text"
-            placeholder="Enter Patient Hash"
-            value={patientHash}
-            onChange={e => setPatientHash(e.target.value)}
-            style={inputStyle}
-          />
-          <button
-            onClick={handleVerify}
-            disabled={loading || verified}
-            style={{
-              ...buttonStyle,
-              background: loading ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-              opacity: loading || verified ? 0.6 : 1,
-              marginLeft: '10px'
-            }}
-          >
-            {loading ? 'Verifying...' : verified ? 'Verified' : 'Verify on Midnight'}
-          </button>
-        </div>
-        <div style={{ marginBottom: '20px' }}>
-          <button
-            onClick={() => {
-              const demoHash = localStorage.getItem('solaceIdHash') || '';
+      <Navbar />
+      <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)', paddingTop: '140px', paddingBottom: '60px' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h1 style={{ fontSize: '2.5rem', margin: 0 }}>Hospital Dashboard</h1>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginTop: '0.75rem' }}>Demo environment — Midnight Network Preprod</p>
+          </div>
+
+          <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.14)', marginBottom: '2rem' }}>
+            <div style={{ display: 'grid', gap: '1rem', alignItems: 'center', gridTemplateColumns: '1fr auto' }}>
+              <input type='text' placeholder='Enter Patient Hash' value={patientHash} onChange={e => setPatientHash(e.target.value)} style={inputStyle} />
+              <button onClick={handleVerify} disabled={loading || verified} className='button-primary' style={{ width: '100%', maxWidth: '220px' }}>
+                {loading ? 'Verifying…' : verified ? 'Verified' : 'Verify on Midnight'}
+              </button>
+            </div>
+            <button onClick={() => {
+              const demoHash = localStorage.getItem('patientHash') || '';
               setPatientHash(demoHash);
-              // Auto-trigger verification after 500ms delay
               setTimeout(() => {
-                const verifyButton = document.querySelector('button[children*="Verify on Midnight"]') as HTMLButtonElement;
-                if (verifyButton && !verifyButton.disabled) {
+                const verifyButton = document.querySelector('button:enabled.button-primary') as HTMLButtonElement;
+                if (verifyButton) {
                   verifyButton.click();
                 }
               }, 500);
-            }}
-            style={{
-              ...buttonStyle,
-              background: 'transparent',
-              border: '2px solid #7c3aed',
-              color: 'white',
-              width: '100%',
-              padding: '12px',
-              cursor: 'pointer'
-            }}
-          >
-            Use Demo Hash
-          </button>
-        </div>
-        <div style={{ marginBottom: '30px' }}>
-          <h3>Recent Verifications</h3>
-          <div style={{ padding: '40px', border: '1px solid #374151', borderRadius: '8px', background: 'rgba(55, 65, 81, 0.1)', textAlign: 'center' }}>
-            <div style={{ fontSize: '48px', marginBottom: '20px', color: '#6b7280' }}>📋</div>
-            <h4 style={{ color: '#e2e8f0', margin: '0 0 10px 0', fontSize: '18px' }}>No verifications yet</h4>
-            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Verified patient records will appear here</p>
-            <p style={{ color: '#6b7280', margin: '10px 0 0 0', fontSize: '12px', fontStyle: 'italic' }}>This is a demo environment</p>
+            }} className='button-secondary' style={{ marginTop: '1rem', width: '100%' }}>
+              Use Demo Hash
+            </button>
           </div>
-        </div>
-        <div style={{ marginBottom: '30px' }}>
-          <h3>Patient History</h3>
-          <div style={{ padding: '40px', border: '1px solid #374151', borderRadius: '8px', background: 'rgba(55, 65, 81, 0.1)', textAlign: 'center' }}>
-            <div style={{ fontSize: '48px', marginBottom: '20px', color: '#6b7280' }}>📊</div>
-            <h4 style={{ color: '#e2e8f0', margin: '0 0 10px 0', fontSize: '18px' }}>No patient history yet</h4>
-            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Patient verification records will appear here</p>
-            <p style={{ color: '#6b7280', margin: '10px 0 0 0', fontSize: '12px', fontStyle: 'italic' }}>This is a demo environment</p>
+
+          <div className='grid-split' style={{ marginBottom: '2rem' }}>
+            <div className='panel-card' style={{ borderColor: 'rgba(124, 58, 237, 0.18)' }}>
+              <h3 style={{ margin: '0 0 0.75rem 0' }}>Recent Verifications</h3>
+              <p style={{ margin: 0, color: 'var(--text-muted)' }}>Verified patient records appear here once you complete a check.</p>
+            </div>
+            <div className='panel-card' style={{ borderColor: 'rgba(124, 58, 237, 0.18)' }}>
+              <h3 style={{ margin: '0 0 0.75rem 0' }}>Patient History</h3>
+              <p style={{ margin: 0, color: 'var(--text-muted)' }}>Patient verification history is stored off-chain and referenced through cryptographic proof.</p>
+            </div>
           </div>
-        </div>
-        {verified && (
-          <div>
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '30px',
-              padding: '30px',
-              background: 'linear-gradient(135deg, #10b981, #7c3aed)',
-              borderRadius: '15px',
-              fontSize: '28px',
-              fontWeight: 'bold',
-              boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)'
-            }}>
-              <div style={{
-                display: 'inline-block',
-                width: '80px',
-                height: '80px',
-                border: '4px solid white',
-                borderRadius: '50%',
-                position: 'relative',
-                marginBottom: '15px',
-                animation: 'checkmarkScale 0.6s ease-out'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '20px',
-                  left: '28px',
-                  width: '24px',
-                  height: '40px',
-                  border: 'solid white',
-                  borderWidth: '0 6px 6px 0',
-                  transform: 'rotate(45deg)',
-                  animation: 'checkmarkDraw 0.4s ease-out 0.2s both'
-                }}></div>
+
+          {verified && (
+            <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(16, 185, 129, 0.18)', marginBottom: '2rem' }}>
+              <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'inline-flex', width: '100px', height: '100px', border: '4px solid rgba(16, 185, 129, 0.5)', borderRadius: '50%', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', animation: 'checkmarkScale 0.6s ease-out' }}>
+                  <div style={{ width: '28px', height: '48px', border: 'solid white', borderWidth: '0 6px 6px 0', transform: 'rotate(45deg)', animation: 'checkmarkDraw 0.4s ease-out 0.2s both' }}></div>
+                </div>
+                <h2 style={{ margin: '0 0 0.75rem 0' }}>ZK Proof Verified</h2>
+                <p style={{ margin: 0, color: 'var(--text-muted)' }}>The patient hash has been validated against Midnight Network.</p>
               </div>
-              <br />
-              ZK Proof Verified
-              <div style={{
-                marginTop: '15px',
-                fontSize: '16px',
-                fontWeight: 'normal',
-                background: 'rgba(255,255,255,0.2)',
-                padding: '10px',
-                borderRadius: '10px',
-                display: 'inline-block'
-              }}>
-                Verified by Midnight Network
-              </div>
-              <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                <button
-                  onClick={() => {
-                    const patientHash = localStorage.getItem('solaceIdHash') || 'N/A';
-                    const verifiedFields = JSON.parse(localStorage.getItem('ehrData') || '[]').join(', ') || 'N/A';
-                    const timestamp = new Date().toISOString();
-                    const receiptHash = '0x' + Math.random().toString(16).substr(2, 64);
-                    
-                    const reportContent = `SolaceID Verification Report
-================================
 
-Patient Hash: ${patientHash}
-Verified Fields: ${verifiedFields}
-Timestamp: ${timestamp}
-Receipt Hash: ${receiptHash}
+              {patientData && (
+                <div className='panel-card' style={{ borderColor: 'rgba(16, 185, 129, 0.18)', marginBottom: '1.5rem' }}>
+                  <h3 style={{ margin: '0 0 0.75rem 0' }}>Verified Patient Data</h3>
+                  <p style={{ margin: '0.4rem 0' }}><strong>Name:</strong> {patientData.name}</p>
+                  <p style={{ margin: '0.4rem 0' }}><strong>DOB:</strong> {patientData.dob}</p>
+                  <p style={{ margin: '0.4rem 0' }}><strong>Blood Type:</strong> {patientData.bloodType}</p>
+                  <p style={{ margin: '0.4rem 0' }}><strong>Allergies:</strong> {patientData.allergies}</p>
+                  <p style={{ margin: 0 }}><strong>Vaccination:</strong> {patientData.vaccination ? 'Vaccinated' : 'Not Vaccinated'}</p>
+                </div>
+              )}
 
-Verified by Midnight Network
-================================`;
-
-                    const blob = new Blob([reportContent], { type: 'text/plain' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `solaceid-report-${Date.now()}.txt`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                  }}
-                  style={{
-                    background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-                    border: 'none',
-                    color: 'white',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  Download Report
-                </button>
-                <button
-                  onClick={() => window.print()}
-                  style={{
-                    background: 'linear-gradient(to right, #06b6d4, #7c3aed)',
-                    border: 'none',
-                    color: 'white',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  Print Report
-                </button>
-                <button
-                  onClick={() => {
-                    setPatientHash('');
-                    setVerified(false);
-                    setPatientData(null);
-                    setAuditTrail(null);
-                  }}
-                  style={{
-                    background: 'linear-gradient(to right, #374151, #6b7280)',
-                    border: 'none',
-                    color: 'white',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  New Verification
-                </button>
-                <button
-                  onClick={async () => {
-                    const patientHash = localStorage.getItem('solaceIdHash') || 'N/A';
-                    const shortHash = patientHash.length > 16 ? `${patientHash.slice(0, 16)}...` : patientHash;
-                    const timestamp = new Date().toLocaleString();
-                    
-                    const shareText = `✅ Patient verified on Midnight Network
-Hash: ${shortHash}
-Timestamp: ${timestamp}
-Network: Midnight Preprod`;
-
-                    try {
-                      await navigator.clipboard.writeText(shareText);
-                      alert('Verification details copied to clipboard!');
-                    } catch (err) {
-                      console.error('Copy failed', err);
-                      alert('Failed to copy verification details');
-                    }
-                  }}
-                  style={{
-                    background: 'linear-gradient(to right, #10b981, #059669)',
-                    border: 'none',
-                    color: 'white',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold'
-                  }}
-                >
+              <div style={{ display: 'grid', gap: '1rem' }}>
+                <button onClick={() => {
+                  const patientHash = localStorage.getItem('patientHash') || 'N/A';
+                  const shortHash = patientHash.length > 16 ? `${patientHash.slice(0, 16)}...` : patientHash;
+                  const timestamp = new Date().toLocaleString();
+                  const shareText = `✅ Patient verified on Midnight Network\nHash: ${shortHash}\nTimestamp: ${timestamp}\nNetwork: Midnight Preprod`;
+                  navigator.clipboard.writeText(shareText).then(() => alert('Verification details copied to clipboard!')).catch(() => alert('Failed to copy verification details'));
+                }} className='button-secondary' style={{ width: '100%' }}>
                   Share Verification
+                </button>
+                <button onClick={() => window.print()} className='button-secondary' style={{ width: '100%' }}>
+                  Print Report
                 </button>
               </div>
             </div>
-            <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-              <h3>Blockchain Transaction Timeline</h3>
-              <div style={{ position: 'relative', paddingLeft: '50px' }}>
-                <div style={{
-                  position: 'absolute',
-                  left: '20px',
-                  top: 0,
-                  bottom: 0,
-                  width: '2px',
-                  background: 'linear-gradient(to bottom, #7c3aed, #06b6d4)'
-                }}></div>
-                <div style={{ marginBottom: '20px', position: 'relative' }}>
-                  <div style={{
-                    position: 'absolute',
-                    left: '-40px',
-                    top: '5px',
-                    width: '20px',
-                    height: '20px',
-                    background: '#7c3aed',
-                    borderRadius: '50%'
-                  }}></div>
-                  <div style={{ background: 'rgba(124, 58, 237, 0.1)', padding: '15px', borderRadius: '10px', border: '1px solid #7c3aed' }}>
-                    <strong>Identity Commitment</strong><br />
-                    Patient ZK identity created on Midnight Network
+          )}
+
+          {verified && (
+            <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.12)', marginBottom: '2rem' }}>
+              <h3 style={{ margin: '0 0 1rem 0' }}>Blockchain Transaction Timeline</h3>
+              <div style={{ position: 'relative', paddingLeft: '2rem' }}>
+                <div style={{ position: 'absolute', left: '0.8rem', top: 0, bottom: 0, width: '2px', background: 'linear-gradient(to bottom, var(--accent), var(--accent-2))' }}></div>
+                <div style={{ position: 'relative', marginBottom: '1rem' }}>
+                  <div style={{ position: 'absolute', left: '-18px', top: '8px', width: '16px', height: '16px', background: 'var(--accent)', borderRadius: '50%' }}></div>
+                  <div style={{ padding: '1rem', borderRadius: '18px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(124, 58, 237, 0.12)' }}>
+                    <strong>Identity Commitment</strong><br />Patient ZK identity created on Midnight Network.
                   </div>
                 </div>
-                <div style={{ marginBottom: '20px', position: 'relative' }}>
-                  <div style={{
-                    position: 'absolute',
-                    left: '-40px',
-                    top: '5px',
-                    width: '20px',
-                    height: '20px',
-                    background: '#06b6d4',
-                    borderRadius: '50%'
-                  }}></div>
-                  <div style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '15px', borderRadius: '10px', border: '1px solid #06b6d4' }}>
-                    <strong>Consent Transaction</strong><br />
-                    Patient signed consent for data sharing
+                <div style={{ position: 'relative', marginBottom: '1rem' }}>
+                  <div style={{ position: 'absolute', left: '-18px', top: '8px', width: '16px', height: '16px', background: 'var(--accent-2)', borderRadius: '50%' }}></div>
+                  <div style={{ padding: '1rem', borderRadius: '18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(6, 182, 212, 0.12)' }}>
+                    <strong>Consent Transaction</strong><br />Patient consent recorded and authorized.
                   </div>
                 </div>
                 <div style={{ position: 'relative' }}>
-                  <div style={{
-                    position: 'absolute',
-                    left: '-40px',
-                    top: '5px',
-                    width: '20px',
-                    height: '20px',
-                    background: '#10b981',
-                    borderRadius: '50%'
-                  }}></div>
-                  <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '15px', borderRadius: '10px', border: '1px solid #10b981' }}>
-                    <strong>ZK Verification</strong><br />
-                    Hospital verified proof and accessed authorized data
+                  <div style={{ position: 'absolute', left: '-18px', top: '8px', width: '16px', height: '16px', background: '#10b981', borderRadius: '50%' }}></div>
+                  <div style={{ padding: '1rem', borderRadius: '18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(16, 185, 129, 0.12)' }}>
+                    <strong>ZK Verification</strong><br />Hospital verified the proof and accessed authorized fields.
                   </div>
                 </div>
               </div>
             </div>
-            <div style={{ marginBottom: '30px' }}>
-              <h3>Patient Health Record</h3>
-              <p><strong>Blood Type:</strong> {patientData?.bloodType}</p>
-              <p><strong>Allergies:</strong> {patientData?.allergies}</p>
-              <p><strong>Vaccination Status:</strong> {patientData?.vaccination ? 'Vaccinated' : 'Not Vaccinated'}</p>
-            </div>
-            <div style={{ marginBottom: '30px' }}>
-              <h3>Audit Trail</h3>
+          )}
+
+          {verified && (
+            <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.12)' }}>
+              <h3 style={{ margin: '0 0 1rem 0' }}>Audit Trail</h3>
               <p><strong>Receipt Hash:</strong> {auditTrail?.receiptHash}</p>
               <p><strong>Timestamp:</strong> {auditTrail?.timestamp}</p>
               <p><strong>Network:</strong> {auditTrail?.network}</p>
               <p><strong>Purpose:</strong> {auditTrail?.purpose}</p>
-              <div style={{ marginTop: '15px', padding: '10px', background: 'rgba(124, 58, 237, 0.1)', borderRadius: '8px', border: '1px solid #7c3aed' }}>
-                <p style={{ margin: '0', fontSize: '14px' }}><strong>Blockchain Transaction:</strong> 0x8f7e6d5c4b3a2910...fedcba9876543210</p>
-                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#94a3b8' }}>Verified on Midnight Network - Block #1,247,893</p>
-              </div>
             </div>
-            <footer style={{
-              textAlign: 'center',
-              marginTop: '50px',
-              padding: '20px',
-              borderTop: '1px solid #7c3aed',
-              fontSize: '14px',
-              color: '#ccc'
-            }}>
-              This record was verified by Midnight Network. Raw medical data was never stored on-chain.
-            </footer>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      </div>
-    </div>
-  </>
+    </>
   );
 }
 
 const inputStyle: React.CSSProperties = {
-  width: '60%',
-  padding: '12px',
-  border: 'none',
-  borderRadius: '5px',
+  width: '100%',
+  padding: '14px',
+  border: '1px solid var(--border)',
+  borderRadius: '14px',
   fontSize: '16px',
+  background: 'var(--surface-3)',
+  color: 'var(--text)',
   boxSizing: 'border-box'
-};
-
-const buttonStyle: React.CSSProperties = {
-  padding: '12px 24px',
-  border: 'none',
-  borderRadius: '5px',
-  color: 'white',
-  cursor: 'pointer',
-  fontSize: '16px',
-  fontWeight: 'bold'
 };
 
 export default HospitalDashboard;

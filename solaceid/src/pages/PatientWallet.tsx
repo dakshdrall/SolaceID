@@ -13,7 +13,6 @@ function PatientWallet() {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [flash, setFlash] = useState(false);
   const [hash, setHash] = useState('');
 
   useEffect(() => {
@@ -41,8 +40,6 @@ function PatientWallet() {
       localStorage.setItem('patientCreated', new Date().toISOString());
       setLoading(false);
       setSuccess(true);
-      setFlash(true);
-      setTimeout(() => setFlash(false), 1000);
     }, 2500);
   };
 
@@ -52,312 +49,132 @@ function PatientWallet() {
 
   return (
     <>
-    <Navbar />
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: "140px", scrollPaddingTop: '3rem' }}>
-      {localStorage.getItem('patientName') && (
-        <div style={{ textAlign: 'center', margin: '20px 0', padding: '0 1rem' }}>
-          <span style={{ background: '#10b981', color: 'white', padding: '8px 16px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold' }}>
-            Welcome back, {localStorage.getItem('patientName')}
-          </span>
-        </div>
-      )}
-      <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{
-            fontSize: "2rem",
-            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            margin: '0'
-          }}>
-            Patient Portal
-          </h1>
-        </div>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        {/* Why ZK Identity Section */}
-        <div style={{ marginBottom: '30px' }}>
-          <h2 style={{
-            textAlign: 'center',
-            fontSize: '1.5rem',
-            color: '#7c3aed',
-            marginBottom: '20px'
-          }}>
-            Why ZK Identity?
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <div style={{
-              background: '#1a1f2e',
-              border: '1px solid #444a70',
-              borderRadius: '10px',
-              padding: '15px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}>
-              <div style={{ fontSize: '24px' }}>🔒</div>
-              <div>
-                <h4 style={{ margin: '0 0 5px', color: '#7c3aed', fontSize: '16px' }}>No Data Exposure</h4>
-                <p style={{ margin: '0', color: '#94a3b8', fontSize: '14px' }}>Your medical data never leaves your device</p>
-              </div>
+      <Navbar />
+      <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)', paddingTop: '140px', paddingBottom: '60px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <div>
+              <h1 style={{ fontSize: '2.5rem', margin: 0 }}>Patient Portal</h1>
+              <p style={{ color: 'var(--text-muted)', marginTop: '0.75rem' }}>Onboard securely with a zero-knowledge identity and grant consent on your terms.</p>
             </div>
-
-            <div style={{
-              background: '#1a1f2e',
-              border: '1px solid #444a70',
-              borderRadius: '10px',
-              padding: '15px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}>
-              <div style={{ fontSize: '24px' }}>🛡️</div>
-              <div>
-                <h4 style={{ margin: '0 0 5px', color: '#7c3aed', fontSize: '16px' }}>Cryptographically Secure</h4>
-                <p style={{ margin: '0', color: '#94a3b8', fontSize: '14px' }}>Zero-knowledge proofs ensure mathematical privacy</p>
-              </div>
-            </div>
-
-            <div style={{
-              background: '#1a1f2e',
-              border: '1px solid #444a70',
-              borderRadius: '10px',
-              padding: '15px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}>
-              <div style={{ fontSize: '24px' }}>👤</div>
-              <div>
-                <h4 style={{ margin: '0 0 5px', color: '#7c3aed', fontSize: '16px' }}>Patient Controlled</h4>
-                <p style={{ margin: '0', color: '#94a3b8', fontSize: '14px' }}>You decide what data to share and when</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          borderRadius: '15px',
-          padding: '30px',
-          marginBottom: '20px',
-          ...(flash ? { animation: 'flash 1s ease-out' } : {})
-        }}>
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <div style={{
-              display: 'inline-block',
-              background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
-              color: 'white',
-              padding: '10px 20px',
-              borderRadius: '20px',
-              fontWeight: 'bold'
-            }}>
-              Your Privacy Score: 100%
-            </div>
-          </div>
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: '#1a1f2e',
-              borderRadius: '20px',
-              padding: '8px 16px',
-              fontSize: '14px',
-              color: '#94a3b8'
-            }}>
-              <span>🔒</span>
-              <span>Your data never leaves this device until you consent</span>
-            </div>
-          </div>
-          <div style={{ marginBottom: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ fontSize: '14px', color: '#94a3b8' }}>Step 1 of 3</span>
-              <span style={{ fontSize: '12px', color: '#94a3b8' }}>Identity Creation</span>
-            </div>
-            <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>
-              <div style={{ flex: 1, height: '4px', backgroundColor: '#7c3aed', borderRadius: '2px' }}></div>
-              <div style={{ flex: 1, height: '4px', backgroundColor: '#374151', borderRadius: '2px' }}></div>
-              <div style={{ flex: 1, height: '4px', backgroundColor: '#374151', borderRadius: '2px' }}></div>
-            </div>
-          </div>
-          <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Patient Onboarding</h2>
-          <form style={{ marginBottom: '20px' }}>
-            <input
-              type="text"
-              placeholder="e.g. Daksh Drall"
-              value={form.name}
-              onChange={e => setForm({ ...form, name: e.target.value })}
-              style={inputStyle}
-            />
-            <input
-              type="date"
-              placeholder="Date of Birth"
-              value={form.dob}
-              onChange={e => setForm({ ...form, dob: e.target.value })}
-              style={inputStyle}
-            />
-            <select
-              value={form.bloodType}
-              onChange={e => setForm({ ...form, bloodType: e.target.value })}
-              style={inputStyle}
-            >
-              <option value="">Select Blood Type</option>
-              <option>A+</option>
-              <option>A-</option>
-              <option>B+</option>
-              <option>B-</option>
-              <option>O+</option>
-              <option>O-</option>
-              <option>AB+</option>
-              <option>AB-</option>
-            </select>
-            <input
-              type="text"
-              placeholder="e.g. Penicillin, Peanuts"
-              value={form.allergies}
-              onChange={e => setForm({ ...form, allergies: e.target.value })}
-              style={inputStyle}
-            />
-            <label style={{ display: 'block', margin: '10px 0', fontSize: '16px' }}>
-              <input
-                type="checkbox"
-                checked={form.vaccination}
-                onChange={e => setForm({ ...form, vaccination: e.target.checked })}
-                style={{ marginRight: '10px' }}
-              />
-              Vaccination Status
-            </label>
-          </form>
-          <div style={{ textAlign: 'center' }}>
-            <button
-              onClick={handleGenerate}
-              disabled={loading || success || !form.name.trim() || !form.dob}
-              style={{
-                ...buttonStyle,
-                background: loading || !form.name.trim() || !form.dob ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-                opacity: loading || success || !form.name.trim() || !form.dob ? 0.6 : 1,
-                cursor: loading || success || !form.name.trim() || !form.dob ? 'not-allowed' : 'pointer'
-              }}
-            >
-              {loading ? 'Generating ZK Identity...' : success ? 'ZK Identity Generated' : 'Generate ZK Identity'}
+            <button onClick={() => navigate('/dashboard')} className='button-secondary' style={{ alignSelf: 'flex-start' }}>
+              View Dashboard
             </button>
-            {(!form.name.trim() || !form.dob) && !loading && !success && (
-              <div style={{
-                marginTop: '10px',
-                fontSize: '14px',
-                color: '#ef4444',
-                fontWeight: 'bold'
-              }}>
-                Please fill in Name and Date of Birth
+          </div>
+
+          <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.14)', marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '1rem' }}>
+              <h2 style={{ margin: '0 0 0.75rem 0' }}>Why ZK Identity?</h2>
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, margin: 0 }}>A patient identity built with zero-knowledge proofs means verified care without exposing your medical record.</p>
+            </div>
+            <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+              <div className='panel-card' style={{ borderColor: 'rgba(124, 58, 237, 0.2)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.75rem' }}>🔒</div>
+                <h4 style={{ margin: '0 0 0.5rem 0' }}>No Data Exposure</h4>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>Everything stays on your device until you explicitly consent.</p>
               </div>
-            )}
-            {loading && <div style={{ marginTop: '10px', fontSize: '14px' }}>Processing...</div>}
-            {success && (
-              <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                <div style={{
-                  display: 'inline-block',
-                  width: '50px',
-                  height: '50px',
-                  border: '3px solid #10b981',
-                  borderRadius: '50%',
-                  position: 'relative',
-                  marginBottom: '10px'
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '15px',
-                    width: '15px',
-                    height: '25px',
-                    border: 'solid #10b981',
-                    borderWidth: '0 3px 3px 0',
-                    transform: 'rotate(45deg)'
-                  }}></div>
-                </div>
-                <div style={{ color: '#10b981', fontSize: '18px', fontWeight: 'bold', marginBottom: '15px' }}>
-                  ZK Identity Generated Successfully!
-                </div>
-                <div style={{ marginBottom: '15px' }}>
-                  <div style={{
-                    background: '#1a1f2e',
-                    border: '1px solid #444a70',
-                    borderRadius: '8px',
-                    padding: '12px',
-                    fontFamily: 'monospace',
-                    fontSize: '14px',
-                    wordBreak: 'break-all',
-                    marginBottom: '10px'
-                  }}>
-                    {hash}
-                  </div>
-                  <button
-                    onClick={async () => {
-                      try {
-                        await navigator.clipboard.writeText(hash);
-                        // Show "Copied!" temporarily
-                        const btn = event?.target as HTMLButtonElement;
-                        if (btn) {
-                          const originalText = btn.textContent;
-                          btn.textContent = 'Copied!';
-                          btn.style.background = '#10b981';
-                          setTimeout(() => {
-                            btn.textContent = originalText;
-                            btn.style.background = '#7c3aed';
-                          }, 2000);
-                        }
-                      } catch (err) {
-                        console.error('Copy failed', err);
-                      }
-                    }}
-                    style={{
-                      background: '#7c3aed',
-                      border: 'none',
-                      color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                      fontSize: '14px'
-                    }}
-                  >
-                    Copy Hash
-                  </button>
-                </div>
+              <div className='panel-card' style={{ borderColor: 'rgba(6, 182, 212, 0.2)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.75rem' }}>🛡️</div>
+                <h4 style={{ margin: '0 0 0.5rem 0' }}>Cryptographically Secure</h4>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>Zero-knowledge proofs protect your identity while enabling authorized access.</p>
               </div>
-            )}
-            {success && (
-              <button onClick={handleProceed} style={{ ...buttonStyle, background: '#10b981', marginTop: '20px' }}>
-                Proceed to Consent
+              <div className='panel-card' style={{ borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+                <div style={{ fontSize: '1.3rem', marginBottom: '0.75rem' }}>👤</div>
+                <h4 style={{ margin: '0 0 0.5rem 0' }}>Patient Controlled</h4>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>You keep the power to approve or revoke hospital access at any time.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.12)' }}>
+            <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1.2rem', borderRadius: '999px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--accent)' }}></span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>Onboarding progress</span>
+              </div>
+              <h2 style={{ margin: '1.25rem 0 0.75rem 0' }}>Patient Onboarding</h2>
+              <p style={{ color: 'var(--text-muted)', margin: 0 }}>Create your secure identity commitment and move to consent in minutes.</p>
+            </div>
+
+            <form style={{ display: 'grid', gap: '1rem', marginBottom: '1.5rem' }}>
+              <input type='text' placeholder='e.g. Daksh Drall' value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} />
+              <input type='date' placeholder='Date of Birth' value={form.dob} onChange={e => setForm({ ...form, dob: e.target.value })} style={inputStyle} />
+              <select value={form.bloodType} onChange={e => setForm({ ...form, bloodType: e.target.value })} style={inputStyle}>
+                <option value=''>Select Blood Type</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>O+</option>
+                <option>O-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+              </select>
+              <input type='text' placeholder='e.g. Penicillin, Peanuts' value={form.allergies} onChange={e => setForm({ ...form, allergies: e.target.value })} style={inputStyle} />
+              <label style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}>
+                <input type='checkbox' checked={form.vaccination} onChange={e => setForm({ ...form, vaccination: e.target.checked })} />
+                Vaccination Status
+              </label>
+            </form>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+              <button onClick={handleGenerate} disabled={loading || success || !form.name.trim() || !form.dob} className='button-primary' style={{ width: '100%', opacity: loading || success || !form.name.trim() || !form.dob ? 0.65 : 1 }}>
+                {loading ? 'Generating ZK Identity…' : success ? 'ZK Identity Generated' : 'Generate ZK Identity'}
               </button>
+              {(!form.name.trim() || !form.dob) && !loading && !success && (
+                <div style={{ color: '#f87171', fontWeight: 700 }}>Please fill in Name and Date of Birth</div>
+              )}
+              {loading && <div style={{ color: 'var(--text-muted)' }}>Processing…</div>}
+            </div>
+
+            {success && (
+              <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+                <div style={{ display: 'inline-flex', width: '60px', height: '60px', border: '3px solid var(--accent-2)', borderRadius: '50%', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', animation: 'flash 1s ease-out' }}>
+                  <div style={{ width: '18px', height: '30px', border: 'solid var(--accent-2)', borderWidth: '0 4px 4px 0', transform: 'rotate(45deg)' }}></div>
+                </div>
+                <div style={{ color: 'var(--accent-2)', fontSize: '1.1rem', fontWeight: 700, marginBottom: '1rem' }}>ZK Identity Generated Successfully!</div>
+                <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '1rem', fontFamily: 'monospace', wordBreak: 'break-all', marginBottom: '1rem' }}>
+                  {hash}
+                </div>
+                <button type='button' onClick={async (event) => {
+                  try {
+                    await navigator.clipboard.writeText(hash);
+                    const btn = event.currentTarget as HTMLButtonElement;
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    btn.style.background = 'var(--accent)';
+                    setTimeout(() => {
+                      btn.textContent = originalText;
+                      btn.style.background = '';
+                    }, 2000);
+                  } catch (err) {
+                    console.error('Copy failed', err);
+                  }
+                }} className='button-secondary' style={{ width: '100%', maxWidth: '220px' }}>
+                  Copy Hash
+                </button>
+                <button onClick={handleProceed} className='button-primary' style={{ width: '100%', maxWidth: '220px', marginTop: '1rem' }}>
+                  Proceed to Consent
+                </button>
+              </div>
             )}
           </div>
         </div>
       </div>
-      </div>
-    </div>
-  </>
+    </>
   );
 }
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  padding: '12px',
-  margin: '10px 0',
-  border: 'none',
-  borderRadius: '5px',
+  padding: '14px',
+  margin: '8px 0',
+  border: '1px solid var(--border)',
+  borderRadius: '14px',
   fontSize: '16px',
+  background: 'var(--surface-3)',
+  color: 'var(--text)',
   boxSizing: 'border-box'
-};
-
-const buttonStyle: React.CSSProperties = {
-  padding: '12px 24px',
-  border: 'none',
-  borderRadius: '5px',
-  color: 'white',
-  cursor: 'pointer',
-  fontSize: '16px',
-  fontWeight: 'bold'
 };
 
 export default PatientWallet;

@@ -13,7 +13,6 @@ function Navbar() {
       setWalletAddress(savedAddress);
     }
 
-    // Add pulse animation for connected wallet indicator
     const style = document.createElement('style');
     style.textContent = `
       @keyframes pulse {
@@ -39,7 +38,6 @@ function Navbar() {
     const lace = (window as any).midnight?.mnLace;
 
     if (!lace) {
-      // Temporarily change button text
       const button = document.querySelector('button[onclick*="connectWallet"]') as HTMLButtonElement;
       if (button) {
         const originalText = button.textContent;
@@ -62,7 +60,6 @@ function Navbar() {
       }
     } catch (err) {
       console.error('Wallet connection error:', err);
-      // Temporarily change button text on error too
       const button = document.querySelector('button[onclick*="connectWallet"]') as HTMLButtonElement;
       if (button) {
         const originalText = button.textContent;
@@ -81,11 +78,12 @@ function Navbar() {
   const getLinkStyle = (path: string) => {
     const isActive = location.pathname === path;
     return {
-      color: isActive ? '#7c3aed' : '#e2e8f0',
+      color: isActive ? 'var(--accent)' : 'var(--text-muted)',
       fontWeight: isActive ? 700 : 400,
       textDecoration: 'none',
-      fontSize: '15px',
-      marginLeft: '2rem'
+      fontSize: '0.95rem',
+      marginLeft: '2rem',
+      transition: 'color 0.2s ease'
     };
   };
 
@@ -96,19 +94,19 @@ function Navbar() {
         top: 0,
         left: 0,
         right: 0,
-        height: '70px',
-        background: 'rgba(10, 15, 30, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(124, 58, 237, 0.3)',
+        height: '72px',
+        background: 'rgba(7, 12, 25, 0.92)',
+        backdropFilter: 'blur(18px)',
+        borderBottom: '1px solid rgba(124, 58, 237, 0.18)',
         zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: isMobile ? '0 1rem' : '0 24px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25)'
+        padding: isMobile ? '0 1rem' : '0 28px',
+        boxShadow: '0 12px 30px rgba(0, 0, 0, 0.28)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Link to='/' style={{ color: '#7c3aed', textDecoration: 'none', fontSize: '1.5rem', fontWeight: 700 }}>SolaceID</Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+          <Link to='/' style={{ color: 'var(--accent)', textDecoration: 'none', fontSize: '1.6rem', fontWeight: 800, letterSpacing: '0.08em' }}>SolaceID</Link>
           {!isMobile && (
             <>
               <Link to='/' style={getLinkStyle('/')}>Home</Link>
@@ -126,31 +124,34 @@ function Navbar() {
               cursor: 'pointer',
               display: 'flex',
               flexDirection: 'column',
-              gap: '4px'
+              gap: '5px',
+              padding: 0
             }}>
-              <div style={{ width: '20px', height: '2px', backgroundColor: 'white' }}></div>
-              <div style={{ width: '20px', height: '2px', backgroundColor: 'white' }}></div>
-              <div style={{ width: '20px', height: '2px', backgroundColor: 'white' }}></div>
+              <div style={{ width: '22px', height: '2px', backgroundColor: 'white' }}></div>
+              <div style={{ width: '22px', height: '2px', backgroundColor: 'white' }}></div>
+              <div style={{ width: '22px', height: '2px', backgroundColor: 'white' }}></div>
             </button>
           )}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           {localStorage.getItem('patientName') && (
-            <span style={{ color: '#94a3b8', fontSize: '14px' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
               Hi, {localStorage.getItem('patientName')}
             </span>
           )}
           <button onClick={connectWallet} style={{
-            background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-            color: walletAddress ? '#10b981' : '#fff',
-            border: walletAddress ? '1px solid #10b981' : 'none',
-            borderRadius: '6px',
-            padding: '8px 14px',
+            background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(135deg, var(--accent), var(--accent-2))',
+            color: walletAddress ? 'var(--accent-2)' : '#fff',
+            border: walletAddress ? '1px solid rgba(16, 185, 129, 0.7)' : 'none',
+            borderRadius: '999px',
+            padding: '10px 18px',
             cursor: 'pointer',
-            fontWeight: 'bold',
+            fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '10px',
+            minWidth: '160px',
+            justifyContent: 'center'
           }}>
             {walletAddress ? (
               <>
@@ -159,7 +160,7 @@ function Navbar() {
                   height: '8px',
                   borderRadius: '50%',
                   backgroundColor: '#10b981',
-                  animation: 'pulse 2s infinite'
+                  animation: 'pulse 1.8s infinite'
                 }}></span>
                 {walletAddress}
               </>
@@ -173,16 +174,16 @@ function Navbar() {
       {menuOpen && isMobile && (
         <div style={{
           position: 'fixed',
-          top: '70px',
+          top: '72px',
           left: 0,
           right: 0,
-          backgroundColor: '#0a0f1e',
-          borderBottom: '1px solid rgba(124, 58, 237, 0.3)',
+          backgroundColor: 'rgba(7, 12, 25, 0.96)',
+          borderBottom: '1px solid rgba(124, 58, 237, 0.18)',
           zIndex: 999,
           padding: '1rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px'
+          gap: '12px'
         }}>
           <Link to='/' style={getLinkStyle('/')} onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to='/patient-login' style={getLinkStyle('/patient-login')} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
@@ -192,7 +193,6 @@ function Navbar() {
           <Link to='/contracts' style={getLinkStyle('/contracts')} onClick={() => setMenuOpen(false)}>Contracts</Link>
         </div>
       )}
-
     </>
   );
 }
