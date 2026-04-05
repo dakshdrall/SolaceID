@@ -78,7 +78,6 @@ function Navbar() {
       fontWeight: isActive ? 700 : 400,
       textDecoration: 'none',
       fontSize: '0.95rem',
-      marginLeft: '2rem',
       transition: 'color 0.2s ease'
     };
   };
@@ -101,18 +100,39 @@ function Navbar() {
         padding: isMobile ? '0 1rem' : '0 28px',
         boxShadow: '0 12px 30px rgba(0, 0, 0, 0.28)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-          <Link to='/' style={{ color: 'var(--accent)', textDecoration: 'none', fontSize: '1.6rem', fontWeight: 800, letterSpacing: '0.08em' }}>SolaceID</Link>
-          {!isMobile && (
-            <>
-              <Link to='/' style={getLinkStyle('/')}>Home</Link>
-              <Link to='/patient-login' style={getLinkStyle('/patient-login')}>Patient Portal</Link>
-              <Link to='/dashboard' style={getLinkStyle('/dashboard')}>Dashboard</Link>
-              <Link to='/hospital-login' style={getLinkStyle('/hospital-login')}>Hospital</Link>
-              <Link to='/about' style={getLinkStyle('/about')}>About</Link>
-              <Link to='/contracts' style={getLinkStyle('/contracts')}>Contracts</Link>
-            </>
+        <div style={{ width: isMobile ? 'auto' : '220px', display: 'flex', alignItems: 'center' }}>
+          <Link
+            to='/'
+            style={{
+              color: '#7c3aed',
+              textDecoration: 'none',
+              fontFamily: 'Syne',
+              fontWeight: 700,
+              fontSize: '1.5rem'
+            }}
+          >
+            SolaceID
+          </Link>
+        </div>
+
+        {!isMobile && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2rem', flex: 1 }}>
+            <Link to='/' style={getLinkStyle('/')}>Home</Link>
+            <Link to='/patient-login' style={getLinkStyle('/patient-login')}>Patient Portal</Link>
+            <Link to='/dashboard' style={getLinkStyle('/dashboard')}>Dashboard</Link>
+            <Link to='/hospital-login' style={getLinkStyle('/hospital-login')}>Hospital</Link>
+            <Link to='/about' style={getLinkStyle('/about')}>About</Link>
+            <Link to='/contracts' style={getLinkStyle('/contracts')}>Contracts</Link>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          {localStorage.getItem('patientName') && (
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+              Hi, {localStorage.getItem('patientName')}
+            </span>
           )}
+
           {isMobile && (
             <button onClick={toggleMenu} style={{
               background: 'none',
@@ -128,18 +148,12 @@ function Navbar() {
               <div style={{ width: '22px', height: '2px', backgroundColor: 'white' }}></div>
             </button>
           )}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {localStorage.getItem('patientName') && (
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              Hi, {localStorage.getItem('patientName')}
-            </span>
-          )}
+
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
             <button onClick={connectWallet} disabled={isConnecting} style={{
-              background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(135deg, var(--accent), var(--accent-2))',
-              color: walletAddress ? 'var(--accent-2)' : '#fff',
-              border: walletAddress ? '1px solid rgba(16, 185, 129, 0.7)' : 'none',
+              background: 'linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)',
+              color: '#fff',
+              border: 'none',
               borderRadius: '999px',
               padding: '10px 18px',
               cursor: isConnecting ? 'not-allowed' : 'pointer',
@@ -157,7 +171,7 @@ function Navbar() {
                     width: '8px',
                     height: '8px',
                     borderRadius: '50%',
-                    backgroundColor: '#10b981',
+                    backgroundColor: '#e9d5ff',
                     animation: 'pulse 1.8s infinite'
                   }}></span>
                   {walletAddress}

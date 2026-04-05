@@ -1,18 +1,8 @@
 import { useState } from 'react';
+import Navbar from '../components/Navbar';
 
 function LandingPage() {
-  const [email, setEmail] = useState('');
   const [waitlistEmail, setWaitlistEmail] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  const handleWaitlist = () => {
-    if (email.trim()) {
-      localStorage.setItem('waitlistEmail', email);
-      setShowSuccess(true);
-      setEmail('');
-      setTimeout(() => setShowSuccess(false), 3000);
-    }
-  };
 
   const handleWaitlistSubmit = () => {
     if (waitlistEmail.trim()) {
@@ -30,40 +20,7 @@ function LandingPage() {
       minHeight: '100vh',
       lineHeight: 1.6
     }}>
-      {/* Navbar */}
-      <nav style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        background: '#0a0a0a',
-        borderBottom: '1px solid #222222',
-        zIndex: 1000,
-        padding: '20px 40px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <div style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'Syne, sans-serif' }}>
-          SolaceID
-        </div>
-        <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-          <a href="#how-it-works" style={{ color: '#ffffff', textDecoration: 'none', fontSize: '0.9rem' }}>How It Works</a>
-          <a href="#why-midnight" style={{ color: '#ffffff', textDecoration: 'none', fontSize: '0.9rem' }}>Why Midnight</a>
-          <a href="#about" style={{ color: '#ffffff', textDecoration: 'none', fontSize: '0.9rem' }}>About</a>
-        </div>
-        <button style={{
-          background: '#ffffff',
-          color: '#000000',
-          border: 'none',
-          padding: '12px 24px',
-          fontSize: '0.9rem',
-          fontWeight: 500,
-          cursor: 'pointer'
-        }}>
-          Join Waitlist
-        </button>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section style={{ padding: '120px 40px 80px', maxWidth: '1400px', margin: '0 auto' }}>
@@ -102,7 +59,7 @@ function LandingPage() {
               alignItems: 'center',
               gap: '8px'
             }}>
-              Join Waitlist →
+              Get Early Access →
             </button>
             <button style={{
               background: 'transparent',
@@ -302,35 +259,33 @@ function LandingPage() {
             your control.<br />
             Starting now.
           </h2>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '40px', maxWidth: '500px', margin: '0 auto 40px' }}>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{
-                flex: 1,
-                background: '#111111',
-                border: '1px solid #222222',
-                color: '#ffffff',
-                padding: '16px 20px',
-                fontSize: '1rem'
-              }}
-            />
-            <button
-              onClick={handleWaitlist}
-              style={{
-                background: '#ffffff',
-                color: '#000000',
-                border: 'none',
-                padding: '16px 32px',
-                fontSize: '1rem',
-                fontWeight: 500,
-                cursor: 'pointer'
-              }}
-            >
-              {showSuccess ? "You're on the list ✓" : 'Join Waitlist'}
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '40px', flexWrap: 'wrap' }}>
+            <a href='/patient-login' style={{
+              background: '#ffffff',
+              color: '#000000',
+              textDecoration: 'none',
+              border: 'none',
+              padding: '16px 32px',
+              fontSize: '1rem',
+              fontWeight: 500,
+              display: 'inline-flex',
+              alignItems: 'center'
+            }}>
+              Enter Patient Portal
+            </a>
+            <a href='/hospital-login' style={{
+              background: 'transparent',
+              color: '#ffffff',
+              textDecoration: 'none',
+              border: '1px solid #ffffff',
+              padding: '16px 32px',
+              fontSize: '1rem',
+              fontWeight: 500,
+              display: 'inline-flex',
+              alignItems: 'center'
+            }}>
+              Hospital Access
+            </a>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', fontSize: '0.8rem', color: '#666666' }}>
             <div>ZERO-KNOWLEDGE PROOFS</div>
