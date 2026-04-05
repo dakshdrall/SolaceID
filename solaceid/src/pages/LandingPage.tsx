@@ -11,6 +11,7 @@ function LandingPage() {
     breaches: 0
   });
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
     setExpandedFaq(expandedFaq === index ? null : index);
@@ -248,15 +249,45 @@ function LandingPage() {
 
       <section style={{ padding: '40px 1rem', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
-          <div style={cardStyle}>
+          <div
+            style={{
+              ...cardStyle,
+              transition: 'all 0.3s ease',
+              boxShadow: hoveredCard === 0 ? '0 0 30px rgba(124, 58, 237, 0.4)' : 'none',
+              transform: hoveredCard === 0 ? 'translateY(-5px)' : 'translateY(0)',
+              border: hoveredCard === 0 ? '1px solid rgba(124, 58, 237, 0.8)' : '1px solid #7c3aed'
+            }}
+            onMouseEnter={() => setHoveredCard(0)}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
             <h3>ZK-Patient ID</h3>
             <p>Create a zero-knowledge identity that proves your eligibility without revealing personal details.</p>
           </div>
-          <div style={cardStyle}>
+          <div
+            style={{
+              ...cardStyle,
+              transition: 'all 0.3s ease',
+              boxShadow: hoveredCard === 1 ? '0 0 30px rgba(6, 182, 212, 0.4)' : 'none',
+              transform: hoveredCard === 1 ? 'translateY(-5px)' : 'translateY(0)',
+              border: hoveredCard === 1 ? '1px solid rgba(6, 182, 212, 0.8)' : '1px solid #7c3aed'
+            }}
+            onMouseEnter={() => setHoveredCard(1)}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
             <h3>Confidential EHR Exchange</h3>
             <p>Share health records securely with hospitals, maintaining privacy through cryptographic proofs.</p>
           </div>
-          <div style={cardStyle}>
+          <div
+            style={{
+              ...cardStyle,
+              transition: 'all 0.3s ease',
+              boxShadow: hoveredCard === 2 ? '0 0 30px rgba(16, 185, 129, 0.4)' : 'none',
+              transform: hoveredCard === 2 ? 'translateY(-5px)' : 'translateY(0)',
+              border: hoveredCard === 2 ? '1px solid rgba(16, 185, 129, 0.8)' : '1px solid #7c3aed'
+            }}
+            onMouseEnter={() => setHoveredCard(2)}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
             <h3>Patient-Controlled Consent</h3>
             <p>Grant and revoke consent for data sharing on your terms, with full transparency and control.</p>
           </div>
@@ -339,6 +370,41 @@ function LandingPage() {
       <footer style={{ textAlign: 'center', padding: '20px 0', marginTop: '30px', color: '#aaa', fontSize: '14px' }}>
         © 2026 SolaceID · Built on Midnight Network · Privacy-first healthcare · <a href="/privacy" style={{ color: '#7c3aed', textDecoration: 'none' }}>Privacy Policy</a>
       </footer>
+
+      {/* Floating Try Demo Button */}
+      <button
+        onClick={() => navigate('/wallet')}
+        style={{
+          position: 'fixed',
+          bottom: '2rem',
+          right: '2rem',
+          background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+          border: 'none',
+          color: 'white',
+          padding: '12px 24px',
+          borderRadius: '50px',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          zIndex: 1000,
+          boxShadow: '0 4px 20px rgba(124, 58, 237, 0.3)',
+          transition: 'all 0.3s ease',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'scale(1.05)';
+          e.currentTarget.style.boxShadow = '0 6px 25px rgba(124, 58, 237, 0.4)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 20px rgba(124, 58, 237, 0.3)';
+        }}
+      >
+        Try Live Demo →
+      </button>
+
     </div>
   );
 }

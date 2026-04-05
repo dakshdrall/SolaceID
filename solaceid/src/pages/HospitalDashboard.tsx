@@ -328,6 +328,38 @@ Verified by Midnight Network
                 >
                   New Verification
                 </button>
+                <button
+                  onClick={async () => {
+                    const patientHash = localStorage.getItem('solaceIdHash') || 'N/A';
+                    const shortHash = patientHash.length > 16 ? `${patientHash.slice(0, 16)}...` : patientHash;
+                    const timestamp = new Date().toLocaleString();
+                    
+                    const shareText = `✅ Patient verified on Midnight Network
+Hash: ${shortHash}
+Timestamp: ${timestamp}
+Network: Midnight Preprod`;
+
+                    try {
+                      await navigator.clipboard.writeText(shareText);
+                      alert('Verification details copied to clipboard!');
+                    } catch (err) {
+                      console.error('Copy failed', err);
+                      alert('Failed to copy verification details');
+                    }
+                  }}
+                  style={{
+                    background: 'linear-gradient(to right, #10b981, #059669)',
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Share Verification
+                </button>
               </div>
             </div>
             <div style={{ marginBottom: '30px', textAlign: 'center' }}>

@@ -371,6 +371,43 @@ function PatientDashboard() {
           </div>
         </div>
 
+        <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '20px', marginBottom: '30px' }}>
+          <h2 style={{ margin: '0 0 20px' }}>Recent Activity</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            {/* ZK Identity Created */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '12px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#10b981', flexShrink: 0 }}></div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 'bold', color: '#e2e8f0', fontSize: '14px' }}>ZK Identity Created</div>
+                <div style={{ color: '#94a3b8', fontSize: '12px' }}>
+                  {createdDate ? new Date(createdDate).toLocaleString() : 'Recently'}
+                </div>
+              </div>
+            </div>
+
+            {/* Consent Activities */}
+            {consents.slice().reverse().map((consent, index) => (
+              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '12px', background: 'rgba(124, 58, 237, 0.1)', borderRadius: '8px', border: '1px solid rgba(124, 58, 237, 0.3)' }}>
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#7c3aed', flexShrink: 0 }}></div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 'bold', color: '#e2e8f0', fontSize: '14px' }}>
+                    Consent {consent.status === 'Active' ? 'Granted' : 'Revoked'} - {consent.hospital}
+                  </div>
+                  <div style={{ color: '#94a3b8', fontSize: '12px' }}>
+                    {new Date(consent.date).toLocaleString()} • Purpose: {consent.purpose}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {consents.length === 0 && (
+              <div style={{ textAlign: 'center', color: '#94a3b8', padding: '20px', fontStyle: 'italic' }}>
+                No activity yet. Create your first consent to get started!
+              </div>
+            )}
+          </div>
+        </div>
+
         {revokeDialog.show && (
           <div style={{
             position: 'fixed',
