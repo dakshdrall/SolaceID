@@ -40,30 +40,46 @@ function Navbar() {
     try {
       setIsConnecting(true);
       
-      // Try new Lace wallet (main extension, now supports Midnight)
-      const lace = (window as any).cardano?.lace;
-      
-      if (!lace) {
-        setWalletError('Please install Lace wallet from lacewallet.io and enable Midnight network');
+      const midnight = (window as any).midnight;
+      if (!midnight) {
+        setWalletError('Please install Lace wallet with Midnight enabled');
         setIsConnecting(false);
         return;
       }
       
-      const api = await lace.enable();
-      const address = await api.getChangeAddress();
-      const shortAddress = address.slice(0, 10) + '...' + address.slice(-6);
+      // Get the first available wallet API (UUID key)
+      const walletKey = Object.keys(midnight)[0];
+      const walletApi = midnight[walletKey];
+      
+      if (!walletApi) {
+        setWalletError('Midnight wallet API not found');
+        setIsConnecting(false);
+        return;
+      }
+      
+      // Enable the wallet
+      const enabledApi = await walletApi.enable();
+      
+      // Get wallet state
+      const state = await enabledApi.state();
+      const address = state?.address 
+        || state?.unshieldedAddress 
+        || state?.coinPublicKey
+        || walletKey.slice(0, 8);
+      
+      const shortAddress = typeof address === 'string' && address.length > 10
+        ? address.slice(0, 10) + '...' + address.slice(-6)
+        : 'Connected';
+
       setWalletAddress(shortAddress);
       localStorage.setItem('walletAddress', address);
       setIsConnecting(false);
       setWalletError('');
-      
+
     } catch (err: any) {
       setIsConnecting(false);
-      if (err?.message?.includes('user declined')) {
-        setWalletError('Connection declined. Please approve in Lace wallet.');
-      } else {
-        setWalletError('Could not connect. Make sure Lace wallet is installed and unlocked.');
-      }
+      console.error('Wallet error:', err);
+      setWalletError('Connection failed: ' + (err?.message || 'Please approve in wallet'));
     }
   };
 
