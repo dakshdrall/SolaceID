@@ -10,6 +10,34 @@ function LandingPage() {
     uptime: 0,
     breaches: 0
   });
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
+  };
+
+  const faqs = [
+    {
+      question: "Is my medical data stored on the blockchain?",
+      answer: "No, only cryptographic hashes and ZK proofs are stored on-chain. Your actual medical data remains private and is never exposed to the blockchain or third parties."
+    },
+    {
+      question: "What is a ZK-Patient ID?",
+      answer: "A ZK-Patient ID is a cryptographic commitment of your identity that allows hospitals to verify your authenticity without revealing any personal information about you."
+    },
+    {
+      question: "Can I revoke access?",
+      answer: "Yes, at any time from your dashboard. Consent revocation is immediate and cryptographically enforced - hospitals lose access to your data instantly."
+    },
+    {
+      question: "Which hospitals are supported?",
+      answer: "Any hospital that integrates the SolaceID API can participate. We're working with healthcare providers worldwide to adopt this privacy-preserving standard."
+    },
+    {
+      question: "Is this HIPAA compliant?",
+      answer: "Yes, by design - we follow the principle of minimum necessary disclosure. Only authorized healthcare providers can access the specific data fields you've consented to share."
+    }
+  ];
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -250,6 +278,64 @@ function LandingPage() {
           </div>
         </div>
       </section>
+
+      <section style={{ padding: '60px 1rem', backgroundColor: '#0f1624' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h2 style={{
+            textAlign: 'center',
+            fontSize: '2.5rem',
+            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '40px'
+          }}>
+            Frequently Asked Questions
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {faqs.map((faq, index) => (
+              <div key={index} style={{ background: '#1a1f2e', border: '1px solid #444a70', borderRadius: '10px', overflow: 'hidden' }}>
+                <button
+                  onClick={() => toggleFaq(index)}
+                  style={{
+                    width: '100%',
+                    padding: '20px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#e2e8f0',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  {faq.question}
+                  <span style={{
+                    transform: expandedFaq === index ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.3s ease',
+                    fontSize: '18px'
+                  }}>
+                    ▼
+                  </span>
+                </button>
+                {expandedFaq === index && (
+                  <div style={{
+                    padding: '0 20px 20px 20px',
+                    color: '#94a3b8',
+                    lineHeight: '1.6',
+                    borderTop: '1px solid #444a70'
+                  }}>
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <footer style={{ textAlign: 'center', padding: '20px 0', marginTop: '30px', color: '#aaa', fontSize: '14px' }}>
         © 2026 SolaceID · Built on Midnight Network · Privacy-first healthcare · <a href="/privacy" style={{ color: '#7c3aed', textDecoration: 'none' }}>Privacy Policy</a>
       </footer>

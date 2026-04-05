@@ -74,6 +74,67 @@ function PatientWallet() {
           </h1>
         </div>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        {/* Why ZK Identity Section */}
+        <div style={{ marginBottom: '30px' }}>
+          <h2 style={{
+            textAlign: 'center',
+            fontSize: '1.5rem',
+            color: '#7c3aed',
+            marginBottom: '20px'
+          }}>
+            Why ZK Identity?
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #444a70',
+              borderRadius: '10px',
+              padding: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px'
+            }}>
+              <div style={{ fontSize: '24px' }}>🔒</div>
+              <div>
+                <h4 style={{ margin: '0 0 5px', color: '#7c3aed', fontSize: '16px' }}>No Data Exposure</h4>
+                <p style={{ margin: '0', color: '#94a3b8', fontSize: '14px' }}>Your medical data never leaves your device</p>
+              </div>
+            </div>
+
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #444a70',
+              borderRadius: '10px',
+              padding: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px'
+            }}>
+              <div style={{ fontSize: '24px' }}>🛡️</div>
+              <div>
+                <h4 style={{ margin: '0 0 5px', color: '#7c3aed', fontSize: '16px' }}>Cryptographically Secure</h4>
+                <p style={{ margin: '0', color: '#94a3b8', fontSize: '14px' }}>Zero-knowledge proofs ensure mathematical privacy</p>
+              </div>
+            </div>
+
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #444a70',
+              borderRadius: '10px',
+              padding: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px'
+            }}>
+              <div style={{ fontSize: '24px' }}>👤</div>
+              <div>
+                <h4 style={{ margin: '0 0 5px', color: '#7c3aed', fontSize: '16px' }}>Patient Controlled</h4>
+                <p style={{ margin: '0', color: '#94a3b8', fontSize: '14px' }}>You decide what data to share and when</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div style={{
           background: 'rgba(255, 255, 255, 0.1)',
           backdropFilter: 'blur(10px)',

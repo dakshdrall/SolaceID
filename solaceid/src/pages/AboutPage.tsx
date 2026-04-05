@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 
 function AboutPage() {
   const navigate = useNavigate();
+  const [showWaitlist, setShowWaitlist] = useState(false);
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -197,6 +199,112 @@ function AboutPage() {
           </button>
         </div>
       </section>
+
+      {/* Team & Vision Section */}
+      <section style={{ padding: '60px 1rem', backgroundColor: '#0f1624' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: '2.5rem',
+            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '40px'
+          }}>
+            Team & Vision
+          </h2>
+
+          <div style={{ marginBottom: '40px' }}>
+            <h3 style={{ color: '#7c3aed', fontSize: '1.8rem', marginBottom: '15px' }}>Our Vision</h3>
+            <p style={{ fontSize: '18px', lineHeight: '1.6', color: '#e2e8f0', marginBottom: '30px' }}>
+              A world where patients control their health data
+            </p>
+
+            <h3 style={{ color: '#06b6d4', fontSize: '1.8rem', marginBottom: '15px' }}>Our Mission</h3>
+            <p style={{ fontSize: '18px', lineHeight: '1.6', color: '#e2e8f0', marginBottom: '40px' }}>
+              Build privacy-preserving infrastructure for healthcare on blockchain
+            </p>
+          </div>
+
+          {!showWaitlist ? (
+            <button
+              onClick={() => setShowWaitlist(true)}
+              style={{
+                background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                border: 'none',
+                color: 'white',
+                padding: '15px 30px',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Join the Waitlist
+            </button>
+          ) : (
+            <div style={{ background: '#1a1f2e', border: '1px solid #444a70', borderRadius: '10px', padding: '30px', maxWidth: '400px', margin: '0 auto' }}>
+              <h3 style={{ color: '#7c3aed', marginBottom: '20px' }}>Join Our Waitlist</h3>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #444a70',
+                  borderRadius: '6px',
+                  backgroundColor: '#0f1624',
+                  color: '#e2e8f0',
+                  fontSize: '16px',
+                  marginBottom: '15px'
+                }}
+              />
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  onClick={() => {
+                    if (email) {
+                      alert('Thank you for joining our waitlist!');
+                      setShowWaitlist(false);
+                      setEmail('');
+                    }
+                  }}
+                  style={{
+                    flex: 1,
+                    background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px',
+                    borderRadius: '6px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Subscribe
+                </button>
+                <button
+                  onClick={() => {
+                    setShowWaitlist(false);
+                    setEmail('');
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid #666',
+                    color: '#ccc',
+                    padding: '12px',
+                    borderRadius: '6px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
     </div>
   );
 }

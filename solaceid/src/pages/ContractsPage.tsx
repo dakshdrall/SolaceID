@@ -224,6 +224,118 @@ export circuits {
             </div>
           ))}
         </div>
+
+        {/* Contract Architecture Diagram */}
+        <div style={{ marginTop: '60px', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: '2rem',
+            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '40px'
+          }}>
+            Contract Architecture
+          </h2>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: '20px',
+            marginBottom: '20px'
+          }}>
+            {/* Patient */}
+            <div style={{
+              background: '#7c3aed',
+              color: 'white',
+              padding: '15px 20px',
+              borderRadius: '10px',
+              fontWeight: 'bold',
+              fontSize: '16px',
+              minWidth: '100px',
+              textAlign: 'center'
+            }}>
+              Patient
+            </div>
+
+            {/* Arrow */}
+            <div style={{ color: '#e2e8f0', fontSize: '24px', fontWeight: 'bold' }}>→</div>
+
+            {/* identity.compact */}
+            <div style={{
+              background: '#1a1f2e',
+              border: '2px solid #7c3aed',
+              color: '#7c3aed',
+              padding: '15px 20px',
+              borderRadius: '10px',
+              fontWeight: 'bold',
+              fontSize: '14px',
+              minWidth: '120px',
+              textAlign: 'center'
+            }}>
+              identity.compact
+            </div>
+
+            {/* Arrow */}
+            <div style={{ color: '#e2e8f0', fontSize: '24px', fontWeight: 'bold' }}>→</div>
+
+            {/* consent.compact */}
+            <div style={{
+              background: '#1a1f2e',
+              border: '2px solid #7c3aed',
+              color: '#7c3aed',
+              padding: '15px 20px',
+              borderRadius: '10px',
+              fontWeight: 'bold',
+              fontSize: '14px',
+              minWidth: '120px',
+              textAlign: 'center'
+            }}>
+              consent.compact
+            </div>
+
+            {/* Arrow */}
+            <div style={{ color: '#e2e8f0', fontSize: '24px', fontWeight: 'bold' }}>→</div>
+
+            {/* exchange.compact */}
+            <div style={{
+              background: '#1a1f2e',
+              border: '2px solid #7c3aed',
+              color: '#7c3aed',
+              padding: '15px 20px',
+              borderRadius: '10px',
+              fontWeight: 'bold',
+              fontSize: '14px',
+              minWidth: '120px',
+              textAlign: 'center'
+            }}>
+              exchange.compact
+            </div>
+
+            {/* Arrow */}
+            <div style={{ color: '#e2e8f0', fontSize: '24px', fontWeight: 'bold' }}>→</div>
+
+            {/* Hospital */}
+            <div style={{
+              background: '#06b6d4',
+              color: 'white',
+              padding: '15px 20px',
+              borderRadius: '10px',
+              fontWeight: 'bold',
+              fontSize: '16px',
+              minWidth: '100px',
+              textAlign: 'center'
+            }}>
+              Hospital
+            </div>
+          </div>
+
+          <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '20px' }}>
+            All contracts deployed on Midnight Network Preprod
+          </p>
+        </div>
+
       </div>
     </div>
   </>
