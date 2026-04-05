@@ -72,7 +72,6 @@ function LandingPage() {
         fontWeight: '500',
         zIndex: 1001
       }}>
-        🚀 SolaceID is in early development — built for Midnight Network Hackathon 2026
       </div>
 
       <Navbar />
