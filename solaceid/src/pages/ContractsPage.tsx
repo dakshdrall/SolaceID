@@ -143,7 +143,7 @@ export circuits {
       <div style={{ padding: '40px 1rem', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{
-            fontSize: '3rem',
+            fontSize: "2rem",
             background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

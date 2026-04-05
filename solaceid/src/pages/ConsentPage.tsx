@@ -57,7 +57,7 @@ function ConsentPage() {
       <div style={{ padding: '20px 1rem 40px', margin: '0 auto', maxWidth: '1000px', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{
-            fontSize: '2.5rem',
+            fontSize: "2rem",
             background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
