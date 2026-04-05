@@ -31,7 +31,7 @@ function PatientLogin() {
   return (
     <>
     <Navbar />
-    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: "120px" }}>
+    <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: "140px" }}>
       <div style={{ padding: '40px 1rem', maxWidth: '400px', margin: '0 auto' }}>
         <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '30px', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}>
           <div style={{ display: 'flex', marginBottom: '20px', borderBottom: '1px solid #444a70' }}>
