@@ -49,11 +49,17 @@ Circuits: recordExchange, verifyExchange, getReceipt
 ## Product Pages
 | Page | Route | Description |
 |------|-------|-------------|
-| Landing | / | Product overview and onboarding |
-| Patient Portal | /wallet | Generate ZK identity commitment |
-| Consent | /consent | Sign cryptographic consent on-chain |
-| Dashboard | /dashboard | Manage identities, consents, QR code |
-| Hospital Dashboard | /hospital | Verify patient records with ZK proof |
+| Landing Page | / | Product overview, features, and onboarding |
+| Patient Login | /patient-login | Patient authentication and email storage |
+| Patient Wallet | /wallet | Generate ZK identity commitment with health profile |
+| Consent Page | /consent | Sign cryptographic consent for hospital data access |
+| Patient Dashboard | /dashboard | Manage identities, consents, QR codes, and data export |
+| Hospital Login | /hospital-login | Hospital authentication and access |
+| Hospital Dashboard | /hospital | Verify patient records with ZK proofs and manage verifications |
+| About Page | /about | Technical explanation, team vision, and waitlist signup |
+| Smart Contracts | /contracts | Documentation of smart contracts with architecture diagrams |
+| Privacy Policy | /privacy | Complete privacy documentation and ZK focus |
+| 404 Not Found | * | Catch-all route for invalid URLs |
 
 ## Tech Stack
 - **Blockchain:** Midnight Network (Preprod)

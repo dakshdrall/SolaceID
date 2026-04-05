@@ -166,20 +166,101 @@ function LandingPage() {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
           <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.1), rgba(124,58,237,0.05))', border: '1px solid rgba(124,58,237,0.3)' }}>
             <div style={stepIcon}>1</div>
-            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '0 0 10px 0' }}>Generate ZK Identity</h3>
-            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Create your cryptographic identity commitment on Midnight Network.</p>
+            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '20px 0 15px 0' }}>Patient creates ZK Identity</h3>
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #374151',
+              borderRadius: '8px',
+              padding: '15px',
+              margin: '0 auto 15px',
+              width: '180px',
+              textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '8px' }}>Name</div>
+              <div style={{ background: '#374151', height: '8px', borderRadius: '4px', marginBottom: '12px' }}></div>
+              <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '8px' }}>Date of Birth</div>
+              <div style={{ background: '#374151', height: '8px', borderRadius: '4px', marginBottom: '12px' }}></div>
+              <button style={{
+                background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                border: 'none',
+                color: 'white',
+                padding: '6px 12px',
+                borderRadius: '4px',
+                fontSize: '11px',
+                width: '100%'
+              }}>
+                Generate ZK Identity
+              </button>
+            </div>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '12px' }}>Create your cryptographic identity commitment on Midnight Network.</p>
           </div>
           <div style={{ fontSize: '24px', color: '#7c3aed', display: 'flex', alignItems: 'center' }}>→</div>
           <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.1), rgba(6,182,212,0.05))', border: '1px solid rgba(6,182,212,0.3)' }}>
             <div style={stepIcon}>2</div>
-            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '0 0 10px 0' }}>Grant Consent</h3>
-            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Sign consent transactions for specific hospital data access.</p>
+            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '20px 0 15px 0' }}>Patient signs consent</h3>
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #374151',
+              borderRadius: '8px',
+              padding: '15px',
+              margin: '0 auto 15px',
+              width: '180px',
+              textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '8px' }}>Fields to Share:</div>
+              <label style={{ display: 'block', fontSize: '11px', marginBottom: '4px' }}>
+                <input type="checkbox" checked style={{ marginRight: '6px' }} /> Blood Type
+              </label>
+              <label style={{ display: 'block', fontSize: '11px', marginBottom: '4px' }}>
+                <input type="checkbox" checked style={{ marginRight: '6px' }} /> Vaccination
+              </label>
+              <label style={{ display: 'block', fontSize: '11px', marginBottom: '8px' }}>
+                <input type="checkbox" style={{ marginRight: '6px' }} /> Allergies
+              </label>
+              <button style={{
+                background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                border: 'none',
+                color: 'white',
+                padding: '6px 12px',
+                borderRadius: '4px',
+                fontSize: '11px',
+                width: '100%'
+              }}>
+                Sign Consent on Midnight
+              </button>
+            </div>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '12px' }}>Sign consent transactions for specific hospital data access.</p>
           </div>
           <div style={{ fontSize: '24px', color: '#7c3aed', display: 'flex', alignItems: 'center' }}>→</div>
           <div style={{ ...stepStyle, background: 'linear-gradient(145deg, rgba(124,58,237,0.1), rgba(16,185,129,0.05))', border: '1px solid rgba(16,185,129,0.3)' }}>
             <div style={stepIcon}>3</div>
-            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '0 0 10px 0' }}>Verify & Access</h3>
-            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Hospitals verify ZK proofs to access authorized health records.</p>
+            <h3 style={{ color: 'white', fontWeight: 'bold', margin: '20px 0 15px 0' }}>Hospital verifies with ZK proof</h3>
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #374151',
+              borderRadius: '8px',
+              padding: '15px',
+              margin: '0 auto 15px',
+              width: '180px',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #10b981, #34d399)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 10px',
+                fontSize: '18px'
+              }}>
+                ✓
+              </div>
+              <div style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold' }}>ZK Proof Verified</div>
+              <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '4px' }}>Patient Identity Confirmed</div>
+            </div>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '12px' }}>Hospitals verify ZK proofs to access authorized health records.</p>
           </div>
         </div>
       </section>

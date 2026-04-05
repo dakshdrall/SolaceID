@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
+  const location = useLocation();
   const [walletAddress, setWalletAddress] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress') || '';
@@ -78,6 +78,17 @@ function Navbar() {
     setMenuOpen(!menuOpen);
   };
 
+  const getLinkStyle = (path: string) => {
+    const isActive = location.pathname === path;
+    return {
+      color: isActive ? '#7c3aed' : '#e2e8f0',
+      fontWeight: isActive ? 700 : 400,
+      textDecoration: 'none',
+      fontSize: '15px',
+      marginLeft: '2rem'
+    };
+  };
+
   return (
     <>
       <nav style={{
@@ -100,12 +111,12 @@ function Navbar() {
           <Link to='/' style={{ color: '#7c3aed', textDecoration: 'none', fontSize: '1.5rem', fontWeight: 700 }}>SolaceID</Link>
           {!isMobile && (
             <>
-              <Link to='/' style={{ color: hoveredLink === 'home' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('home')} onMouseLeave={() => setHoveredLink(null)}>Home</Link>
-              <Link to='/patient-login' style={{ color: hoveredLink === 'wallet' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('wallet')} onMouseLeave={() => setHoveredLink(null)}>Patient Portal</Link>
-              <Link to='/dashboard' style={{ color: hoveredLink === 'dashboard' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('dashboard')} onMouseLeave={() => setHoveredLink(null)}>Dashboard</Link>
-              <Link to='/hospital-login' style={{ color: hoveredLink === 'hospital' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('hospital')} onMouseLeave={() => setHoveredLink(null)}>Hospital</Link>
-              <Link to='/about' style={{ color: hoveredLink === 'about' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('about')} onMouseLeave={() => setHoveredLink(null)}>About</Link>
-              <Link to='/contracts' style={{ color: hoveredLink === 'contracts' ? '#7c3aed' : '#e2e8f0', textDecoration: 'none', fontSize: '15px', marginLeft: '2rem' }} onMouseEnter={() => setHoveredLink('contracts')} onMouseLeave={() => setHoveredLink(null)}>Contracts</Link>
+              <Link to='/' style={getLinkStyle('/')}>Home</Link>
+              <Link to='/patient-login' style={getLinkStyle('/patient-login')}>Patient Portal</Link>
+              <Link to='/dashboard' style={getLinkStyle('/dashboard')}>Dashboard</Link>
+              <Link to='/hospital-login' style={getLinkStyle('/hospital-login')}>Hospital</Link>
+              <Link to='/about' style={getLinkStyle('/about')}>About</Link>
+              <Link to='/contracts' style={getLinkStyle('/contracts')}>Contracts</Link>
             </>
           )}
           {isMobile && (
@@ -173,12 +184,12 @@ function Navbar() {
           flexDirection: 'column',
           gap: '10px'
         }}>
-          <Link to='/' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to='/patient-login' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
-          <Link to='/dashboard' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Dashboard</Link>
-          <Link to='/hospital-login' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Hospital</Link>
-          <Link to='/about' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>About</Link>
-          <Link to='/contracts' style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '15px' }} onClick={() => setMenuOpen(false)}>Contracts</Link>
+          <Link to='/' style={getLinkStyle('/')} onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to='/patient-login' style={getLinkStyle('/patient-login')} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
+          <Link to='/dashboard' style={getLinkStyle('/dashboard')} onClick={() => setMenuOpen(false)}>Dashboard</Link>
+          <Link to='/hospital-login' style={getLinkStyle('/hospital-login')} onClick={() => setMenuOpen(false)}>Hospital</Link>
+          <Link to='/about' style={getLinkStyle('/about')} onClick={() => setMenuOpen(false)}>About</Link>
+          <Link to='/contracts' style={getLinkStyle('/contracts')} onClick={() => setMenuOpen(false)}>Contracts</Link>
         </div>
       )}
 
