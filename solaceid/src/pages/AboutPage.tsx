@@ -51,18 +51,13 @@ function AboutPage() {
       {/* The Privacy Problem Section */}
       <section style={{ padding: '60px 1rem', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px', color: '#ef4444' }}>The Privacy Problem</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap', maxWidth: '1000px', margin: '0 auto' }}>
-          <div style={{ background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1))', border: '1px solid #ef4444', borderRadius: '15px', padding: '30px', width: '280px', textAlign: 'center' }}>
-            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>1 in 3</div>
-            <div style={{ fontSize: '16px', color: '#ccc' }}>patients have had medical data breached</div>
-          </div>
-          <div style={{ background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1))', border: '1px solid #ef4444', borderRadius: '15px', padding: '30px', width: '280px', textAlign: 'center' }}>
-            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>$10.9M</div>
-            <div style={{ fontSize: '16px', color: '#ccc' }}>average cost of healthcare data breach</div>
-          </div>
-          <div style={{ background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1))', border: '1px solid #ef4444', borderRadius: '15px', padding: '30px', width: '280px', textAlign: 'center' }}>
-            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>0%</div>
-            <div style={{ fontSize: '16px', color: '#ccc' }}>of patients control their own EHR data today</div>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ fontSize: '18px', color: '#94a3b8', lineHeight: '1.6', marginBottom: '30px' }}>
+            Healthcare data is siloed, paper-based, and insecure. Patients have zero control over who sees their medical history. Every hospital visit requires sharing your entire medical record, and there's no cryptographic proof of consent.
+          </p>
+          <div style={{ background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1))', border: '1px solid #ef4444', borderRadius: '15px', padding: '30px', textAlign: 'center' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '15px' }}>No Cryptographic Consent</div>
+            <div style={{ fontSize: '16px', color: '#ccc' }}>Current systems rely on policy, not cryptography</div>
           </div>
         </div>
       </section>

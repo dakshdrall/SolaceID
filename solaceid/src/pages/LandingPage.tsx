@@ -87,6 +87,23 @@ function LandingPage() {
 
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
+      {/* Early Access Banner */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: 'linear-gradient(to right, #7c3aed, #a855f7)',
+        color: 'white',
+        textAlign: 'center',
+        padding: '8px 1rem',
+        fontSize: '14px',
+        fontWeight: '500',
+        zIndex: 1001
+      }}>
+        🚀 SolaceID is in early development — built for Midnight Network Hackathon 2026
+      </div>
+
       <Navbar />
 
       <div style={{
@@ -143,19 +160,19 @@ function LandingPage() {
       <section style={{ padding: '40px 1rem', textAlign: 'center', background: 'rgba(124, 58, 237, 0.05)', borderTop: '1px solid rgba(124, 58, 237, 0.2)', borderBottom: '1px solid rgba(124, 58, 237, 0.2)' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }}>{stats.patients.toLocaleString()}</div>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }}>Built for Scale</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Patients Protected</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }}>{stats.hospitals}</div>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }}>Hospital Ready</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Hospitals Connected</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }}>{stats.uptime}.9%</div>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }}>ZK Verified</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Uptime</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>{stats.breaches}</div>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>Zero Raw Data On-Chain</div>
             <div style={{ color: '#94a3b8', fontSize: '16px' }}>Data Breaches</div>
           </div>
         </div>
@@ -261,86 +278,6 @@ function LandingPage() {
               <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '4px' }}>Patient Identity Confirmed</div>
             </div>
             <p style={{ color: '#94a3b8', margin: '0', fontSize: '12px' }}>Hospitals verify ZK proofs to access authorized health records.</p>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: '60px 1rem', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>Trusted by Leading Hospitals</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}>
-          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
-            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>Apollo Hospitals</h3>
-            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
-          </div>
-          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
-            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>AIIMS Delhi</h3>
-            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
-          </div>
-          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
-            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>Fortis Healthcare</h3>
-            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
-          </div>
-          <div style={{ backgroundColor: '#1a1f2e', padding: '30px', borderRadius: '12px', border: '1px solid #7c3aed', width: '220px', textAlign: 'center' }}>
-            <h3 style={{ color: 'white', margin: '0 0 10px 0', fontSize: '18px' }}>Max Hospital</h3>
-            <p style={{ color: '#ccc', margin: '0', fontSize: '14px' }}>Partner Hospital</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section style={{ padding: '60px 1rem', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '2.5rem', marginBottom: '40px', color: '#7c3aed' }}>What Our Users Say</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap', maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{
-            background: 'linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05))',
-            border: '1px solid rgba(124, 58, 237, 0.3)',
-            borderRadius: '15px',
-            padding: '30px',
-            width: '350px',
-            textAlign: 'center'
-          }}>
-            <div style={{ fontSize: '16px', color: '#e2e8f0', marginBottom: '20px', fontStyle: 'italic' }}>
-              "SolaceID gave me control over my medical records for the first time. No more worrying about data breaches or unauthorized access."
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-              {'⭐'.repeat(5)}
-            </div>
-            <div style={{ fontWeight: 'bold', color: '#7c3aed' }}>Priya S.</div>
-            <div style={{ color: '#94a3b8', fontSize: '14px' }}>Patient</div>
-          </div>
-          <div style={{
-            background: 'linear-gradient(145deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05))',
-            border: '1px solid rgba(6, 182, 212, 0.3)',
-            borderRadius: '15px',
-            padding: '30px',
-            width: '350px',
-            textAlign: 'center'
-          }}>
-            <div style={{ fontSize: '16px', color: '#e2e8f0', marginBottom: '20px', fontStyle: 'italic' }}>
-              "Reduced our data compliance costs by 60% while maintaining full auditability. The ZK verification is incredible."
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-              {'⭐'.repeat(5)}
-            </div>
-            <div style={{ fontWeight: 'bold', color: '#06b6d4' }}>Dr. Mehta</div>
-            <div style={{ color: '#94a3b8', fontSize: '14px' }}>Apollo Hospitals</div>
-          </div>
-          <div style={{
-            background: 'linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05))',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            borderRadius: '15px',
-            padding: '30px',
-            width: '350px',
-            textAlign: 'center'
-          }}>
-            <div style={{ fontSize: '16px', color: '#e2e8f0', marginBottom: '20px', fontStyle: 'italic' }}>
-              "The ZK proof verification is seamless and gives us confidence in patient data authenticity without compromising privacy."
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-              {'⭐'.repeat(5)}
-            </div>
-            <div style={{ fontWeight: 'bold', color: '#10b981' }}>IT Director</div>
-            <div style={{ color: '#94a3b8', fontSize: '14px' }}>AIIMS Delhi</div>
           </div>
         </div>
       </section>

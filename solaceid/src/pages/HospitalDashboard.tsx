@@ -83,6 +83,9 @@ function HospitalDashboard() {
           }}>
             Hospital Dashboard
           </h1>
+          <p style={{ color: '#94a3b8', fontSize: '16px', margin: '10px 0 0 0' }}>
+            Demo Environment — Midnight Network Preprod
+          </p>
         </div>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ marginBottom: '30px' }}>
@@ -134,81 +137,20 @@ function HospitalDashboard() {
         </div>
         <div style={{ marginBottom: '30px' }}>
           <h3>Recent Verifications</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ padding: '15px', border: '1px solid #7c3aed', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.05)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', color: '#ccc' }}>Patient: 0x1a2b3c...def456</span>
-                <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
-              </div>
-              <div style={{ fontSize: '14px', color: '#ddd' }}>
-                <p style={{ margin: '4px 0' }}><strong>Hospital:</strong> Apollo Hospital, Delhi</p>
-                <p style={{ margin: '4px 0' }}><strong>Purpose:</strong> Emergency Admission</p>
-                <p style={{ margin: '4px 0' }}><strong>Timestamp:</strong> 2 hours ago</p>
-              </div>
-            </div>
-            <div style={{ padding: '15px', border: '1px solid #7c3aed', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.05)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', color: '#ccc' }}>Patient: 0x4d5e6f...abc789</span>
-                <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
-              </div>
-              <div style={{ fontSize: '14px', color: '#ddd' }}>
-                <p style={{ margin: '4px 0' }}><strong>Hospital:</strong> Apollo Hospital, Delhi</p>
-                <p style={{ margin: '4px 0' }}><strong>Purpose:</strong> Routine Transfer</p>
-                <p style={{ margin: '4px 0' }}><strong>Timestamp:</strong> 1 day ago</p>
-              </div>
-            </div>
-            <div style={{ padding: '15px', border: '1px solid #7c3aed', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.05)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', color: '#ccc' }}>Patient: 0x7h8i9j...xyz012</span>
-                <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
-              </div>
-              <div style={{ fontSize: '14px', color: '#ddd' }}>
-                <p style={{ margin: '4px 0' }}><strong>Hospital:</strong> Apollo Hospital, Delhi</p>
-                <p style={{ margin: '4px 0' }}><strong>Purpose:</strong> Specialist Referral</p>
-                <p style={{ margin: '4px 0' }}><strong>Timestamp:</strong> 3 days ago</p>
-              </div>
-            </div>
+          <div style={{ padding: '40px', border: '1px solid #374151', borderRadius: '8px', background: 'rgba(55, 65, 81, 0.1)', textAlign: 'center' }}>
+            <div style={{ fontSize: '48px', marginBottom: '20px', color: '#6b7280' }}>📋</div>
+            <h4 style={{ color: '#e2e8f0', margin: '0 0 10px 0', fontSize: '18px' }}>No verifications yet</h4>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Verified patient records will appear here</p>
+            <p style={{ color: '#6b7280', margin: '10px 0 0 0', fontSize: '12px', fontStyle: 'italic' }}>This is a demo environment</p>
           </div>
         </div>
         <div style={{ marginBottom: '30px' }}>
           <h3>Patient History</h3>
-          <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: '#1a1f2e' }}>
-                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Date</th>
-                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Patient Hash</th>
-                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Fields Shared</th>
-                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style={{ background: 'rgba(124, 58, 237, 0.05)' }}>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>2026-04-01</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0', fontFamily: 'monospace' }}>0x7a8b9c...def123</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>Blood Type, Allergies</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171' }}>
-                    <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
-                  </td>
-                </tr>
-                <tr style={{ background: '#11182e' }}>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>2026-03-28</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0', fontFamily: 'monospace' }}>0x4d5e6f...abc789</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>Vaccination Status</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171' }}>
-                    <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
-                  </td>
-                </tr>
-                <tr style={{ background: 'rgba(124, 58, 237, 0.05)' }}>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>2026-03-25</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0', fontFamily: 'monospace' }}>0x1a2b3c...def456</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>Blood Type, Vaccination</td>
-                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171' }}>
-                    <span style={{ backgroundColor: '#ef4444', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Revoked</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div style={{ padding: '40px', border: '1px solid #374151', borderRadius: '8px', background: 'rgba(55, 65, 81, 0.1)', textAlign: 'center' }}>
+            <div style={{ fontSize: '48px', marginBottom: '20px', color: '#6b7280' }}>📊</div>
+            <h4 style={{ color: '#e2e8f0', margin: '0 0 10px 0', fontSize: '18px' }}>No patient history yet</h4>
+            <p style={{ color: '#94a3b8', margin: '0', fontSize: '14px' }}>Patient verification records will appear here</p>
+            <p style={{ color: '#6b7280', margin: '10px 0 0 0', fontSize: '12px', fontStyle: 'italic' }}>This is a demo environment</p>
           </div>
         </div>
         {verified && (
