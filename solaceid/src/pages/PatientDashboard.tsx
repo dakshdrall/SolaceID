@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import QRCode from 'react-qr-code';
+
 
 function PatientDashboard() {
   const navigate = useNavigate();
@@ -155,7 +155,7 @@ function PatientDashboard() {
           </div>
           <button onClick={copyHash} style={{ backgroundColor: '#7c3aed', color: 'white', border: 'none', padding: '10px 14px', borderRadius: '8px', cursor: 'pointer' }}>Copy</button>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '1rem' }}>
-            <QRCode value={patientHash || 'no-id'} size={160} bgColor="#0d1526" fgColor="#7c3aed" />
+            <div style={{width:'160px',height:'160px',background:'#1a0a2e',border:'2px solid #7c3aed',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'11px',color:'#7c3aed',textAlign:'center',padding:'8px',wordBreak:'break-all',fontFamily:'monospace'}}>{patientHash.slice(0,20)}...{patientHash.slice(-8)}</div>
             <p style={{ color: '#94a3b8', fontSize: '13px', marginTop: '8px' }}>Scan to verify identity</p>
             <button
               onClick={() => {
