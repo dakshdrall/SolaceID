@@ -210,7 +210,7 @@ function HospitalDashboard() {
               }}>
                 Verified by Midnight Network
               </div>
-              <div style={{ marginTop: '20px' }}>
+              <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
                 <button
                   onClick={() => {
                     const patientHash = localStorage.getItem('solaceIdHash') || 'N/A';
@@ -251,6 +251,41 @@ Verified by Midnight Network
                   }}
                 >
                   Download Report
+                </button>
+                <button
+                  onClick={() => window.print()}
+                  style={{
+                    background: 'linear-gradient(to right, #06b6d4, #7c3aed)',
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Print Report
+                </button>
+                <button
+                  onClick={() => {
+                    setPatientHash('');
+                    setVerified(false);
+                    setPatientData(null);
+                    setAuditTrail(null);
+                  }}
+                  style={{
+                    background: 'linear-gradient(to right, #374151, #6b7280)',
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  New Verification
                 </button>
               </div>
             </div>

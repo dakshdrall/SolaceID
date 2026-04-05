@@ -98,6 +98,39 @@ function ConsentPage() {
         </div>
         <div style={{ marginBottom: '20px' }}>
           <h3>Fields to Share</h3>
+          <div style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
+            <button
+              onClick={() => setConsent({ ...consent, bloodType: true, vaccination: true, allergies: true })}
+              style={{
+                background: '#7c3aed',
+                border: 'none',
+                color: 'white',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Select All
+            </button>
+            <button
+              onClick={() => setConsent({ ...consent, bloodType: false, vaccination: false, allergies: false })}
+              style={{
+                background: '#374151',
+                border: 'none',
+                color: 'white',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Deselect All
+            </button>
+          </div>
+          <div style={{ marginBottom: '15px', fontSize: '14px', color: '#94a3b8' }}>
+            You are sharing {Object.values(consent).filter(v => typeof v === 'boolean' && v).length} of 3 fields
+          </div>
           <label style={{ display: 'block', margin: '10px 0' }}>
             <input
               type="checkbox"

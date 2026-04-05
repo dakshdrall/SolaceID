@@ -204,8 +204,53 @@ function PatientWallet() {
                     transform: 'rotate(45deg)'
                   }}></div>
                 </div>
-                <div style={{ color: '#10b981', fontSize: '18px', fontWeight: 'bold' }}>
-                  Success! Commitment Hash: {hash}
+                <div style={{ color: '#10b981', fontSize: '18px', fontWeight: 'bold', marginBottom: '15px' }}>
+                  ZK Identity Generated Successfully!
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  <div style={{
+                    background: '#1a1f2e',
+                    border: '1px solid #444a70',
+                    borderRadius: '8px',
+                    padding: '12px',
+                    fontFamily: 'monospace',
+                    fontSize: '14px',
+                    wordBreak: 'break-all',
+                    marginBottom: '10px'
+                  }}>
+                    {hash}
+                  </div>
+                  <button
+                    onClick={async () => {
+                      try {
+                        await navigator.clipboard.writeText(hash);
+                        // Show "Copied!" temporarily
+                        const btn = event?.target as HTMLButtonElement;
+                        if (btn) {
+                          const originalText = btn.textContent;
+                          btn.textContent = 'Copied!';
+                          btn.style.background = '#10b981';
+                          setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.style.background = '#7c3aed';
+                          }, 2000);
+                        }
+                      } catch (err) {
+                        console.error('Copy failed', err);
+                      }
+                    }}
+                    style={{
+                      background: '#7c3aed',
+                      border: 'none',
+                      color: 'white',
+                      padding: '8px 16px',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '14px'
+                    }}
+                  >
+                    Copy Hash
+                  </button>
                 </div>
               </div>
             )}

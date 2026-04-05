@@ -11,6 +11,7 @@ function PatientDashboard() {
 
   const [consents, setConsents] = useState<any[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [revokeDialog, setRevokeDialog] = useState<{show: boolean, index: number | null}>({show: false, index: null});
 
   useEffect(() => {
     const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
@@ -41,12 +42,23 @@ function PatientDashboard() {
   };
 
   const revokeConsent = (index: number) => {
-    const updated = [...consents];
-    if (updated[index]) {
-      updated[index] = { ...updated[index], status: 'Revoked' };
-      setConsents(updated);
-      localStorage.setItem('consents', JSON.stringify(updated));
+    setRevokeDialog({show: true, index});
+  };
+
+  const confirmRevoke = () => {
+    if (revokeDialog.index !== null) {
+      const updated = [...consents];
+      if (updated[revokeDialog.index]) {
+        updated[revokeDialog.index] = { ...updated[revokeDialog.index], status: 'Revoked' };
+        setConsents(updated);
+        localStorage.setItem('consents', JSON.stringify(updated));
+      }
     }
+    setRevokeDialog({show: false, index: null});
+  };
+
+  const cancelRevoke = () => {
+    setRevokeDialog({show: false, index: null});
   };
 
   return (
@@ -212,6 +224,66 @@ function PatientDashboard() {
             </button>
           </div>
         </div>
+
+        {revokeDialog.show && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              background: '#11182e',
+              border: '1px solid #444a70',
+              borderRadius: '10px',
+              padding: '30px',
+              maxWidth: '400px',
+              width: '90%',
+              textAlign: 'center'
+            }}>
+              <h3 style={{ margin: '0 0 20px', color: '#ef4444' }}>Revoke Consent</h3>
+              <p style={{ margin: '0 0 30px', color: '#ccc' }}>
+                Are you sure you want to revoke this consent? This action cannot be undone and the hospital will lose access to your data.
+              </p>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                <button
+                  onClick={cancelRevoke}
+                  style={{
+                    background: '#374151',
+                    border: 'none',
+                    color: 'white',
+                    padding: '10px 20px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '16px'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmRevoke}
+                  style={{
+                    background: '#ef4444',
+                    border: 'none',
+                    color: 'white',
+                    padding: '10px 20px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '16px'
+                  }}
+                >
+                  Revoke Consent
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   </>
