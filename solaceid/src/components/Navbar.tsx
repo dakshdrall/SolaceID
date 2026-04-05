@@ -123,33 +123,40 @@ function Navbar() {
             </button>
           )}
         </div>
-        <button onClick={connectWallet} style={{
-          background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-          color: walletAddress ? '#10b981' : '#fff',
-          border: walletAddress ? '1px solid #10b981' : 'none',
-          borderRadius: '6px',
-          padding: '8px 14px',
-          cursor: 'pointer',
-          fontWeight: 'bold',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px'
-        }}>
-          {walletAddress ? (
-            <>
-              <span style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                backgroundColor: '#10b981',
-                animation: 'pulse 2s infinite'
-              }}></span>
-              {walletAddress}
-            </>
-          ) : (
-            'Connect Wallet'
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          {localStorage.getItem('patientName') && (
+            <span style={{ color: '#94a3b8', fontSize: '14px' }}>
+              Hi, {localStorage.getItem('patientName')}
+            </span>
           )}
-        </button>
+          <button onClick={connectWallet} style={{
+            background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
+            color: walletAddress ? '#10b981' : '#fff',
+            border: walletAddress ? '1px solid #10b981' : 'none',
+            borderRadius: '6px',
+            padding: '8px 14px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            {walletAddress ? (
+              <>
+                <span style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: '#10b981',
+                  animation: 'pulse 2s infinite'
+                }}></span>
+                {walletAddress}
+              </>
+            ) : (
+              'Connect Wallet'
+            )}
+          </button>
+        </div>
       </nav>
 
       {menuOpen && isMobile && (

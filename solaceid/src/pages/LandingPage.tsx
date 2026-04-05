@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ function LandingPage() {
   });
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
   const toggleFaq = (index: number) => {
     setExpandedFaq(expandedFaq === index ? null : index);
@@ -367,9 +370,94 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer style={{ textAlign: 'center', padding: '20px 0', marginTop: '30px', color: '#aaa', fontSize: '14px' }}>
-        © 2026 SolaceID · Built on Midnight Network · Privacy-first healthcare · <a href="/privacy" style={{ color: '#7c3aed', textDecoration: 'none' }}>Privacy Policy</a>
-      </footer>
+      {/* Newsletter Signup Section */}
+      <section style={{ padding: '60px 1rem', backgroundColor: '#0f1624' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: '2.5rem',
+            background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '15px'
+          }}>
+            Stay updated on SolaceID
+          </h2>
+          <p style={{
+            fontSize: '18px',
+            color: '#94a3b8',
+            marginBottom: '30px',
+            lineHeight: '1.6'
+          }}>
+            Be the first to know when we launch
+          </p>
+
+          {!newsletterSubmitted ? (
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #444a70',
+              borderRadius: '10px',
+              padding: '30px',
+              maxWidth: '400px',
+              margin: '0 auto'
+            }}>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #444a70',
+                  borderRadius: '6px',
+                  backgroundColor: '#0f1624',
+                  color: '#e2e8f0',
+                  fontSize: '16px',
+                  marginBottom: '15px',
+                  boxSizing: 'border-box'
+                }}
+              />
+              <button
+                onClick={() => {
+                  if (newsletterEmail) {
+                    setNewsletterSubmitted(true);
+                    setNewsletterEmail('');
+                  }
+                }}
+                style={{
+                  background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                  border: 'none',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  width: '100%'
+                }}
+              >
+                Join Waitlist
+              </button>
+            </div>
+          ) : (
+            <div style={{
+              background: '#1a1f2e',
+              border: '1px solid #10b981',
+              borderRadius: '10px',
+              padding: '30px',
+              maxWidth: '400px',
+              margin: '0 auto',
+              color: '#10b981',
+              fontSize: '18px',
+              fontWeight: 'bold'
+            }}>
+              You're on the list! ✓
+            </div>
+          )}
+        </div>
+      </section>
+
+      <Footer />
 
       {/* Floating Try Demo Button */}
       <button

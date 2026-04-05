@@ -20,6 +20,7 @@ function PatientLogin() {
       if (activeTab === 'signup') {
         localStorage.setItem('patientName', form.name);
       }
+      localStorage.setItem('patientEmail', form.email);
       navigate('/wallet');
     }, 2000);
   };
