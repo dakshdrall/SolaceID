@@ -79,9 +79,9 @@ function LandingPage() {
     };
 
     // Start animations with slight delays
-    setTimeout(() => animateNumber(2847, 'patients'), 200);
-    setTimeout(() => animateNumber(143, 'hospitals'), 400);
-    setTimeout(() => animateNumber(99, 'uptime'), 600);
+    setTimeout(() => animateNumber(0, 'patients'), 200);
+    setTimeout(() => animateNumber(0, 'hospitals'), 400);
+    setTimeout(() => animateNumber(0, 'uptime'), 600);
     setTimeout(() => animateNumber(0, 'breaches'), 800);
   }, []);
 
@@ -135,8 +135,8 @@ function LandingPage() {
           </button>
         </div>
         <div style={{ marginTop: '28px' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#11182e', borderRadius: '999px', padding: '8px 14px', fontSize: '0.9rem', color: '#fff' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '999px', background: '#7c3aed', animation: 'pulse 2s infinite' }} />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#11182e', borderRadius: 'ZK9px', padding: '8px 14px', fontSize: '0.9rem', color: '#fff' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: 'ZK9px', background: '#7c3aed', animation: 'pulse 2s infinite' }} />
             Built on Midnight Network
           </span>
         </div>
@@ -161,19 +161,19 @@ function LandingPage() {
         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }}>Built for Scale</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Patients Protected</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Scale</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }}>Hospital Ready</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Hospitals Connected</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Ready</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }}>ZK Verified</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Uptime</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Verified</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '200px' }}>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>Zero Raw Data On-Chain</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Data Breaches</div>
+            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Zero Raw Data On-Chain</div>
           </div>
         </div>
       </section>
@@ -265,7 +265,7 @@ function LandingPage() {
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #10b981, #34d399)',
+                background: 'linear-gradient(135deg, #10b981, #34d3ZK)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -559,7 +559,7 @@ const stepStyle: React.CSSProperties = {
 const stepIcon: React.CSSProperties = {
   width: '70px',
   height: '70px',
-  borderRadius: '999px',
+  borderRadius: 'ZK9px',
   background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
   color: 'white',
   display: 'flex',
