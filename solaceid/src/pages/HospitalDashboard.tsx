@@ -111,6 +111,13 @@ function HospitalDashboard() {
             onClick={() => {
               const demoHash = localStorage.getItem('solaceIdHash') || '';
               setPatientHash(demoHash);
+              // Auto-trigger verification after 500ms delay
+              setTimeout(() => {
+                const verifyButton = document.querySelector('button[children*="Verify on Midnight"]') as HTMLButtonElement;
+                if (verifyButton && !verifyButton.disabled) {
+                  verifyButton.click();
+                }
+              }, 500);
             }}
             style={{
               ...buttonStyle,

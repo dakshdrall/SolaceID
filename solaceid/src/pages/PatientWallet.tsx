@@ -233,15 +233,26 @@ function PatientWallet() {
           <div style={{ textAlign: 'center' }}>
             <button
               onClick={handleGenerate}
-              disabled={loading || success}
+              disabled={loading || success || !form.name.trim() || !form.dob}
               style={{
                 ...buttonStyle,
-                background: loading ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
-                opacity: loading || success ? 0.6 : 1
+                background: loading || !form.name.trim() || !form.dob ? '#666' : 'linear-gradient(to right, #7c3aed, #06b6d4)',
+                opacity: loading || success || !form.name.trim() || !form.dob ? 0.6 : 1,
+                cursor: loading || success || !form.name.trim() || !form.dob ? 'not-allowed' : 'pointer'
               }}
             >
               {loading ? 'Generating ZK Identity...' : success ? 'ZK Identity Generated' : 'Generate ZK Identity'}
             </button>
+            {(!form.name.trim() || !form.dob) && !loading && !success && (
+              <div style={{
+                marginTop: '10px',
+                fontSize: '14px',
+                color: '#ef4444',
+                fontWeight: 'bold'
+              }}>
+                Please fill in Name and Date of Birth
+              </div>
+            )}
             {loading && <div style={{ marginTop: '10px', fontSize: '14px' }}>Processing...</div>}
             {success && (
               <div style={{ marginTop: '20px', textAlign: 'center' }}>

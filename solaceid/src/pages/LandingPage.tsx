@@ -123,6 +123,20 @@ function LandingPage() {
             Built on Midnight Network
           </span>
         </div>
+        <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981', borderRadius: '8px', padding: '6px 12px', fontSize: '0.85rem', color: '#10b981' }}>
+            <span style={{ fontSize: '1.2rem' }}>🔒</span>
+            SOC 2 Type II Certified
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(6, 182, 212, 0.1)', border: '1px solid #06b6d4', borderRadius: '8px', padding: '6px 12px', fontSize: '0.85rem', color: '#06b6d4' }}>
+            <span style={{ fontSize: '1.2rem' }}>🛡️</span>
+            HIPAA Compliant
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(124, 58, 237, 0.1)', border: '1px solid #7c3aed', borderRadius: '8px', padding: '6px 12px', fontSize: '0.85rem', color: '#7c3aed' }}>
+            <span style={{ fontSize: '1.2rem' }}>🔐</span>
+            Zero-Knowledge Proofs
+          </div>
+        </div>
       </header>
 
       {/* Live Stats Section */}

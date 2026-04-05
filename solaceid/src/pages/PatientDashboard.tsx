@@ -68,6 +68,28 @@ function PatientDashboard() {
     }
   };
 
+  const downloadMyData = () => {
+    const patientData = {
+      patientName: localStorage.getItem('patientName') || '',
+      solaceIdHash: localStorage.getItem('solaceIdHash') || '',
+      ehrData: JSON.parse(localStorage.getItem('ehrData') || '[]'),
+      consents: JSON.parse(localStorage.getItem('consents') || '[]'),
+      patientEmail: localStorage.getItem('patientEmail') || '',
+      createdDate: localStorage.getItem('patientCreated') || ''
+    };
+
+    const dataStr = JSON.stringify(patientData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'solaceid-patient-data.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const revokeConsent = (index: number) => {
     setRevokeDialog({show: true, index});
   };
@@ -94,30 +116,43 @@ function PatientDashboard() {
     <div style={{ background: '#0a0f1e', minHeight: "100vh", color: "#fff", paddingTop: "140px" }}>
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Welcome back, {patientName}</h1>
-        <button
-          onClick={() => {
-            localStorage.removeItem('solaceIdHash');
-            localStorage.removeItem('patientName');
-            localStorage.removeItem('ehrData');
-            localStorage.removeItem('consents');
-            localStorage.removeItem('consentTx');
-            navigate('/patient-login');
-          }}
-          style={{
-            position: 'absolute',
-            top: '120px',
-            right: '1rem',
-            background: 'transparent',
-            border: '1px solid #dc2626',
-            color: '#dc2626',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '14px'
-          }}
-        >
-          Sign Out
-        </button>
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+          <button
+            onClick={downloadMyData}
+            style={{
+              background: 'linear-gradient(to right, #7c3aed, #06b6d4)',
+              border: 'none',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Download My Data
+          </button>
+          <button
+            onClick={() => {
+              localStorage.removeItem('solaceIdHash');
+              localStorage.removeItem('patientName');
+              localStorage.removeItem('ehrData');
+              localStorage.removeItem('consents');
+              localStorage.removeItem('consentTx');
+              navigate('/patient-login');
+            }}
+            style={{
+              background: 'transparent',
+              border: '1px solid #dc2626',
+              color: '#dc2626',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
 
         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', flexWrap: 'wrap', gap: '20px', marginBottom: '20px' }}>
           <div style={{ background: '#11182e', border: '1px solid #444a70', boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)', borderRadius: '10px', padding: '20px', flex: '1 1 220px' }}>
