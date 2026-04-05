@@ -1,159 +1,348 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { useState } from 'react';
 
 function LandingPage() {
-  const navigate = useNavigate();
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [email, setEmail] = useState('');
 
-  const toggleFaq = (index: number) => {
-    setExpandedFaq(expandedFaq === index ? null : index);
+  const handleWaitlist = () => {
+    // Handle waitlist signup
+    console.log('Waitlist signup:', email);
   };
 
-  const faqs = [
-    {
-      question: 'Is my medical data stored on the blockchain?',
-      answer: 'No. Only cryptographic commitments and zero-knowledge proofs are stored on-chain. Your medical records remain private and never leave your device without your consent.'
-    },
-    {
-      question: 'What is a ZK-Patient ID?',
-      answer: 'A ZK-Patient ID is a privacy-preserving identity commitment that proves your eligibility without revealing your personal data.'
-    },
-    {
-      question: 'Can I revoke access?',
-      answer: 'Yes. Consent can be revoked instantly from your dashboard, and access is cryptographically blocked for hospitals immediately.'
-    },
-    {
-      question: 'Which hospitals are supported?',
-      answer: 'Any hospital that integrates the SolaceID API can verify your identity while preserving privacy.'
-    },
-    {
-      question: 'Is this HIPAA compliant?',
-      answer: 'Yes. SolaceID is designed around minimum necessary disclosure and patient control, which supports HIPAA privacy principles.'
-    }
-  ];
-
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
   return (
-    <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)', paddingTop: '100px', paddingBottom: '80px' }}>
-      <Navbar />
+    <div style={{
+      background: '#0a0a0a',
+      color: '#ffffff',
+      fontFamily: 'Inter, sans-serif',
+      minHeight: '100vh',
+      lineHeight: 1.6
+    }}>
+      {/* Navbar */}
+      <nav style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: '#0a0a0a',
+        borderBottom: '1px solid #222222',
+        zIndex: 1000,
+        padding: '20px 40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'Syne, sans-serif' }}>
+          SolaceID
+        </div>
+        <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
+          <a href="#how-it-works" style={{ color: '#ffffff', textDecoration: 'none', fontSize: '0.9rem' }}>How It Works</a>
+          <a href="#why-midnight" style={{ color: '#ffffff', textDecoration: 'none', fontSize: '0.9rem' }}>Why Midnight</a>
+          <a href="#about" style={{ color: '#ffffff', textDecoration: 'none', fontSize: '0.9rem' }}>About</a>
+        </div>
+        <button style={{
+          background: '#ffffff',
+          color: '#000000',
+          border: 'none',
+          padding: '12px 24px',
+          fontSize: '0.9rem',
+          fontWeight: 500,
+          cursor: 'pointer'
+        }}>
+          Join Waitlist
+        </button>
+      </nav>
 
-      <main style={{ padding: '0 1rem' }}>
-        <section className='hero-banner' style={{ marginTop: '80px' }}>
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto' }}>
-            <p className='badge-pill' style={{ marginBottom: '1.5rem', letterSpacing: '0.12em' }}>MEDICAL-GRADE PRIVACY • CYBERPUNK-GRADE SECURITY</p>
-            <h1 className='hero-title'>Medical identity, locked with zero-knowledge cryptography.</h1>
-            <p className='hero-copy'>SolaceID gives patients control over their health records, while hospitals verify identity and consent without ever seeing private data.</p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', marginTop: '2rem' }}>
-              <button onClick={() => navigate('/patient-login')} className='button-primary' style={{ minWidth: '220px', padding: '16px 32px', background: 'linear-gradient(135deg, var(--accent), var(--accent-2))' }}>
-                Patient Onboarding
-              </button>
-              <button onClick={() => navigate('/hospital-login')} className='button-secondary' style={{ minWidth: '220px' }}>
-                Hospital Login
-              </button>
+      {/* Hero Section */}
+      <section style={{ padding: '120px 40px 80px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '60px' }}>
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#666666',
+            letterSpacing: '0.15em',
+            marginBottom: '40px'
+          }}>
+            &gt; ZK-HEALTH · MIDNIGHT NETWORK · EST. 2026
+          </div>
+          <h1 style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(3.5rem, 8vw, 7rem)',
+            fontWeight: 800,
+            lineHeight: 1.0,
+            margin: 0,
+            marginBottom: '40px'
+          }}>
+            Patient identity,<br />
+            locked with zero-<br />
+            knowledge proofs.
+          </h1>
+          <div style={{ display: 'flex', gap: '20px', marginBottom: '60px' }}>
+            <button style={{
+              background: '#ffffff',
+              color: '#000000',
+              border: 'none',
+              padding: '16px 32px',
+              fontSize: '1rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              Join Waitlist →
+            </button>
+            <button style={{
+              background: 'transparent',
+              color: '#ffffff',
+              border: '1px solid #ffffff',
+              padding: '16px 32px',
+              fontSize: '1rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              How It Works →
+            </button>
+          </div>
+          <div style={{ display: 'flex', gap: '40px', fontSize: '0.9rem', color: '#666666' }}>
+            <div>ZK Proofs | ZERO KNOWLEDGE</div>
+            <div>Smart Contracts | CODE-ENFORCED</div>
+            <div>Midnight Network | PRIVACY L1</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Market Section */}
+      <section style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '60px' }}>
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#666666',
+            letterSpacing: '0.15em',
+            marginBottom: '20px'
+          }}>
+            &gt; MARKET CONTEXT
+          </div>
+          <h2 style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+            fontWeight: 800,
+            lineHeight: 1.1,
+            margin: 0
+          }}>
+            The problem is real.<br />
+            The solution is now.
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+          <div style={{ background: '#111111', padding: '30px', border: '1px solid #222222' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '10px' }}>$10.9M</div>
+            <div style={{ fontSize: '0.9rem', color: '#666666' }}>Average healthcare breach cost</div>
+          </div>
+          <div style={{ background: '#111111', padding: '30px', border: '1px solid #222222' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '10px' }}>1 in 3</div>
+            <div style={{ fontSize: '0.9rem', color: '#666666' }}>Patients have had data exposed</div>
+          </div>
+          <div style={{ background: '#111111', padding: '30px', border: '1px solid #222222' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '10px' }}>0</div>
+            <div style={{ fontSize: '0.9rem', color: '#666666' }}>Cryptographic consent systems today</div>
+          </div>
+          <div style={{ background: '#111111', padding: '30px', border: '1px solid #222222' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '10px' }}>100%</div>
+            <div style={{ fontSize: '0.9rem', color: '#666666' }}>Patient control with SolaceID</div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '60px' }}>
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#666666',
+            letterSpacing: '0.15em',
+            marginBottom: '20px'
+          }}>
+            &gt; PATIENT JOURNEY
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'start' }}>
+            <h2 style={{
+              fontFamily: 'Syne, sans-serif',
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              fontWeight: 800,
+              lineHeight: 1.1,
+              margin: 0
+            }}>
+              How SolaceID<br />
+              protects you.
+            </h2>
+            <p style={{ fontSize: '1.1rem', color: '#cccccc', lineHeight: 1.7 }}>
+              Patients generate zero-knowledge proofs of their identity and medical data locally.
+              Hospitals verify eligibility without accessing sensitive information. Every interaction
+              is cryptographically enforced through smart contracts on Midnight Network.
+            </p>
+          </div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+          <div style={{ background: '#111111', padding: '40px', border: '1px solid #222222' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#666666', marginBottom: '20px' }}>01 CREATE</div>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px' }}>Generate ZK Identity</h3>
+            <p style={{ color: '#cccccc', lineHeight: 1.6 }}>
+              Create a cryptographic commitment to your identity that proves eligibility
+              without revealing personal details.
+            </p>
+          </div>
+          <div style={{ background: '#111111', padding: '40px', border: '1px solid #222222' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#666666', marginBottom: '20px' }}>02 CONSENT</div>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px' }}>Authorise Access</h3>
+            <p style={{ color: '#cccccc', lineHeight: 1.6 }}>
+              Grant specific permissions to hospitals for defined time periods,
+              enforced by smart contracts.
+            </p>
+          </div>
+          <div style={{ background: '#111111', padding: '40px', border: '1px solid #222222' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#666666', marginBottom: '20px' }}>03 VERIFY</div>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px' }}>Hospital Confirms</h3>
+            <p style={{ color: '#cccccc', lineHeight: 1.6 }}>
+              Healthcare providers verify your identity and consent through
+              zero-knowledge proofs, maintaining complete privacy.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Midnight Section */}
+      <section id="why-midnight" style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '60px' }}>
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#666666',
+            letterSpacing: '0.15em',
+            marginBottom: '20px'
+          }}>
+            &gt; PROTOCOL
+          </div>
+          <h2 style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+            fontWeight: 800,
+            lineHeight: 1.1,
+            margin: 0,
+            marginBottom: '60px'
+          }}>
+            Why only Midnight<br />
+            can do this.
+          </h2>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '40px', alignItems: 'start' }}>
+            <div style={{ borderLeft: '2px solid #ffffff', paddingLeft: '30px' }}>
+              <h3 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '15px' }}>Privacy-First Architecture</h3>
+              <p style={{ color: '#cccccc', lineHeight: 1.7 }}>
+                Midnight Network's zero-knowledge virtual machine enables computation
+                on encrypted data, ensuring patient privacy while maintaining
+                cryptographic verifiability.
+              </p>
+            </div>
+            <div></div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px', alignItems: 'start' }}>
+            <div></div>
+            <div style={{ borderLeft: '2px solid #ffffff', paddingLeft: '30px' }}>
+              <h3 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '15px' }}>Regulatory Compliance</h3>
+              <p style={{ color: '#cccccc', lineHeight: 1.7 }}>
+                Built for healthcare compliance with minimum necessary disclosure
+                and patient control at the protocol level, supporting HIPAA
+                and GDPR requirements.
+              </p>
             </div>
           </div>
-          <div style={{ display: 'grid', gap: '1rem', marginTop: '3rem', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
-            <div className='feature-card' style={{ borderColor: 'rgba(124, 58, 237, 0.2)' }}>
-              <h3 style={{ marginTop: 0 }}>Zero Data On-Chain</h3>
-              <p className='step-detail'>Your medical facts stay private. Only hashed proofs live on Midnight Network.</p>
-            </div>
-            <div className='feature-card' style={{ borderColor: 'rgba(6, 182, 212, 0.2)' }}>
-              <h3 style={{ marginTop: 0 }}>Patient-Centric Consent</h3>
-              <p className='step-detail'>You choose what gets shared, for how long, and with which hospital.</p>
-            </div>
-            <div className='feature-card' style={{ borderColor: 'rgba(16, 185, 129, 0.2)' }}>
-              <h3 style={{ marginTop: 0 }}>ZK Verified Access</h3>
-              <p className='step-detail'>Hospitals verify identity without learning your underlying health information.</p>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        <section style={{ padding: '6rem 0 0', textAlign: 'center' }}>
-          <h2 className='section-heading'>How it works</h2>
-          <p className='section-subtitle'>A patient generates a ZK identity, signs consent, and a verified hospital receives access only to the data fields you've approved.</p>
-          <div className='grid-3' style={{ marginTop: '2.5rem', gap: '1.5rem' }}>
-            <div className='flow-step'>
-              <div className='flow-step-number'>1</div>
-              <h3>Create ZK identity</h3>
-              <p className='step-detail'>Patients generate a private cryptographic commitment locally, then publish a proof to Midnight Network.</p>
-            </div>
-            <div className='flow-step'>
-              <div className='flow-step-number'>2</div>
-              <h3>Grant consent</h3>
-              <p className='step-detail'>Select which fields hospitals can access and sign the transaction with your identity.</p>
-            </div>
-            <div className='flow-step'>
-              <div className='flow-step-number'>3</div>
-              <h3>Verify with ZK proof</h3>
-              <p className='step-detail'>Hospitals verify your consent and identity cryptographically—without reading your full health record.</p>
-            </div>
+      {/* CTA Section */}
+      <section style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#666666',
+            letterSpacing: '0.15em',
+            marginBottom: '20px'
+          }}>
+            &gt; EARLY ACCESS
           </div>
-        </section>
-
-        <section style={{ padding: '4rem 0' }}>
-          <div className='surface-card' style={{ padding: '2.5rem', maxWidth: '980px', margin: '0 auto', borderColor: 'rgba(124, 58, 237, 0.12)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
-              <h2 className='section-heading'>Secure patient identity for hospital workflows</h2>
-              <p className='section-subtitle'>SolaceID is built for trusted care teams that need verification without risking patient privacy.</p>
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <span className='badge-pill status-chip primary'>100% Private</span>
-                <span className='badge-pill status-chip info'>ZK-Proof Verified</span>
-                <span className='badge-pill status-chip success'>Patient Controlled</span>
-              </div>
-            </div>
+          <h2 style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+            fontWeight: 800,
+            lineHeight: 1.1,
+            margin: 0,
+            marginBottom: '40px'
+          }}>
+            Your health data,<br />
+            your control.<br />
+            Starting now.
+          </h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '40px', maxWidth: '500px', margin: '0 auto 40px' }}>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                flex: 1,
+                background: '#111111',
+                border: '1px solid #222222',
+                color: '#ffffff',
+                padding: '16px 20px',
+                fontSize: '1rem'
+              }}
+            />
+            <button
+              onClick={handleWaitlist}
+              style={{
+                background: '#ffffff',
+                color: '#000000',
+                border: 'none',
+                padding: '16px 32px',
+                fontSize: '1rem',
+                fontWeight: 500,
+                cursor: 'pointer'
+              }}
+            >
+              Join Waitlist
+            </button>
           </div>
-        </section>
-
-        <section style={{ padding: '4rem 0', textAlign: 'center' }}>
-          <h2 className='section-heading'>Frequently Asked Questions</h2>
-          <div style={{ display: 'grid', gap: '1rem', maxWidth: '860px', margin: '0 auto' }}>
-            {faqs.map((faq, index) => (
-              <div key={index} className='surface-card' style={{ padding: '1.4rem' }}>
-                <button onClick={() => toggleFaq(index)} style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  background: 'transparent',
-                  border: 'none',
-                  color: 'var(--text)',
-                  fontSize: '1rem',
-                  cursor: 'pointer',
-                  padding: 0
-                }}>
-                  <span>{faq.question}</span>
-                  <span style={{ color: 'var(--accent)' }}>{expandedFaq === index ? '−' : '+'}</span>
-                </button>
-                {expandedFaq === index && (
-                  <p style={{ marginTop: '1rem', color: 'var(--text-muted)', lineHeight: 1.8 }}>{faq.answer}</p>
-                )}
-              </div>
-            ))}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', fontSize: '0.8rem', color: '#666666' }}>
+            <div>ZERO-KNOWLEDGE PROOFS</div>
+            <div>PATIENT CONTROLLED</div>
+            <div>CODE-ENFORCED</div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <Footer />
+      {/* Footer */}
+      <footer style={{
+        borderTop: '1px solid #222222',
+        padding: '40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div style={{ color: '#666666', fontSize: '0.9rem' }}>
+          © 2026 SolaceID. All rights reserved.
+        </div>
+        <div style={{ display: 'flex', gap: '30px' }}>
+          <a href="#" style={{ color: '#666666', textDecoration: 'none', fontSize: '0.9rem' }}>Privacy</a>
+          <a href="#" style={{ color: '#666666', textDecoration: 'none', fontSize: '0.9rem' }}>Terms</a>
+          <a href="#" style={{ color: '#666666', textDecoration: 'none', fontSize: '0.9rem' }}>Contact</a>
+        </div>
+      </footer>
     </div>
   );
 }
