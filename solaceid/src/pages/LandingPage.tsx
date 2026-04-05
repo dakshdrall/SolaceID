@@ -5,12 +5,6 @@ import Footer from '../components/Footer';
 
 function LandingPage() {
   const navigate = useNavigate();
-  const [stats, setStats] = useState({
-    patients: 0,
-    hospitals: 0,
-    uptime: 0,
-    breaches: 0
-  });
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -62,29 +56,6 @@ function LandingPage() {
     };
   }, []);
 
-  useEffect(() => {
-    const animateNumber = (target: number, key: keyof typeof stats, duration: number = 2000) => {
-      const start = 0;
-      const increment = target / (duration / 50);
-      let current = start;
-
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          current = target;
-          clearInterval(timer);
-        }
-        setStats(prev => ({ ...prev, [key]: Math.floor(current) }));
-      }, 50);
-    };
-
-    // Start animations with slight delays
-    setTimeout(() => animateNumber(0, 'patients'), 200);
-    setTimeout(() => animateNumber(0, 'hospitals'), 400);
-    setTimeout(() => animateNumber(0, 'uptime'), 600);
-    setTimeout(() => animateNumber(0, 'breaches'), 800);
-  }, []);
-
   return (
     <div style={{ backgroundColor: '#0a0f1e', minHeight: '100vh', color: 'white', fontFamily: 'Arial, sans-serif', paddingTop: '100px', scrollPaddingTop: '3rem' }}>
       {/* Early Access Banner */}
@@ -134,6 +105,12 @@ function LandingPage() {
             Hospital Login
           </button>
         </div>
+        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <span style={{ border: '1px solid #1e2d4a', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', color: '#94a3b8' }}>🔒 Zero Data On-Chain</span>
+          <span style={{ border: '1px solid #1e2d4a', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', color: '#94a3b8' }}>⚡ ZK Proof Verified</span>
+          <span style={{ border: '1px solid #1e2d4a', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', color: '#94a3b8' }}>🏥 Hospital Ready</span>
+          <span style={{ border: '1px solid #1e2d4a', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', color: '#94a3b8' }}>🌐 Built for Scale</span>
+        </div>
         <div style={{ marginTop: '28px' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#11182e', borderRadius: 'ZK9px', padding: '8px 14px', fontSize: '0.9rem', color: '#fff' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: 'ZK9px', background: '#7c3aed', animation: 'pulse 2s infinite' }} />
@@ -155,28 +132,6 @@ function LandingPage() {
           </div>
         </div>
       </header>
-
-      {/* Live Stats Section */}
-      <section style={{ padding: '40px 1rem', textAlign: 'center', background: 'rgba(124, 58, 237, 0.05)', borderTop: '1px solid rgba(124, 58, 237, 0.2)', borderBottom: '1px solid rgba(124, 58, 237, 0.2)' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
-          <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#7c3aed', marginBottom: '10px' }}>Built for Scale</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Scale</div>
-          </div>
-          <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '10px' }}>Hospital Ready</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Ready</div>
-          </div>
-          <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#10b981', marginBottom: '10px' }}>ZK Verified</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Verified</div>
-          </div>
-          <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>Zero Raw Data On-Chain</div>
-            <div style={{ color: '#94a3b8', fontSize: '16px' }}>Zero Raw Data On-Chain</div>
-          </div>
-        </div>
-      </section>
 
       <section style={{ padding: '80px 1rem 20px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '2.5rem', marginBottom: '40px' }}>How It Works</h2>
