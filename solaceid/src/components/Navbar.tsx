@@ -4,13 +4,15 @@ import { Link, useLocation } from 'react-router-dom';
 function Navbar() {
   const location = useLocation();
   const [walletAddress, setWalletAddress] = useState('');
+  const [walletError, setWalletError] = useState('');
+  const [isConnecting, setIsConnecting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress') || '';
     if (savedAddress) {
-      setWalletAddress(savedAddress);
+      setWalletAddress(`${savedAddress.slice(0, 10)}...${savedAddress.slice(-6)}`);
     }
 
     const style = document.createElement('style');
@@ -35,38 +37,32 @@ function Navbar() {
   }, []);
 
   const connectWallet = async () => {
-    const lace = (window as any).midnight?.mnLace;
-
-    if (!lace) {
-      const button = document.querySelector('button[onclick*="connectWallet"]') as HTMLButtonElement;
-      if (button) {
-        const originalText = button.textContent;
-        button.textContent = 'Wallet Not Found';
-        setTimeout(() => {
-          button.textContent = originalText;
-        }, 3000);
-      }
-      return;
-    }
-
     try {
-      const enabled = await lace.enable();
-      const state = await enabled.state();
-      const address = state?.address || state?.unshieldedAddress || state?.coinPublicKey || '';
-      if (address) {
-        const short = typeof address === 'string' ? `${address.slice(0, 10)}...${address.slice(-6)}` : 'Connected';
-        setWalletAddress(short);
-        localStorage.setItem('walletAddress', short);
+      setIsConnecting(true);
+      
+      // Try new Lace wallet (main extension, now supports Midnight)
+      const lace = (window as any).cardano?.lace;
+      
+      if (!lace) {
+        setWalletError('Please install Lace wallet from lacewallet.io and enable Midnight network');
+        setIsConnecting(false);
+        return;
       }
-    } catch (err) {
-      console.error('Wallet connection error:', err);
-      const button = document.querySelector('button[onclick*="connectWallet"]') as HTMLButtonElement;
-      if (button) {
-        const originalText = button.textContent;
-        button.textContent = 'Wallet Not Found';
-        setTimeout(() => {
-          button.textContent = originalText;
-        }, 3000);
+      
+      const api = await lace.enable();
+      const address = await api.getChangeAddress();
+      const shortAddress = address.slice(0, 10) + '...' + address.slice(-6);
+      setWalletAddress(shortAddress);
+      localStorage.setItem('walletAddress', address);
+      setIsConnecting(false);
+      setWalletError('');
+      
+    } catch (err: any) {
+      setIsConnecting(false);
+      if (err?.message?.includes('user declined')) {
+        setWalletError('Connection declined. Please approve in Lace wallet.');
+      } else {
+        setWalletError('Could not connect. Make sure Lace wallet is installed and unlocked.');
       }
     }
   };
@@ -139,35 +135,43 @@ function Navbar() {
               Hi, {localStorage.getItem('patientName')}
             </span>
           )}
-          <button onClick={connectWallet} style={{
-            background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(135deg, var(--accent), var(--accent-2))',
-            color: walletAddress ? 'var(--accent-2)' : '#fff',
-            border: walletAddress ? '1px solid rgba(16, 185, 129, 0.7)' : 'none',
-            borderRadius: '999px',
-            padding: '10px 18px',
-            cursor: 'pointer',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            minWidth: '160px',
-            justifyContent: 'center'
-          }}>
-            {walletAddress ? (
-              <>
-                <span style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: '#10b981',
-                  animation: 'pulse 1.8s infinite'
-                }}></span>
-                {walletAddress}
-              </>
-            ) : (
-              'Connect Wallet'
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+            <button onClick={connectWallet} disabled={isConnecting} style={{
+              background: walletAddress ? 'rgba(16, 185, 129, 0.1)' : 'linear-gradient(135deg, var(--accent), var(--accent-2))',
+              color: walletAddress ? 'var(--accent-2)' : '#fff',
+              border: walletAddress ? '1px solid rgba(16, 185, 129, 0.7)' : 'none',
+              borderRadius: '999px',
+              padding: '10px 18px',
+              cursor: isConnecting ? 'not-allowed' : 'pointer',
+              opacity: isConnecting ? 0.8 : 1,
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              minWidth: '160px',
+              justifyContent: 'center'
+            }}>
+              {walletAddress ? (
+                <>
+                  <span style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    backgroundColor: '#10b981',
+                    animation: 'pulse 1.8s infinite'
+                  }}></span>
+                  {walletAddress}
+                </>
+              ) : (
+                isConnecting ? 'Connecting...' : 'Connect Wallet'
+              )}
+            </button>
+            {walletError && (
+              <span style={{ color: '#f87171', fontSize: '0.78rem', textAlign: 'right', maxWidth: '200px' }}>
+                {walletError}
+              </span>
             )}
-          </button>
+          </div>
         </div>
       </nav>
 
