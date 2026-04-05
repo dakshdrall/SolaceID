@@ -251,7 +251,7 @@ function LandingPage() {
         </div>
       </section>
       <footer style={{ textAlign: 'center', padding: '20px 0', marginTop: '30px', color: '#aaa', fontSize: '14px' }}>
-        © 2026 SolaceID · Built on Midnight Network · Privacy-first healthcare
+        © 2026 SolaceID · Built on Midnight Network · Privacy-first healthcare · <a href="/privacy" style={{ color: '#7c3aed', textDecoration: 'none' }}>Privacy Policy</a>
       </footer>
     </div>
   );

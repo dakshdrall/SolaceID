@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import HospitalLogin from './pages/HospitalLogin';
 import PatientLogin from './pages/PatientLogin';
 import ContractsPage from './pages/ContractsPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/dashboard" element={<PatientDashboard />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contracts" element={<ContractsPage />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/hospital-login" element={<HospitalLogin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -163,6 +163,47 @@ function HospitalDashboard() {
             </div>
           </div>
         </div>
+        <div style={{ marginBottom: '30px' }}>
+          <h3>Patient History</h3>
+          <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', overflow: 'hidden' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ background: '#1a1f2e' }}>
+                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Date</th>
+                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Patient Hash</th>
+                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Fields Shared</th>
+                  <th style={{ padding: '12px', textAlign: 'left', color: '#7c3aed', fontWeight: 'bold', borderBottom: '1px solid #444a70' }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ background: 'rgba(124, 58, 237, 0.05)' }}>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>2026-04-01</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0', fontFamily: 'monospace' }}>0x7a8b9c...def123</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>Blood Type, Allergies</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171' }}>
+                    <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
+                  </td>
+                </tr>
+                <tr style={{ background: '#11182e' }}>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>2026-03-28</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0', fontFamily: 'monospace' }}>0x4d5e6f...abc789</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>Vaccination Status</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171' }}>
+                    <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Verified</span>
+                  </td>
+                </tr>
+                <tr style={{ background: 'rgba(124, 58, 237, 0.05)' }}>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>2026-03-25</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0', fontFamily: 'monospace' }}>0x1a2b3c...def456</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171', color: '#e2e8f0' }}>Blood Type, Vaccination</td>
+                  <td style={{ padding: '12px', borderBottom: '1px solid #2b3171' }}>
+                    <span style={{ backgroundColor: '#ef4444', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>Revoked</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         {verified && (
           <div>
             <div style={{

@@ -12,6 +12,9 @@ function PatientDashboard() {
   const [consents, setConsents] = useState<any[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [revokeDialog, setRevokeDialog] = useState<{show: boolean, index: number | null}>({show: false, index: null});
+  const [autoShareEmergency, setAutoShareEmergency] = useState(false);
+  const [allowHospitalSearch, setAllowHospitalSearch] = useState(true);
+  const [emailNotifications, setEmailNotifications] = useState(false);
 
   useEffect(() => {
     const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
@@ -25,6 +28,30 @@ function PatientDashboard() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Load privacy settings from localStorage
+  useEffect(() => {
+    const savedAutoShare = localStorage.getItem('autoShareEmergency') === 'true';
+    const savedHospitalSearch = localStorage.getItem('allowHospitalSearch') !== 'false'; // default true
+    const savedEmailNotifications = localStorage.getItem('emailNotifications') === 'true';
+
+    setAutoShareEmergency(savedAutoShare);
+    setAllowHospitalSearch(savedHospitalSearch);
+    setEmailNotifications(savedEmailNotifications);
+  }, []);
+
+  // Save privacy settings to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem('autoShareEmergency', autoShareEmergency.toString());
+  }, [autoShareEmergency]);
+
+  useEffect(() => {
+    localStorage.setItem('allowHospitalSearch', allowHospitalSearch.toString());
+  }, [allowHospitalSearch]);
+
+  useEffect(() => {
+    localStorage.setItem('emailNotifications', emailNotifications.toString());
+  }, [emailNotifications]);
 
   const activeConsents = consents.filter(c => c.status === 'Active').length;
   const uniqueHospitals = new Set(consents.map(c => c.hospital)).size;
@@ -222,6 +249,125 @@ function PatientDashboard() {
             >
               Download QR
             </button>
+          </div>
+        </div>
+
+        <div style={{ background: '#11182e', border: '1px solid #444a70', borderRadius: '10px', padding: '20px', marginBottom: '30px' }}>
+          <h2 style={{ margin: '0 0 20px' }}>Privacy Settings</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h4 style={{ margin: '0 0 4px', color: '#e2e8f0' }}>Auto-share Blood Type in Emergency</h4>
+                <p style={{ margin: '0', fontSize: '14px', color: '#94a3b8' }}>Allow hospitals to access blood type during emergency situations</p>
+              </div>
+              <label style={{ position: 'relative', display: 'inline-block', width: '50px', height: '24px' }}>
+                <input
+                  type="checkbox"
+                  checked={autoShareEmergency}
+                  onChange={(e) => setAutoShareEmergency(e.target.checked)}
+                  style={{ opacity: 0, width: 0, height: 0 }}
+                />
+                <span style={{
+                  position: 'absolute',
+                  cursor: 'pointer',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: autoShareEmergency ? '#10b981' : '#374151',
+                  transition: '0.4s',
+                  borderRadius: '24px'
+                }}>
+                  <span style={{
+                    position: 'absolute',
+                    content: '""',
+                    height: '18px',
+                    width: '18px',
+                    left: autoShareEmergency ? '26px' : '3px',
+                    bottom: '3px',
+                    backgroundColor: 'white',
+                    transition: '0.4s',
+                    borderRadius: '50%'
+                  }}></span>
+                </span>
+              </label>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h4 style={{ margin: '0 0 4px', color: '#e2e8f0' }}>Allow Hospital Search</h4>
+                <p style={{ margin: '0', fontSize: '14px', color: '#94a3b8' }}>Let hospitals find your profile when searching for patients</p>
+              </div>
+              <label style={{ position: 'relative', display: 'inline-block', width: '50px', height: '24px' }}>
+                <input
+                  type="checkbox"
+                  checked={allowHospitalSearch}
+                  onChange={(e) => setAllowHospitalSearch(e.target.checked)}
+                  style={{ opacity: 0, width: 0, height: 0 }}
+                />
+                <span style={{
+                  position: 'absolute',
+                  cursor: 'pointer',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: allowHospitalSearch ? '#10b981' : '#374151',
+                  transition: '0.4s',
+                  borderRadius: '24px'
+                }}>
+                  <span style={{
+                    position: 'absolute',
+                    content: '""',
+                    height: '18px',
+                    width: '18px',
+                    left: allowHospitalSearch ? '26px' : '3px',
+                    bottom: '3px',
+                    backgroundColor: 'white',
+                    transition: '0.4s',
+                    borderRadius: '50%'
+                  }}></span>
+                </span>
+              </label>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h4 style={{ margin: '0 0 4px', color: '#e2e8f0' }}>Email Notifications</h4>
+                <p style={{ margin: '0', fontSize: '14px', color: '#94a3b8' }}>Receive email updates about consent requests and data access</p>
+              </div>
+              <label style={{ position: 'relative', display: 'inline-block', width: '50px', height: '24px' }}>
+                <input
+                  type="checkbox"
+                  checked={emailNotifications}
+                  onChange={(e) => setEmailNotifications(e.target.checked)}
+                  style={{ opacity: 0, width: 0, height: 0 }}
+                />
+                <span style={{
+                  position: 'absolute',
+                  cursor: 'pointer',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: emailNotifications ? '#10b981' : '#374151',
+                  transition: '0.4s',
+                  borderRadius: '24px'
+                }}>
+                  <span style={{
+                    position: 'absolute',
+                    content: '""',
+                    height: '18px',
+                    width: '18px',
+                    left: emailNotifications ? '26px' : '3px',
+                    bottom: '3px',
+                    backgroundColor: 'white',
+                    transition: '0.4s',
+                    borderRadius: '50%'
+                  }}></span>
+                </span>
+              </label>
+            </div>
           </div>
         </div>
 
