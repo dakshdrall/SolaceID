@@ -2,10 +2,24 @@ import { useState } from 'react';
 
 function LandingPage() {
   const [email, setEmail] = useState('');
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleWaitlist = () => {
-    // Handle waitlist signup
-    console.log('Waitlist signup:', email);
+    if (email.trim()) {
+      localStorage.setItem('waitlistEmail', email);
+      setShowSuccess(true);
+      setEmail('');
+      setTimeout(() => setShowSuccess(false), 3000);
+    }
+  };
+
+  const handleWaitlistSubmit = () => {
+    if (waitlistEmail.trim()) {
+      localStorage.setItem('waitlistEmail', waitlistEmail);
+      setWaitlistEmail('');
+      // Could add success state here too if needed
+    }
   };
 
   return (
@@ -315,10 +329,81 @@ function LandingPage() {
                 cursor: 'pointer'
               }}
             >
-              Join Waitlist
+              {showSuccess ? "You're on the list ✓" : 'Join Waitlist'}
             </button>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', fontSize: '0.8rem', color: '#666666' }}>
+            <div>ZERO-KNOWLEDGE PROOFS</div>
+            <div>PATIENT CONTROLLED</div>
+            <div>CODE-ENFORCED</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Waitlist Section */}
+      <section id="waitlist" style={{ background: '#111111', padding: '80px 2rem', textAlign: 'center' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#666666',
+            letterSpacing: '0.15em',
+            marginBottom: '20px',
+            textTransform: 'uppercase'
+          }}>
+            &gt; EARLY ACCESS
+          </div>
+          <h2 style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontWeight: 800,
+            color: '#ffffff',
+            marginBottom: '20px'
+          }}>
+            Be first to access SolaceID
+          </h2>
+          <p style={{
+            color: '#cccccc',
+            fontSize: '1.1rem',
+            lineHeight: 1.6,
+            marginBottom: '40px'
+          }}>
+            We're building the future of patient privacy on Midnight Network. Join the waitlist for early access.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '40px', flexWrap: 'wrap' }}>
+            <input
+              type="email"
+              placeholder="your@email.com"
+              value={waitlistEmail}
+              onChange={(e) => setWaitlistEmail(e.target.value)}
+              style={{
+                width: '300px',
+                background: '#0a0a0a',
+                border: '1px solid #ffffff',
+                color: '#ffffff',
+                padding: '14px',
+                fontSize: '1rem',
+                borderRadius: 0
+              }}
+            />
+            <button
+              onClick={handleWaitlistSubmit}
+              style={{
+                background: '#ffffff',
+                color: '#000000',
+                border: 'none',
+                padding: '14px 28px',
+                fontSize: '1rem',
+                fontFamily: 'Syne, sans-serif',
+                fontWeight: 600,
+                cursor: 'pointer',
+                borderRadius: 0
+              }}
+            >
+              Join Waitlist
+            </button>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', fontSize: '0.8rem', color: '#666666', fontFamily: 'monospace' }}>
             <div>ZERO-KNOWLEDGE PROOFS</div>
             <div>PATIENT CONTROLLED</div>
             <div>CODE-ENFORCED</div>
