@@ -47,29 +47,46 @@ function Navbar() {
         return;
       }
       
-      // Get the first available wallet API (UUID key)
       const walletKey = Object.keys(midnight)[0];
       const walletApi = midnight[walletKey];
+
+      console.log('Wallet API:', walletApi);
+      console.log('Wallet API keys:', Object.keys(walletApi));
       
       if (!walletApi) {
         setWalletError('Midnight wallet API not found');
         setIsConnecting(false);
         return;
       }
-      
-      // Enable the wallet
-      const enabledApi = await walletApi.enable();
-      
-      // Get wallet state
-      const state = await enabledApi.state();
-      const address = state?.address 
-        || state?.unshieldedAddress 
-        || state?.coinPublicKey
-        || walletKey.slice(0, 8);
+
+      // Try different connection methods
+      let connectedApi;
+      if (typeof walletApi.enable === 'function') {
+        connectedApi = await walletApi.enable();
+      } else if (typeof walletApi.connect === 'function') {
+        connectedApi = await walletApi.connect();
+      } else if (typeof walletApi.authorize === 'function') {
+        connectedApi = await walletApi.authorize();
+      } else {
+        // API might already be enabled, use directly
+        connectedApi = walletApi;
+      }
+
+      console.log('Connected API:', connectedApi);
+      console.log('Connected API keys:', Object.keys(connectedApi || {}));
+
+      // Try to get address
+      let address = 'Connected';
+      if (connectedApi?.state) {
+        const state = await connectedApi.state();
+        address = state?.address || state?.unshieldedAddress || 'Connected';
+      } else if (connectedApi?.getAddress) {
+        address = await connectedApi.getAddress();
+      }
       
       const shortAddress = typeof address === 'string' && address.length > 10
         ? address.slice(0, 10) + '...' + address.slice(-6)
-        : 'Connected';
+        : 'Connected ✓';
 
       setWalletAddress(shortAddress);
       localStorage.setItem('walletAddress', address);
@@ -78,8 +95,8 @@ function Navbar() {
 
     } catch (err: any) {
       setIsConnecting(false);
-      console.error('Wallet error:', err);
-      setWalletError('Connection failed: ' + (err?.message || 'Please approve in wallet'));
+      console.error('Full wallet error:', err);
+      setWalletError('Failed: ' + (err?.message || 'Unknown error'));
     }
   };
 
