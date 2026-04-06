@@ -97,7 +97,7 @@ function PatientWallet() {
             </div>
 
             <form style={{ display: 'grid', gap: '1rem', marginBottom: '1.5rem' }}>
-              <input type='text' placeholder='e.g. Daksh Drall' value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} />
+              <input type='text' placeholder='e.g. Alex Johnson' value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} />
               <input type='date' placeholder='Date of Birth' value={form.dob} onChange={e => setForm({ ...form, dob: e.target.value })} style={inputStyle} />
               <select value={form.bloodType} onChange={e => setForm({ ...form, bloodType: e.target.value })} style={inputStyle}>
                 <option value=''>Select Blood Type</option>
@@ -110,7 +110,7 @@ function PatientWallet() {
                 <option>AB+</option>
                 <option>AB-</option>
               </select>
-              <input type='text' placeholder='e.g. Penicillin, Peanuts' value={form.allergies} onChange={e => setForm({ ...form, allergies: e.target.value })} style={inputStyle} />
+              <input type='text' placeholder='e.g. Penicillin, Latex' value={form.allergies} onChange={e => setForm({ ...form, allergies: e.target.value })} style={inputStyle} />
               <label style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}>
                 <input type='checkbox' checked={form.vaccination} onChange={e => setForm({ ...form, vaccination: e.target.checked })} />
                 Vaccination Status

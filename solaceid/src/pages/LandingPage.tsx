@@ -64,18 +64,21 @@ function LandingPage() {
             >
               Try Demo →
             </button>
-            <button style={{
-              background: 'transparent',
-              color: '#ffffff',
-              border: '1px solid #ffffff',
-              padding: '16px 32px',
-              fontSize: '1rem',
-              fontWeight: 500,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
+            <button
+              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{
+                background: 'transparent',
+                color: '#ffffff',
+                border: '1px solid #ffffff',
+                padding: '16px 32px',
+                fontSize: '1rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
               How It Works →
             </button>
           </div>
@@ -131,8 +134,8 @@ function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
-        <div style={{ marginBottom: '60px' }}>
+      <section style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div id='how-it-works' style={{ marginBottom: '60px' }}>
           <div style={{
             fontFamily: 'monospace',
             fontSize: '0.8rem',
