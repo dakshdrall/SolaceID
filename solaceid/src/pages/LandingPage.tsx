@@ -47,7 +47,9 @@ function LandingPage() {
             knowledge proofs.
           </h1>
           <div style={{ display: 'flex', gap: '20px', marginBottom: '60px' }}>
-            <button style={{
+            <button
+              onClick={() => { window.location.href = '/patient-login'; }}
+              style={{
               background: '#ffffff',
               color: '#000000',
               border: 'none',
@@ -58,8 +60,9 @@ function LandingPage() {
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
-            }}>
-              Get Early Access →
+            }}
+            >
+              Try Demo →
             </button>
             <button style={{
               background: 'transparent',
