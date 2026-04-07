@@ -46,6 +46,16 @@ Circuits: grantConsent, checkConsent, revokeConsent
 Records and verifies EHR exchange receipts with ZK proofs.
 Circuits: recordExchange, verifyExchange, getReceipt
 
+## Contract Deployment
+
+| Contract | Network | Status |
+|----------|---------|--------|
+| identity.compact | Midnight Preprod | Compiled — deployment pending SDK finalization |
+| consent.compact | Midnight Preprod | Compiled — deployment pending SDK finalization |
+| exchange.compact | Midnight Preprod | Compiled — deployment pending SDK finalization |
+
+Note: Contracts are written in Compact 0.28.0 and compiled. Full on-chain deployment is the immediate next milestone pending Midnight SDK wallet integration completion.
+
 ## Product Pages
 | Page | Route | Description |
 |------|-------|-------------|
