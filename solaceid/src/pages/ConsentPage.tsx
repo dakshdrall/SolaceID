@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { signConsentData } from '../utils/midnight';
 
 function ConsentPage() {
   const navigate = useNavigate();
@@ -16,33 +17,49 @@ function ConsentPage() {
   const [success, setSuccess] = useState(false);
   const [txHash, setTxHash] = useState('');
 
-  const handleSign = () => {
+  const handleSign = async () => {
     setLoading(true);
-    setTimeout(() => {
-      const transaction = '0x' + Math.random().toString(16).substr(2, 20);
+    try {
+      const selectedFields = [
+        consent.bloodType && 'bloodType',
+        consent.vaccination && 'vaccination',
+        consent.allergies && 'allergies',
+      ].filter(Boolean) as string[];
+
+      const timestamp = new Date().toISOString();
+      const walletResult = await signConsentData(patientHash, 'City General Hospital', selectedFields, timestamp);
+
+      let transaction: string;
+      if (walletResult) {
+        transaction = walletResult.txHash;
+        localStorage.setItem('consentSignature', walletResult.signature);
+      } else {
+        // Wallet not connected — deterministic fallback using SubtleCrypto
+        const raw = JSON.stringify({ patientHash, selectedFields, timestamp });
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+        transaction = '0x' + Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
       setTxHash(transaction);
       localStorage.setItem('consentData', JSON.stringify(consent));
       localStorage.setItem('consentTx', transaction);
 
-      const flatFields = {
-        bloodType: consent.bloodType,
-        vaccination: consent.vaccination,
-        allergies: consent.allergies
-      };
-
+      const flatFields = { bloodType: consent.bloodType, vaccination: consent.vaccination, allergies: consent.allergies };
       const consents = JSON.parse(localStorage.getItem('consents') || '[]');
       consents.push({
         hospital: 'City General Hospital',
         purpose: consent.purpose,
-        date: new Date().toISOString(),
+        date: timestamp,
         status: 'Active',
-        fields: flatFields
+        fields: flatFields,
+        txHash: transaction,
       });
       localStorage.setItem('consents', JSON.stringify(consents));
 
-      setLoading(false);
       setSuccess(true);
-    }, 2000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { signIdentityData } from '../utils/midnight';
 
 function PatientWallet() {
   const navigate = useNavigate();
@@ -30,17 +31,36 @@ function PatientWallet() {
     };
   }, []);
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     setLoading(true);
-    setTimeout(() => {
-      const commitment = '0x' + Math.random().toString(16).substr(2, 20);
+    try {
+      const salt = crypto.randomUUID();
+      const walletResult = await signIdentityData(
+        form.name + form.dob,
+        { bloodType: form.bloodType, allergies: form.allergies, vaccination: form.vaccination },
+        salt
+      );
+
+      let commitment: string;
+      if (walletResult) {
+        commitment = walletResult.hash;
+        localStorage.setItem('identitySignature', walletResult.signature);
+      } else {
+        // Wallet not connected — deterministic fallback using SubtleCrypto
+        const raw = JSON.stringify({ name: form.name, dob: form.dob, salt });
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+        commitment = '0x' + Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
       setHash(commitment);
       localStorage.setItem('patientData', JSON.stringify(form));
+      localStorage.setItem('solaceIdHash', commitment);
       localStorage.setItem('patientHash', commitment);
       localStorage.setItem('patientCreated', new Date().toISOString());
+    } finally {
       setLoading(false);
       setSuccess(true);
-    }, 2500);
+    }
   };
 
   const handleProceed = () => {
