@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import WalletPanel from '../components/WalletPanel';
 
 function PatientDashboard() {
   const navigate = useNavigate();
@@ -144,6 +145,8 @@ function PatientDashboard() {
           </div>
 
           <button onClick={() => navigate('/consent')} className='button-primary' style={{ marginBottom: '2rem' }}>New Consent</button>
+
+          <WalletPanel />
 
           <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.14)', marginBottom: '1.5rem' }}>
             <h2 style={{ margin: '0 0 1rem 0' }}>ZK Identity</h2>

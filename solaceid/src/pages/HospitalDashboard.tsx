@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import { getMidnightWallet } from '../utils/midnight';
 
 interface PatientData {
   name: string;
@@ -14,6 +15,8 @@ interface AuditTrail {
   timestamp: string;
   network: string;
   purpose: string;
+  identitySignature?: string;
+  consentSignature?: string;
 }
 
 function HospitalDashboard() {
@@ -42,27 +45,46 @@ function HospitalDashboard() {
     };
   }, []);
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     setLoading(true);
-    setTimeout(() => {
+    try {
+      // Try to fetch real network name from connected wallet
+      let networkName = 'Midnight Preprod';
+      try {
+        const wallet = await getMidnightWallet();
+        if (wallet) {
+          const cfg = await wallet.getConfiguration();
+          if (cfg) {
+            networkName = cfg.networkId || cfg.network || cfg.name || cfg.chainName || networkName;
+          }
+        }
+      } catch {
+        // wallet not connected — use default
+      }
+
       const storedHash = localStorage.getItem('patientHash');
       if (patientHash === storedHash) {
         const data = JSON.parse(localStorage.getItem('patientData') || '{}');
         const consent = JSON.parse(localStorage.getItem('consentData') || '{}');
         const tx = localStorage.getItem('consentTx');
+        const identitySig = localStorage.getItem('identitySignature');
+        const consentSig = localStorage.getItem('consentSignature');
         setPatientData(data);
         setAuditTrail({
           receiptHash: tx,
           timestamp: new Date().toISOString(),
-          network: 'Midnight Preprod',
-          purpose: consent.purpose
+          network: networkName,
+          purpose: consent.purpose,
+          ...(identitySig && { identitySignature: identitySig.slice(0, 24) + '…' }),
+          ...(consentSig && { consentSignature: consentSig.slice(0, 24) + '…' }),
         });
         setVerified(true);
       } else {
         alert('Invalid patient hash');
       }
+    } finally {
       setLoading(false);
-    }, 2500);
+    }
   };
 
   return (
@@ -175,10 +197,16 @@ function HospitalDashboard() {
           {verified && (
             <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.12)' }}>
               <h3 style={{ margin: '0 0 1rem 0' }}>Audit Trail</h3>
-              <p><strong>Receipt Hash:</strong> {auditTrail?.receiptHash}</p>
-              <p><strong>Timestamp:</strong> {auditTrail?.timestamp}</p>
-              <p><strong>Network:</strong> {auditTrail?.network}</p>
-              <p><strong>Purpose:</strong> {auditTrail?.purpose}</p>
+              <p style={{ margin: '0.4rem 0' }}><strong>Network:</strong> {auditTrail?.network}</p>
+              <p style={{ margin: '0.4rem 0' }}><strong>Purpose:</strong> {auditTrail?.purpose || '—'}</p>
+              <p style={{ margin: '0.4rem 0' }}><strong>Timestamp:</strong> {auditTrail?.timestamp}</p>
+              <p style={{ margin: '0.4rem 0', wordBreak: 'break-all' }}><strong>Consent Tx:</strong> <span style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>{auditTrail?.receiptHash || '—'}</span></p>
+              {auditTrail?.identitySignature && (
+                <p style={{ margin: '0.4rem 0' }}><strong>Identity Sig:</strong> <span style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>{auditTrail.identitySignature}</span></p>
+              )}
+              {auditTrail?.consentSignature && (
+                <p style={{ margin: '0.4rem 0' }}><strong>Consent Sig:</strong> <span style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>{auditTrail.consentSignature}</span></p>
+              )}
             </div>
           )}
         </div>
