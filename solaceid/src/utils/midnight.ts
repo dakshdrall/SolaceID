@@ -14,18 +14,7 @@ export const getMidnightWallet = async (): Promise<MidnightWalletAPI> => {
   const walletKey = Object.keys(midnight)[0];
   if (!walletKey) throw new Error('No Midnight-compatible wallet available.');
   const walletApi = midnight[walletKey];
-
-  const serviceUriConfig = {
-    proverServerUri: 'https://proof-server.preprod.midnight.network',
-    indexerUri: 'https://indexer.preprod.midnight.network/api/v3/graphql',
-    indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v3/graphql',
-    nodeUri: 'https://rpc.preprod.midnight.network',
-  };
-
-  const enabledApi = await walletApi.enable(serviceUriConfig);
-  const connectedApi = enabledApi.state
-    ? enabledApi
-    : await walletApi.connect('preprod');
+  const connectedApi = await walletApi.connect('preprod');
   if (!connectedApi) throw new Error('Failed to connect to Midnight wallet on preprod.');
   return connectedApi;
 };
