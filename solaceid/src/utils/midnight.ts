@@ -14,6 +14,12 @@ export const getMidnightWallet = async (): Promise<MidnightWalletAPI> => {
   const walletKey = Object.keys(midnight)[0];
   if (!walletKey) throw new Error('No Midnight-compatible wallet available.');
   const walletApi = midnight[walletKey];
+
+  // Enable first if method exists
+  if (typeof walletApi.enable === 'function') {
+    await walletApi.enable();
+  }
+
   const connectedApi = await walletApi.connect('preprod');
   if (!connectedApi) throw new Error('Failed to connect to Midnight wallet on preprod.');
   return connectedApi;

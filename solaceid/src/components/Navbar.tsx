@@ -59,6 +59,11 @@ function Navbar() {
       const walletKey = Object.keys(midnight)[0];
       const walletApi = midnight[walletKey];
 
+      // Enable first if method exists
+      if (typeof walletApi.enable === 'function') {
+        await walletApi.enable();
+      }
+
       const connectedApi = await walletApi.connect('preprod');
       const addressResult = await connectedApi.getUnshieldedAddress();
       const address = addressResult?.unshieldedAddress || 'Connected';
