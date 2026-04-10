@@ -1,3 +1,5 @@
+SolaceID is the world's first anonymous medical data marketplace on Midnight Network. Patients monetize their health data with full ZK privacy. Researchers and hospitals purchase access to exactly the fields they need. No identity ever exposed. All transactions in tNight. Built with Compact 0.28.0 smart contracts on Midnight Preprod.
+
 # SolaceID — Prove your health, not your history.
 
 🌐 **Live Demo:** https://solace-id.vercel.app/

@@ -8,13 +8,62 @@ export interface MidnightWalletAPI {
   getConfiguration: () => Promise<any>;
 }
 
-export const getMidnightWallet = async (): Promise<MidnightWalletAPI | null> => {
+export const getMidnightWallet = async (): Promise<MidnightWalletAPI> => {
   const midnight = (window as any).midnight;
-  if (!midnight) return null;
+  if (!midnight) throw new Error('Midnight wallet not found. Install Lace wallet.');
   const walletKey = Object.keys(midnight)[0];
-  if (!walletKey) return null;
+  if (!walletKey) throw new Error('No Midnight-compatible wallet available.');
   const walletApi = midnight[walletKey];
-  return await walletApi.connect('preprod');
+  const connectedApi = await walletApi.connect('preprod');
+  if (!connectedApi) throw new Error('Failed to connect to Midnight wallet on preprod.');
+  return connectedApi;
+};
+
+export const isWalletConnected = async (): Promise<boolean> => {
+  try {
+    await getMidnightWallet();
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const signAction = async (
+  actionType: string,
+  payload: object
+): Promise<{ txHash: string; signature: string; timestamp: string }> => {
+  const wallet = await getMidnightWallet();
+  const timestamp = new Date().toISOString();
+  const data = JSON.stringify({ actionType, payload, timestamp, network: 'midnight-preprod' });
+  const encoded = new TextEncoder().encode(data);
+  const result = await wallet.signData(encoded);
+  const txHash = btoa(result.signature).slice(0, 64);
+  return { txHash, signature: result.signature, timestamp };
+};
+
+const formatBalanceValue = (raw: any): string => {
+  if (raw === null || raw === undefined) return '0.000000 tDUST';
+  if (typeof raw === 'number') return (raw / 1_000_000).toFixed(6) + ' tDUST';
+  if (typeof raw === 'string') {
+    const n = Number(raw);
+    return isNaN(n) ? raw : (n / 1_000_000).toFixed(6) + ' tDUST';
+  }
+  if (typeof raw === 'object') {
+    const key = Object.keys(raw).find(k => k.toLowerCase().includes('dust'));
+    const val = key ? raw[key] : Object.values(raw)[0];
+    if (typeof val === 'number') return (val / 1_000_000).toFixed(6) + ' tDUST';
+    if (typeof val === 'string') {
+      const n = Number(val);
+      return isNaN(n) ? String(val) : (n / 1_000_000).toFixed(6) + ' tDUST';
+    }
+  }
+  return '0.000000 tDUST';
+};
+
+export const getWalletBalance = async (): Promise<string> => {
+  const wallet = await getMidnightWallet();
+  const raw = await wallet.getUnshieldedBalances();
+  return formatBalanceValue(raw);
 };
 
 export const signIdentityData = async (

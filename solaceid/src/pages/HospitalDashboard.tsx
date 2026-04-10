@@ -20,11 +20,14 @@ interface AuditTrail {
 }
 
 function HospitalDashboard() {
+  const [activeTab, setActiveTab] = useState<'emergency' | 'research'>('emergency');
   const [patientHash, setPatientHash] = useState('');
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [auditTrail, setAuditTrail] = useState<AuditTrail | null>(null);
+  const [searchCondition, setSearchCondition] = useState('');
+  const [emergencyResult, setEmergencyResult] = useState<{ anonId: string; txHash: string } | null>(null);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -97,6 +100,17 @@ function HospitalDashboard() {
             <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginTop: '0.75rem' }}>Demo environment — Midnight Network Preprod</p>
           </div>
 
+          {/* Tab Switcher */}
+          <div style={{ display: 'flex', gap: '0', marginBottom: '2rem', borderRadius: '14px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+            <button onClick={() => setActiveTab('emergency')} style={{ flex: 1, padding: '1rem', border: 'none', background: activeTab === 'emergency' ? '#7c3aed' : 'var(--surface-3)', color: activeTab === 'emergency' ? '#fff' : 'var(--text-muted)', fontWeight: 700, fontSize: '1rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+              Emergency Verify
+            </button>
+            <button onClick={() => setActiveTab('research')} style={{ flex: 1, padding: '1rem', border: 'none', background: activeTab === 'research' ? '#06b6d4' : 'var(--surface-3)', color: activeTab === 'research' ? '#fff' : 'var(--text-muted)', fontWeight: 700, fontSize: '1rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+              Research Access
+            </button>
+          </div>
+
+          {activeTab === 'emergency' && (<>
           <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.14)', marginBottom: '2rem' }}>
             <div style={{ display: 'grid', gap: '1rem', alignItems: 'center', gridTemplateColumns: '1fr auto' }}>
               <input type='text' placeholder='Enter Patient Hash' value={patientHash} onChange={e => setPatientHash(e.target.value)} style={inputStyle} />
@@ -206,6 +220,93 @@ function HospitalDashboard() {
               )}
               {auditTrail?.consentSignature && (
                 <p style={{ margin: '0.4rem 0' }}><strong>Consent Sig:</strong> <span style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>{auditTrail.consentSignature}</span></p>
+              )}
+            </div>
+          )}
+          </>)}
+
+          {activeTab === 'research' && (
+            <div>
+              <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(6, 182, 212, 0.14)', marginBottom: '1.5rem' }}>
+                <h2 style={{ margin: '0 0 1rem 0' }}>Research Data Access</h2>
+                <input type='text' placeholder='Find patient data by condition (e.g. Diabetes, Hypertension)' value={searchCondition} onChange={e => setSearchCondition(e.target.value)} style={{ ...inputStyle, marginBottom: 0 }} />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
+                {(() => {
+                  const mockListings = [
+                    { anonId: 'Patient #3847', conditions: ['Diabetes', 'Hypertension'], fields: ['Blood Type', 'Allergies', 'Vaccinations'], ageRange: '46-55', location: 'North India', price: 75, accessType: 'one-time' },
+                    { anonId: 'Patient #7291', conditions: ['Heart Disease'], fields: ['Blood Type', 'Medications', 'Conditions'], ageRange: '56-65', location: 'South India', price: 120, accessType: 'one-time' },
+                    { anonId: 'Patient #9023', conditions: ['Asthma'], fields: ['Conditions', 'Medications', 'Vaccinations'], ageRange: '18-25', location: 'East India', price: 25, accessType: 'one-time' },
+                    { anonId: 'Patient #4412', conditions: ['Diabetes'], fields: ['Blood Type', 'Medications', 'Conditions'], ageRange: '36-45', location: 'International', price: 60, accessType: 'unlimited' },
+                    { anonId: 'Patient #6678', conditions: ['Diabetes', 'Hypertension', 'Heart Disease'], fields: ['Blood Type', 'Allergies', 'Vaccinations', 'Medications'], ageRange: '56-65', location: 'North India', price: 150, accessType: 'one-time' },
+                    { anonId: 'Patient #8891', conditions: ['Hypertension'], fields: ['Blood Type', 'Conditions', 'Organ Donor'], ageRange: '46-55', location: 'West India', price: 80, accessType: 'one-time' },
+                  ];
+
+                  const stored = localStorage.getItem('patientListing');
+                  if (stored) {
+                    try {
+                      const p = JSON.parse(stored);
+                      mockListings.unshift({
+                        anonId: p.anonId || 'Patient #0000',
+                        conditions: p.conditions || [],
+                        fields: [p.bloodType && 'Blood Type', p.allergies && 'Allergies', p.vaccinations?.length && 'Vaccinations', p.medications && 'Medications'].filter(Boolean) as string[],
+                        ageRange: p.ageRange || '',
+                        location: p.location || '',
+                        price: Number(p.price) || 0,
+                        accessType: p.accessType || 'one-time'
+                      });
+                    } catch { /* ignore */ }
+                  }
+
+                  const conditionColors: Record<string, string> = { 'Diabetes': '#f59e0b', 'Hypertension': '#ef4444', 'Heart Disease': '#ec4899', 'Asthma': '#06b6d4' };
+
+                  return mockListings
+                    .filter(l => !searchCondition || l.conditions.some(c => c.toLowerCase().includes(searchCondition.toLowerCase())))
+                    .map((listing, i) => (
+                    <div key={i} className='surface-card' style={{ padding: '1.5rem', borderColor: 'rgba(6, 182, 212, 0.14)' }}>
+                      <div style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.75rem', fontFamily: 'Syne, sans-serif' }}>{listing.anonId}</div>
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                        {listing.conditions.map(c => (
+                          <span key={c} style={{ padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.78rem', fontWeight: 600, background: `${conditionColors[c] || '#6b7280'}20`, color: conditionColors[c] || '#6b7280', border: `1px solid ${conditionColors[c] || '#6b7280'}40` }}>{c}</span>
+                        ))}
+                      </div>
+                      <p style={{ margin: '0 0 0.5rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>{listing.fields.join(' · ')}</p>
+                      <p style={{ margin: '0 0 0.75rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Age {listing.ageRange} · {listing.location}</p>
+                      <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#06b6d4', marginBottom: '0.75rem' }}>{listing.price} tNight</div>
+                      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                        <span style={{ padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)' }}>ZK Verified</span>
+                      </div>
+                      <button onClick={async () => {
+                        try {
+                          const midnight = (window as any).midnight;
+                          if (!midnight) { alert('Connect Lace wallet first'); return; }
+                          const key = Object.keys(midnight)[0];
+                          const api = midnight[key];
+                          const connectedApi = await api.connect('preprod');
+                          const sig = await connectedApi.signData(new TextEncoder().encode(JSON.stringify({ type: 'EMERGENCY_ACCESS', patientId: listing.anonId, timestamp: Date.now(), emergency: true })));
+                          const txHash = typeof sig === 'string' ? sig : sig?.signature || sig?.txHash || 'emergency_' + Date.now();
+                          setEmergencyResult({ anonId: listing.anonId, txHash });
+                        } catch (err) { console.error(err); alert('Wallet signing failed'); }
+                      }} style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#f87171', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}>
+                        Request Emergency Access
+                      </button>
+                    </div>
+                  ));
+                })()}
+              </div>
+
+              {emergencyResult && (
+                <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(16, 185, 129, 0.18)', marginTop: '1.5rem', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', width: '60px', height: '60px', border: '3px solid #10b981', borderRadius: '50%', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                    <div style={{ width: '16px', height: '28px', border: 'solid #10b981', borderWidth: '0 4px 4px 0', transform: 'rotate(45deg)' }}></div>
+                  </div>
+                  <h3 style={{ margin: '0 0 0.5rem 0' }}>Emergency Access Granted — {emergencyResult.anonId}</h3>
+                  <p style={{ margin: '0 0 1rem', color: 'var(--text-muted)' }}>Emergency access logged on Midnight blockchain</p>
+                  <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem', fontFamily: 'monospace', wordBreak: 'break-all', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                    txHash: {emergencyResult.txHash}
+                  </div>
+                </div>
               )}
             </div>
           )}

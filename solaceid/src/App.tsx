@@ -10,6 +10,7 @@ import HospitalLogin from './pages/HospitalLogin';
 import PatientLogin from './pages/PatientLogin';
 import ContractsPage from './pages/ContractsPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Marketplace from './pages/Marketplace';
 import NotFound from './pages/NotFound';
 
 // Scroll to top on route change
@@ -34,6 +35,7 @@ function App() {
         <Route path="/consent" element={<ConsentPage />} />
         <Route path="/hospital" element={<HospitalDashboard />} />
         <Route path="/dashboard" element={<PatientDashboard />} />
+        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contracts" element={<ContractsPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />

@@ -40,46 +40,75 @@ function LandingPage() {
             fontWeight: 800,
             lineHeight: 1.0,
             margin: 0,
+            marginBottom: '24px'
+          }}>
+            Your medical data<br />
+            has value. You<br />
+            should own it.
+          </h1>
+          <p style={{
+            fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+            color: '#cccccc',
+            lineHeight: 1.7,
+            maxWidth: '720px',
             marginBottom: '40px'
           }}>
-            Patient identity,<br />
-            locked with zero-<br />
-            knowledge proofs.
-          </h1>
-          <div style={{ display: 'flex', gap: '20px', marginBottom: '60px' }}>
+            SolaceID is the world's first anonymous medical data marketplace. Patients monetize their health data. Researchers access exactly what they need. Zero identity exposure — enforced by zero-knowledge proofs on Midnight Network.
+          </p>
+          <div style={{ display: 'flex', gap: '20px', marginBottom: '60px', flexWrap: 'wrap' }}>
             <button
               onClick={() => { window.location.href = '/patient-login'; }}
               style={{
-              background: '#ffffff',
-              color: '#000000',
+              background: '#7c3aed',
+              color: '#ffffff',
               border: 'none',
               padding: '16px 32px',
               fontSize: '1rem',
-              fontWeight: 500,
+              fontWeight: 600,
               cursor: 'pointer',
+              borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}
             >
-              Try Demo →
+              List My Data →
             </button>
             <button
-              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => { window.location.href = '/marketplace'; }}
+              style={{
+                background: 'transparent',
+                color: '#06b6d4',
+                border: '1px solid #06b6d4',
+                padding: '16px 32px',
+                fontSize: '1rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              Browse Research Data →
+            </button>
+            <button
+              onClick={() => { window.location.href = '/hospital-login'; }}
               style={{
                 background: 'transparent',
                 color: '#ffffff',
                 border: '1px solid #ffffff',
                 padding: '16px 32px',
                 fontSize: '1rem',
-                fontWeight: 500,
+                fontWeight: 600,
                 cursor: 'pointer',
+                borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}
             >
-              How It Works →
+              Emergency Verify →
             </button>
           </div>
           <div style={{ display: 'flex', gap: '40px', fontSize: '0.9rem', color: '#666666' }}>

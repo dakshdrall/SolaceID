@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { signConsentData } from '../utils/midnight';
+import { signAction, isWalletConnected } from '../utils/midnight';
 
 function ConsentPage() {
   const navigate = useNavigate();
@@ -16,8 +16,14 @@ function ConsentPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [txHash, setTxHash] = useState('');
+  const [walletConnected, setWalletConnected] = useState(false);
+
+  useEffect(() => {
+    isWalletConnected().then(setWalletConnected);
+  }, []);
 
   const handleSign = async () => {
+    if (!walletConnected) return;
     setLoading(true);
     try {
       const selectedFields = [
@@ -27,20 +33,16 @@ function ConsentPage() {
       ].filter(Boolean) as string[];
 
       const timestamp = new Date().toISOString();
-      const walletResult = await signConsentData(patientHash, 'City General Hospital', selectedFields, timestamp);
+      const result = await signAction('CONSENT_GRANT', {
+        patientHash,
+        hospital: 'City General Hospital',
+        fields: selectedFields,
+        timestamp,
+      });
 
-      let transaction: string;
-      if (walletResult) {
-        transaction = walletResult.txHash;
-        localStorage.setItem('consentSignature', walletResult.signature);
-      } else {
-        // Wallet not connected — deterministic fallback using SubtleCrypto
-        const raw = JSON.stringify({ patientHash, selectedFields, timestamp });
-        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
-        transaction = '0x' + Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-      }
-
+      const transaction = result.txHash;
       setTxHash(transaction);
+      localStorage.setItem('consentSignature', result.signature);
       localStorage.setItem('consentData', JSON.stringify(consent));
       localStorage.setItem('consentTx', transaction);
 
@@ -57,6 +59,8 @@ function ConsentPage() {
       localStorage.setItem('consents', JSON.stringify(consents));
 
       setSuccess(true);
+    } catch (err) {
+      console.error('Consent signing failed:', err);
     } finally {
       setLoading(false);
     }
@@ -165,8 +169,13 @@ function ConsentPage() {
                 </div>
               </div>
 
+              {!walletConnected && (
+                <div style={{ marginTop: '1.5rem', padding: '1rem', borderRadius: '14px', background: 'rgba(248, 113, 113, 0.08)', border: '1px solid rgba(248, 113, 113, 0.35)', color: '#f87171', fontWeight: 600, textAlign: 'center' }}>
+                  ⚠️ Connect your Lace wallet to sign consent on Midnight
+                </div>
+              )}
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '1.5rem' }}>
-                <button onClick={handleSign} disabled={loading || success} className='button-primary' style={{ minWidth: '220px' }}>
+                <button onClick={handleSign} disabled={loading || success || !walletConnected} className='button-primary' style={{ minWidth: '220px', opacity: !walletConnected ? 0.65 : 1 }}>
                   {loading ? 'Signing Consent…' : success ? 'Consent Signed' : 'Sign Consent on Midnight'}
                 </button>
                 {success && (
@@ -182,7 +191,17 @@ function ConsentPage() {
               </div>
 
               {loading && <p style={{ color: 'var(--text-muted)', marginTop: '1rem' }}>Processing…</p>}
-              {success && <p style={{ color: '#10b981', marginTop: '1rem' }}>Success! Transaction Hash: {txHash}</p>}
+              {success && (
+                <div style={{ marginTop: '1.5rem', padding: '1.25rem', borderRadius: '14px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.35)' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 0.9rem', borderRadius: '999px', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', fontWeight: 700, marginBottom: '0.75rem' }}>
+                    Cryptographically signed by patient wallet ✓
+                  </div>
+                  <p style={{ color: '#10b981', margin: '0 0 0.5rem 0', fontFamily: 'monospace', wordBreak: 'break-all', fontSize: '0.9rem' }}>Tx: {txHash}</p>
+                  <a href='https://preprod.midnightexplorer.com/' target='_blank' rel='noopener noreferrer' style={{ color: 'var(--accent)', textDecoration: 'underline', fontSize: '0.9rem' }}>
+                    View on Midnight Explorer ↗
+                  </a>
+                </div>
+              )}
             </div>
           )}
         </div>

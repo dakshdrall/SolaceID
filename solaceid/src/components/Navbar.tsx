@@ -123,6 +123,7 @@ function Navbar() {
             <Link to='/' style={getLinkStyle('/')}>Home</Link>
             <Link to='/patient-login' style={getLinkStyle('/patient-login')}>Patient Portal</Link>
             <Link to='/dashboard' style={getLinkStyle('/dashboard')}>Dashboard</Link>
+            <Link to='/marketplace' style={getLinkStyle('/marketplace')}>Marketplace</Link>
             <Link to='/hospital-login' style={getLinkStyle('/hospital-login')}>Hospital</Link>
             <Link to='/about' style={getLinkStyle('/about')}>About</Link>
             <Link to='/contracts' style={getLinkStyle('/contracts')}>Contracts</Link>
@@ -209,6 +210,7 @@ function Navbar() {
           <Link to='/' style={getLinkStyle('/')} onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to='/patient-login' style={getLinkStyle('/patient-login')} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
           <Link to='/dashboard' style={getLinkStyle('/dashboard')} onClick={() => setMenuOpen(false)}>Dashboard</Link>
+          <Link to='/marketplace' style={getLinkStyle('/marketplace')} onClick={() => setMenuOpen(false)}>Marketplace</Link>
           <Link to='/hospital-login' style={getLinkStyle('/hospital-login')} onClick={() => setMenuOpen(false)}>Hospital</Link>
           <Link to='/about' style={getLinkStyle('/about')} onClick={() => setMenuOpen(false)}>About</Link>
           <Link to='/contracts' style={getLinkStyle('/contracts')} onClick={() => setMenuOpen(false)}>Contracts</Link>
