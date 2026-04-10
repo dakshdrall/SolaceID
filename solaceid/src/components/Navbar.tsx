@@ -59,12 +59,17 @@ function Navbar() {
       const walletKey = Object.keys(midnight)[0];
       const walletApi = midnight[walletKey];
 
-      // Enable first if method exists
-      if (typeof walletApi.enable === 'function') {
-        await walletApi.enable();
-      }
+      const serviceUriConfig = {
+        proverServerUri: 'https://proof-server.preprod.midnight.network',
+        indexerUri: 'https://indexer.preprod.midnight.network/api/v3/graphql',
+        indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v3/graphql',
+        nodeUri: 'https://rpc.preprod.midnight.network',
+      };
 
-      const connectedApi = await walletApi.connect('preprod');
+      const enabledApi = await walletApi.enable(serviceUriConfig);
+      const connectedApi = enabledApi.state
+        ? enabledApi
+        : await walletApi.connect('preprod');
       const addressResult = await connectedApi.getUnshieldedAddress();
       const address = addressResult?.unshieldedAddress || 'Connected';
       
