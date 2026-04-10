@@ -8,12 +8,19 @@ function Navbar() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tNightBalance, setTNightBalance] = useState<number | null>(null);
+
+  const refreshBalance = () => {
+    const bal = localStorage.getItem('walletBalance');
+    if (bal !== null) setTNightBalance(Number(bal));
+  };
 
   useEffect(() => {
     const savedAddress = localStorage.getItem('walletAddress') || '';
     if (savedAddress) {
       setWalletAddress(`${savedAddress.slice(0, 10)}...${savedAddress.slice(-6)}`);
     }
+    refreshBalance();
 
     const style = document.createElement('style');
     style.textContent = `
@@ -30,8 +37,10 @@ function Navbar() {
 
     handleResize();
     window.addEventListener('resize', handleResize);
+    window.addEventListener('balanceUpdate', refreshBalance);
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('balanceUpdate', refreshBalance);
       document.head.removeChild(style);
     };
   }, []);
@@ -124,6 +133,7 @@ function Navbar() {
             <Link to='/patient-login' style={getLinkStyle('/patient-login')}>Patient Portal</Link>
             <Link to='/dashboard' style={getLinkStyle('/dashboard')}>Dashboard</Link>
             <Link to='/marketplace' style={getLinkStyle('/marketplace')}>Marketplace</Link>
+            <Link to='/transactions' style={getLinkStyle('/transactions')}>Transactions</Link>
             <Link to='/hospital-login' style={getLinkStyle('/hospital-login')}>Hospital</Link>
             <Link to='/about' style={getLinkStyle('/about')}>About</Link>
             <Link to='/contracts' style={getLinkStyle('/contracts')}>Contracts</Link>
@@ -179,6 +189,11 @@ function Navbar() {
                     animation: 'pulse 1.8s infinite'
                   }}></span>
                   {walletAddress}
+                  {tNightBalance !== null && (
+                    <span style={{ borderLeft: '1px solid rgba(255,255,255,0.25)', paddingLeft: '10px', color: '#06b6d4', fontSize: '0.82rem' }}>
+                      {tNightBalance} tNight
+                    </span>
+                  )}
                 </>
               ) : (
                 isConnecting ? 'Connecting...' : 'Connect Wallet'
@@ -211,6 +226,7 @@ function Navbar() {
           <Link to='/patient-login' style={getLinkStyle('/patient-login')} onClick={() => setMenuOpen(false)}>Patient Portal</Link>
           <Link to='/dashboard' style={getLinkStyle('/dashboard')} onClick={() => setMenuOpen(false)}>Dashboard</Link>
           <Link to='/marketplace' style={getLinkStyle('/marketplace')} onClick={() => setMenuOpen(false)}>Marketplace</Link>
+          <Link to='/transactions' style={getLinkStyle('/transactions')} onClick={() => setMenuOpen(false)}>Transactions</Link>
           <Link to='/hospital-login' style={getLinkStyle('/hospital-login')} onClick={() => setMenuOpen(false)}>Hospital</Link>
           <Link to='/about' style={getLinkStyle('/about')} onClick={() => setMenuOpen(false)}>About</Link>
           <Link to='/contracts' style={getLinkStyle('/contracts')} onClick={() => setMenuOpen(false)}>Contracts</Link>

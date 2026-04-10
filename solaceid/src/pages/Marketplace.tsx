@@ -19,6 +19,17 @@ interface Listing {
   isReal?: boolean;
 }
 
+interface TransactionReceipt {
+  txId: string;
+  from: string;
+  to: string;
+  amount: string;
+  timestamp: string;
+  status: string;
+  network: string;
+  type: string;
+}
+
 const MOCK_LISTINGS: Listing[] = [
   { anonId: 'Patient #3847', conditions: ['Diabetes', 'Hypertension'], fields: ['Blood Type', 'Allergies', 'Vaccinations'], ageRange: '46-55', location: 'North India', price: 75, accessType: 'one-time', bloodType: 'A+', allergies: 'Sulfa drugs', vaccinations: ['COVID-19', 'Tetanus'], gender: 'Male' },
   { anonId: 'Patient #7291', conditions: ['Heart Disease'], fields: ['Blood Type', 'Medications', 'Conditions'], ageRange: '56-65', location: 'South India', price: 120, accessType: 'one-time', bloodType: 'O+', allergies: 'None', medications: 'Atorvastatin, Aspirin', gender: 'Male' },
@@ -39,6 +50,13 @@ const conditionColors: Record<string, string> = {
   'None': '#6b7280'
 };
 
+function getBalance(): number {
+  const stored = localStorage.getItem('walletBalance');
+  if (stored !== null) return Number(stored);
+  localStorage.setItem('walletBalance', '1000');
+  return 1000;
+}
+
 function Marketplace() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [conditionFilter, setConditionFilter] = useState('All');
@@ -46,9 +64,10 @@ function Marketplace() {
   const [accessFilter, setAccessFilter] = useState('All');
   const [purchaseModal, setPurchaseModal] = useState<Listing | null>(null);
   const [purchasing, setPurchasing] = useState(false);
-  const [purchaseSuccess, setPurchaseSuccess] = useState<{ listing: Listing; txHash: string } | null>(null);
+  const [receipt, setReceipt] = useState<TransactionReceipt | null>(null);
   const [purchases, setPurchases] = useState<any[]>([]);
   const [listings, setListings] = useState<Listing[]>([]);
+  const [balance, setBalance] = useState(getBalance);
 
   useEffect(() => {
     isWalletConnected().then(setWalletConnected);
@@ -112,6 +131,10 @@ function Marketplace() {
 
   const handlePurchase = async () => {
     if (!purchaseModal) return;
+    if (balance < purchaseModal.price) {
+      alert('Insufficient balance. You need ' + purchaseModal.price + ' tNight but have ' + balance + ' tNight.');
+      return;
+    }
     setPurchasing(true);
     try {
       const midnight = (window as any).midnight;
@@ -132,6 +155,30 @@ function Marketplace() {
 
       const txHash = typeof sig === 'string' ? sig : sig?.signature || sig?.txHash || btoa(JSON.stringify(payload)).slice(0, 64);
 
+      // Deduct balance
+      const newBalance = balance - purchaseModal.price;
+      setBalance(newBalance);
+      localStorage.setItem('walletBalance', String(newBalance));
+
+      // Dispatch event so Navbar picks up balance change
+      window.dispatchEvent(new Event('balanceUpdate'));
+
+      const walletAddr = localStorage.getItem('walletAddress') || '';
+      const shortFrom = walletAddr ? `${walletAddr.slice(0, 10)}...${walletAddr.slice(-6)}` : 'Unknown';
+
+      // Build transaction receipt
+      const txReceipt: TransactionReceipt = {
+        txId: txHash.slice(0, 16),
+        from: shortFrom,
+        to: `${purchaseModal.anonId} (anonymous)`,
+        amount: purchaseModal.price + ' tNight',
+        timestamp: new Date().toISOString(),
+        status: 'Confirmed',
+        network: 'Midnight Preprod',
+        type: 'DATA_PURCHASE'
+      };
+
+      // Save purchase
       const purchase = {
         anonId: purchaseModal.anonId,
         price: purchaseModal.price,
@@ -139,12 +186,16 @@ function Marketplace() {
         timestamp: Date.now(),
         listing: purchaseModal
       };
-
       const updatedPurchases = [...purchases, purchase];
       setPurchases(updatedPurchases);
       localStorage.setItem('purchases', JSON.stringify(updatedPurchases));
 
-      setPurchaseSuccess({ listing: purchaseModal, txHash });
+      // Save transaction to transactions array
+      const existingTxs = JSON.parse(localStorage.getItem('transactions') || '[]');
+      existingTxs.push(txReceipt);
+      localStorage.setItem('transactions', JSON.stringify(existingTxs));
+
+      setReceipt(txReceipt);
       setPurchaseModal(null);
     } catch (err) {
       console.error('Purchase failed:', err);
@@ -162,9 +213,16 @@ function Marketplace() {
       <Navbar />
       <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)', paddingTop: '140px', paddingBottom: '60px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
-          <div style={{ marginBottom: '2rem' }}>
-            <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: '2.5rem', margin: 0 }}>Medical Data Marketplace</h1>
-            <p style={{ color: 'var(--text-muted)', marginTop: '0.75rem', fontSize: '1.1rem' }}>Browse anonymous patient records. Pay to access. Verified by Midnight Network.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+            <div>
+              <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: '2.5rem', margin: 0 }}>Medical Data Marketplace</h1>
+              <p style={{ color: 'var(--text-muted)', marginTop: '0.75rem', fontSize: '1.1rem' }}>Browse anonymous patient records. Pay to access. Verified by Midnight Network.</p>
+            </div>
+            {/* Balance display */}
+            <div style={{ padding: '0.75rem 1.25rem', borderRadius: '14px', background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.25)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Balance:</span>
+              <span style={{ color: '#06b6d4', fontSize: '1.3rem', fontWeight: 700 }}>{balance} tNight</span>
+            </div>
           </div>
 
           {/* Filters */}
@@ -196,7 +254,6 @@ function Marketplace() {
                   )}
                   <div style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '0.75rem', fontFamily: 'Syne, sans-serif' }}>{listing.anonId}</div>
 
-                  {/* Condition tags */}
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                     {listing.conditions.length > 0 ? listing.conditions.map(c => (
                       <span key={c} style={{ padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.78rem', fontWeight: 600, background: `${conditionColors[c] || '#6b7280'}20`, color: conditionColors[c] || '#6b7280', border: `1px solid ${conditionColors[c] || '#6b7280'}40` }}>
@@ -209,22 +266,18 @@ function Marketplace() {
                     )}
                   </div>
 
-                  {/* Available fields */}
                   <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
                     {listing.fields.join(' · ')}
                   </p>
 
-                  {/* Age + Region */}
                   <p style={{ margin: '0 0 0.75rem 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                     Age {listing.ageRange} · {listing.location}
                   </p>
 
-                  {/* Price */}
                   <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#06b6d4', marginBottom: '0.75rem' }}>
                     {listing.accessType === 'emergency' ? 'Free' : `${listing.price} tNight`}
                   </div>
 
-                  {/* Badges */}
                   <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
                     <span style={{ padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, background: 'rgba(124, 58, 237, 0.12)', color: '#7c3aed', border: '1px solid rgba(124, 58, 237, 0.3)' }}>
                       {listing.accessType === 'one-time' ? 'One-time' : listing.accessType === 'unlimited' ? 'Unlimited' : 'Emergency'}
@@ -234,7 +287,6 @@ function Marketplace() {
                     </span>
                   </div>
 
-                  {/* Purchased data view */}
                   {purchased && (
                     <div style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.2)', marginBottom: '1rem' }}>
                       <div style={{ fontWeight: 700, color: '#06b6d4', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Accessed Data</div>
@@ -247,7 +299,6 @@ function Marketplace() {
                     </div>
                   )}
 
-                  {/* Button */}
                   {purchased ? (
                     <div style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#10b981', fontWeight: 700, textAlign: 'center' }}>
                       Access Granted ✓
@@ -276,7 +327,7 @@ function Marketplace() {
         </div>
       </div>
 
-      {/* Purchase Modal */}
+      {/* Purchase Confirmation Modal */}
       {purchaseModal && (
         <div className='dialog-backdrop' onClick={() => !purchasing && setPurchaseModal(null)}>
           <div className='dialog-card' onClick={e => e.stopPropagation()} style={{ maxWidth: '480px', padding: '2rem' }}>
@@ -285,37 +336,66 @@ function Marketplace() {
               <p style={{ margin: 0 }}><strong>Purchasing access to:</strong> {purchaseModal.anonId}</p>
               <p style={{ margin: 0 }}><strong>Amount:</strong> <span style={{ color: '#06b6d4', fontWeight: 700 }}>{purchaseModal.price} tNight</span></p>
               {shortWallet && <p style={{ margin: 0, fontSize: '0.9rem' }}><strong>Your wallet:</strong> <span style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>{shortWallet}</span></p>}
+              <p style={{ margin: 0, fontSize: '0.9rem' }}><strong>Balance after:</strong> <span style={{ color: balance >= purchaseModal.price ? '#10b981' : '#f87171', fontWeight: 700 }}>{balance - purchaseModal.price} tNight</span></p>
             </div>
             <div style={{ padding: '0.75rem 1rem', borderRadius: '10px', background: 'rgba(248, 113, 113, 0.08)', border: '1px solid rgba(248, 113, 113, 0.25)', color: '#f87171', fontSize: '0.88rem', marginBottom: '1.5rem' }}>
               This will initiate a real transaction on Midnight Preprod
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <button onClick={() => setPurchaseModal(null)} disabled={purchasing} className='button-secondary' style={{ flex: 1 }}>Cancel</button>
-              <button onClick={handlePurchase} disabled={purchasing} className='button-primary' style={{ flex: 1 }}>
-                {purchasing ? 'Signing...' : 'Confirm Purchase'}
+              <button onClick={handlePurchase} disabled={purchasing || balance < purchaseModal.price} className='button-primary' style={{ flex: 1, opacity: balance < purchaseModal.price ? 0.5 : 1 }}>
+                {purchasing ? 'Signing...' : balance < purchaseModal.price ? 'Insufficient Balance' : 'Confirm Purchase'}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Purchase Success Modal */}
-      {purchaseSuccess && (
-        <div className='dialog-backdrop' onClick={() => setPurchaseSuccess(null)}>
-          <div className='dialog-card' onClick={e => e.stopPropagation()} style={{ maxWidth: '480px', padding: '2rem', textAlign: 'center' }}>
-            <div style={{ display: 'inline-flex', width: '60px', height: '60px', border: '3px solid #10b981', borderRadius: '50%', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
-              <div style={{ width: '16px', height: '28px', border: 'solid #10b981', borderWidth: '0 4px 4px 0', transform: 'rotate(45deg)' }}></div>
+      {/* Transaction Receipt Modal */}
+      {receipt && (
+        <div className='dialog-backdrop' onClick={() => setReceipt(null)}>
+          <div className='dialog-card' onClick={e => e.stopPropagation()} style={{ maxWidth: '520px', padding: '2rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'inline-flex', width: '60px', height: '60px', border: '3px solid #10b981', borderRadius: '50%', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                <div style={{ width: '16px', height: '28px', border: 'solid #10b981', borderWidth: '0 4px 4px 0', transform: 'rotate(45deg)' }}></div>
+              </div>
+              <h2 style={{ margin: '0 0 0.25rem 0' }}>Transaction Confirmed</h2>
+              <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>Your purchase has been recorded on Midnight Preprod</p>
             </div>
-            <h2 style={{ margin: '0 0 0.75rem 0' }}>Transaction Submitted</h2>
-            <p style={{ color: 'var(--text-muted)', margin: '0 0 1rem 0' }}>Access to {purchaseSuccess.listing.anonId} has been granted.</p>
-            <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem', fontFamily: 'monospace', wordBreak: 'break-all', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
-              txHash: {purchaseSuccess.txHash}
+
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', padding: '1.25rem', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'grid', gap: '0.6rem' }}>
+                {[
+                  { label: 'Transaction ID', value: receipt.txId, mono: true },
+                  { label: 'Type', value: receipt.type },
+                  { label: 'From', value: receipt.from, mono: true },
+                  { label: 'To', value: receipt.to },
+                  { label: 'Amount', value: receipt.amount, highlight: true },
+                  { label: 'Network', value: receipt.network },
+                  { label: 'Timestamp', value: new Date(receipt.timestamp).toLocaleString() },
+                  { label: 'Status', value: receipt.status, status: true },
+                ].map((row, i) => (
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.4rem 0', borderBottom: i < 7 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{row.label}</span>
+                    <span style={{
+                      fontFamily: row.mono ? 'monospace' : 'inherit',
+                      fontSize: row.mono ? '0.82rem' : '0.9rem',
+                      fontWeight: row.highlight || row.status ? 700 : 400,
+                      color: row.highlight ? '#06b6d4' : row.status ? '#10b981' : 'var(--text)',
+                      textAlign: 'right',
+                      maxWidth: '60%',
+                      wordBreak: 'break-all'
+                    }}>{row.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href='https://preprod.midnightexplorer.com/' target='_blank' rel='noopener noreferrer' className='button-secondary' style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
-                View on Explorer
+                View on Midnight Explorer
               </a>
-              <button onClick={() => setPurchaseSuccess(null)} className='button-primary'>Close</button>
+              <button onClick={() => setReceipt(null)} className='button-primary'>Close</button>
             </div>
           </div>
         </div>

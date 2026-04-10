@@ -179,7 +179,10 @@ function PatientDashboard() {
                 <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(16, 185, 129, 0.18)', marginBottom: '1.5rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
                     <h2 style={{ margin: 0 }}>My Listings</h2>
-                    <button onClick={() => navigate('/wallet')} className='button-secondary'>Edit Listing</button>
+                    <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                      <button onClick={() => navigate('/transactions')} className='button-secondary'>View All Transactions</button>
+                      <button onClick={() => navigate('/wallet')} className='button-secondary'>Edit Listing</button>
+                    </div>
                   </div>
                   <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: '1rem' }}>
                     <div className='panel-card' style={{ borderColor: 'rgba(124, 58, 237, 0.18)' }}>
@@ -191,10 +194,19 @@ function PatientDashboard() {
                       <p style={{ margin: 0, fontSize: '1.3rem', fontWeight: 700, color: '#06b6d4' }}>{listing.price} tNight</p>
                     </div>
                     <div className='panel-card' style={{ borderColor: 'rgba(16, 185, 129, 0.18)' }}>
-                      <p style={{ margin: '0 0 0.35rem', color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Total tNight Earned</p>
+                      <p style={{ margin: '0 0 0.35rem', color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Total Earned</p>
                       <p style={{ margin: 0, fontSize: '1.3rem', fontWeight: 700, color: '#10b981' }}>{totalEarned} tNight</p>
                     </div>
                   </div>
+
+                  {/* Pending balance notice */}
+                  {totalEarned > 0 && (
+                    <div style={{ padding: '0.85rem 1.25rem', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.25)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <span style={{ color: '#f59e0b', fontSize: '1.1rem' }}>&#9201;</span>
+                      <span style={{ color: '#f59e0b', fontSize: '0.9rem', fontWeight: 600 }}>Pending Balance: {totalEarned} tNight — withdrawable after mainnet launch</span>
+                    </div>
+                  )}
+
                   <div style={{ padding: '1rem', borderRadius: '14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.9rem' }}>
                       <strong>Fields listed:</strong> {[
@@ -210,16 +222,19 @@ function PatientDashboard() {
                     <p style={{ margin: 0, fontSize: '0.9rem' }}><strong>Purchases:</strong> {myPurchases.length}</p>
                   </div>
 
-                  {/* Transaction History */}
+                  {/* Incoming Transactions */}
                   {myPurchases.length > 0 && (
                     <div style={{ marginTop: '1.25rem' }}>
-                      <h3 style={{ margin: '0 0 0.75rem 0', fontSize: '1rem' }}>Data Access Transactions</h3>
+                      <h3 style={{ margin: '0 0 0.75rem 0', fontSize: '1rem' }}>Incoming Transactions</h3>
                       <div style={{ display: 'grid', gap: '0.6rem' }}>
                         {myPurchases.map((p: any, i: number) => (
-                          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '0.75rem 1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(16, 185, 129, 0.12)' }}>
-                            <div>
-                              <p style={{ margin: 0, fontWeight: 600, fontSize: '0.9rem' }}>Researcher accessed your data · {p.price} tNight</p>
-                              <p style={{ margin: '0.2rem 0 0', color: 'var(--text-muted)', fontSize: '0.78rem' }}>{new Date(p.timestamp).toLocaleString()}</p>
+                          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '0.75rem 1rem', borderRadius: '12px', background: 'rgba(16, 185, 129, 0.06)', border: '1px solid rgba(16, 185, 129, 0.18)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                              <span style={{ color: '#10b981', fontWeight: 700, fontSize: '1.1rem' }}>+</span>
+                              <div>
+                                <p style={{ margin: 0, fontWeight: 600, fontSize: '0.9rem', color: '#10b981' }}>+{p.price} tNight received</p>
+                                <p style={{ margin: '0.2rem 0 0', color: 'var(--text-muted)', fontSize: '0.78rem' }}>Researcher accessed your data · {new Date(p.timestamp).toLocaleString()}</p>
+                              </div>
                             </div>
                             <span style={{ padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.72rem', fontWeight: 600, background: 'rgba(16, 185, 129, 0.12)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)', whiteSpace: 'nowrap' }}>ZK Proof ✓</span>
                           </div>
