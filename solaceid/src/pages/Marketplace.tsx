@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import { isWalletConnected } from '../utils/midnight';
 
 interface Listing {
   anonId: string;
@@ -58,7 +57,6 @@ function getBalance(): number {
 }
 
 function Marketplace() {
-  const [walletConnected, setWalletConnected] = useState(false);
   const [conditionFilter, setConditionFilter] = useState('All');
   const [priceFilter, setPriceFilter] = useState('Any');
   const [accessFilter, setAccessFilter] = useState('All');
@@ -70,7 +68,6 @@ function Marketplace() {
   const [balance, setBalance] = useState(getBalance);
 
   useEffect(() => {
-    isWalletConnected().then(setWalletConnected);
     const savedPurchases = JSON.parse(localStorage.getItem('purchases') || '[]');
     setPurchases(savedPurchases);
   }, []);
@@ -305,7 +302,8 @@ function Marketplace() {
                     </div>
                   ) : (
                     <button onClick={() => {
-                      if (!walletConnected) {
+                      const walletAddress = localStorage.getItem('walletAddress');
+                      if (!walletAddress && !(window as any).midnight) {
                         alert('Connect Lace wallet to purchase');
                         return;
                       }
