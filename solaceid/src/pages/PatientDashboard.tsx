@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import WalletPanel from '../components/WalletPanel';
@@ -13,6 +13,7 @@ function safeGet(key: string, fallback: string): string {
 }
 
 function PatientDashboard() {
+  const [hasError, setHasError] = React.useState(false);
   const navigate = useNavigate();
   const patientName = safeGet('patientName', 'Patient');
   const patientHash = safeGet('solaceIdHash', '0x0000000000000000000000000000000000000000');
@@ -33,14 +34,15 @@ function PatientDashboard() {
         const bal = await getWalletBalance();
         setWalletBalance(bal);
         setWalletLoaded(true);
-      } catch {
+      } catch (err) {
+        console.error('wallet balance error', err);
         setWalletLoaded(false);
       }
       try {
         const txs = await getWalletTxHistory();
         if (Array.isArray(txs)) setWalletTxs(txs);
-      } catch {
-        // ignore
+      } catch (err) {
+        console.error('wallet tx history error', err);
       }
     })();
   }, []);
@@ -49,8 +51,10 @@ function PatientDashboard() {
     try {
       const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
       setConsents(Array.isArray(savedConsents) ? savedConsents : []);
-    } catch {
+    } catch (err) {
+      console.error('consents load error', err);
       setConsents([]);
+      setHasError(true);
     }
   }, []);
 
@@ -63,25 +67,41 @@ function PatientDashboard() {
       setAutoShareEmergency(savedAutoShare);
       setAllowHospitalSearch(savedHospitalSearch);
       setEmailNotifications(savedEmailNotifications);
-    } catch {
-      // ignore
+    } catch (err) {
+      console.error('settings load error', err);
+      setHasError(true);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('autoShareEmergency', autoShareEmergency.toString());
+    try {
+      localStorage.setItem('autoShareEmergency', autoShareEmergency.toString());
+    } catch (err) {
+      console.error(err);
+      setHasError(true);
+    }
   }, [autoShareEmergency]);
 
   useEffect(() => {
-    localStorage.setItem('allowHospitalSearch', allowHospitalSearch.toString());
+    try {
+      localStorage.setItem('allowHospitalSearch', allowHospitalSearch.toString());
+    } catch (err) {
+      console.error(err);
+      setHasError(true);
+    }
   }, [allowHospitalSearch]);
 
   useEffect(() => {
-    localStorage.setItem('emailNotifications', emailNotifications.toString());
+    try {
+      localStorage.setItem('emailNotifications', emailNotifications.toString());
+    } catch (err) {
+      console.error(err);
+      setHasError(true);
+    }
   }, [emailNotifications]);
 
-  const activeConsents = consents.filter(c => c.status === 'Active').length;
-  const uniqueHospitals = new Set(consents.map(c => c.hospital)).size;
+  const activeConsents = (consents || []).filter(c => c && c.status === 'Active').length;
+  const uniqueHospitals = new Set((consents || []).map(c => c && c.hospital)).size;
 
   const shortHash = `${patientHash.slice(0, 8)}...${patientHash.slice(-6)}`;
 
@@ -137,7 +157,23 @@ function PatientDashboard() {
     setRevokeDialog({ show: false, index: null });
   };
 
-  return (
+  if (hasError) {
+    return (
+      <>
+        <Navbar />
+        <div style={{ background: '#0a0a0a', minHeight: '100vh', color: '#ffffff', paddingTop: '140px', paddingBottom: '80px' }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem', textAlign: 'center' }}>
+            <h1 style={{ color: '#ffffff' }}>Something went wrong</h1>
+            <p style={{ color: '#9ca3af' }}>Dashboard failed to load. Please refresh the page.</p>
+            <button onClick={() => window.location.reload()} className='button-primary' style={{ marginTop: '1rem' }}>Reload</button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  try {
+    return (
     <>
       <Navbar />
       <div style={{ background: '#0a0a0a', minHeight: '100vh', color: '#ffffff', paddingTop: '140px', paddingBottom: '80px' }}>
@@ -163,7 +199,7 @@ function PatientDashboard() {
           <div className='grid-3' style={{ gap: '1rem', marginBottom: '2rem' }}>
             <div className='panel-card' style={{ borderColor: 'rgba(124, 58, 237, 0.18)' }}>
               <h3 style={{ margin: '0 0 0.75rem 0' }}>Consents Given</h3>
-              <div style={{ fontSize: '2.2rem', fontWeight: 700 }}>{consents.length}</div>
+              <div style={{ fontSize: '2.2rem', fontWeight: 700 }}>{(consents || []).length}</div>
             </div>
             <div className='panel-card' style={{ borderColor: 'rgba(6, 182, 212, 0.18)' }}>
               <h3 style={{ margin: '0 0 0.75rem 0' }}>Active Consents</h3>
@@ -189,8 +225,8 @@ function PatientDashboard() {
             try {
               const listing = JSON.parse(stored);
               const purchasesData = JSON.parse(localStorage.getItem('purchases') || '[]');
-              const myPurchases = purchasesData.filter((p: any) => p.anonId === listing.anonId);
-              const totalEarned = myPurchases.length * (Number(listing.price) || 0);
+              const myPurchases = (Array.isArray(purchasesData) ? purchasesData : []).filter((p: any) => p && p.anonId === listing.anonId);
+              const totalEarned = (myPurchases || []).length * (Number(listing.price) || 0);
               return (
                 <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(16, 185, 129, 0.18)', marginBottom: '1.5rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
@@ -235,15 +271,15 @@ function PatientDashboard() {
                       ].filter(Boolean).join(', ') || 'None'}
                     </p>
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.9rem' }}><strong>Access type:</strong> {listing.accessType}</p>
-                    <p style={{ margin: 0, fontSize: '0.9rem' }}><strong>Purchases:</strong> {myPurchases.length}</p>
+                    <p style={{ margin: 0, fontSize: '0.9rem' }}><strong>Purchases:</strong> {(myPurchases || []).length}</p>
                   </div>
 
                   {/* Incoming Transactions */}
-                  {myPurchases.length > 0 && (
+                  {(myPurchases || []).length > 0 && (
                     <div style={{ marginTop: '1.25rem' }}>
                       <h3 style={{ margin: '0 0 0.75rem 0', fontSize: '1rem' }}>Incoming Transactions</h3>
                       <div style={{ display: 'grid', gap: '0.6rem' }}>
-                        {myPurchases.map((p: any, i: number) => (
+                        {(myPurchases || []).map((p: any, i: number) => (
                           <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '0.75rem 1rem', borderRadius: '12px', background: 'rgba(16, 185, 129, 0.06)', border: '1px solid rgba(16, 185, 129, 0.18)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                               <span style={{ color: '#10b981', fontWeight: 700, fontSize: '1.1rem' }}>+</span>
@@ -279,11 +315,11 @@ function PatientDashboard() {
                 {walletLoaded ? walletBalance : 'Wallet not connected'}
               </p>
             </div>
-            {walletTxs.length > 0 && (
+            {(walletTxs || []).length > 0 && (
               <div>
                 <h3 style={{ margin: '0 0 0.75rem 0', fontSize: '1rem' }}>Recent Transactions</h3>
                 <div style={{ display: 'grid', gap: '0.6rem' }}>
-                  {walletTxs.slice(0, 3).map((tx, i) => {
+                  {(walletTxs || []).slice(0, 3).map((tx, i) => {
                     const hash = tx.txHash || tx.hash || tx.id || '';
                     const shortHash = hash.length > 20 ? hash.slice(0, 10) + '...' + hash.slice(-8) : hash;
                     const type = tx.type || tx.direction || 'Transaction';
@@ -315,11 +351,11 @@ function PatientDashboard() {
 
           <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.14)', marginBottom: '1.5rem' }}>
             <h2 style={{ margin: '0 0 1rem 0' }}>My Consents</h2>
-            {consents.length === 0 ? (
+            {(consents || []).length === 0 ? (
               <p style={{ color: 'var(--text-muted)', margin: 0 }}>No consents yet.</p>
             ) : (
               <div style={{ display: 'grid', gap: '1rem' }}>
-                {consents.map((consent, index) => (
+                {(consents || []).map((consent, index) => (
                   <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '1rem', borderRadius: '18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(124, 58, 237, 0.12)' }}>
                     <div>
                       <p style={{ margin: 0 }}><strong>Hospital:</strong> {consent.hospital}</p>
@@ -421,7 +457,7 @@ function PatientDashboard() {
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{createdDate ? new Date(createdDate).toLocaleString() : 'Recently'}</div>
                 </div>
               </div>
-              {consents.slice().reverse().map((consent, index) => (
+              {(consents || []).slice().reverse().map((consent, index) => (
                 <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', borderRadius: '18px', background: 'rgba(124, 58, 237, 0.08)', border: '1px solid rgba(124, 58, 237, 0.18)' }}>
                   <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#7c3aed' }}></div>
                   <div>
@@ -430,7 +466,7 @@ function PatientDashboard() {
                   </div>
                 </div>
               ))}
-              {consents.length === 0 && (
+              {(consents || []).length === 0 && (
                 <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '1.5rem', borderRadius: '18px', background: 'rgba(255,255,255,0.02)' }}>
                   No activity yet. Create your first consent to get started.
                 </div>
@@ -453,7 +489,22 @@ function PatientDashboard() {
         </div>
       </div>
     </>
-  );
+    );
+  } catch (err) {
+    console.error('PatientDashboard render error', err);
+    return (
+      <>
+        <Navbar />
+        <div style={{ background: '#0a0a0a', minHeight: '100vh', color: '#ffffff', paddingTop: '140px', paddingBottom: '80px' }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem', textAlign: 'center' }}>
+            <h1 style={{ color: '#ffffff' }}>Something went wrong</h1>
+            <p style={{ color: '#9ca3af' }}>Dashboard failed to render. Please refresh the page.</p>
+            <button onClick={() => window.location.reload()} className='button-primary' style={{ marginTop: '1rem' }}>Reload</button>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default PatientDashboard;
