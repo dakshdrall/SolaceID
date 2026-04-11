@@ -4,11 +4,19 @@ import Navbar from '../components/Navbar';
 import WalletPanel from '../components/WalletPanel';
 import { getWalletBalance, getWalletTxHistory } from '../utils/midnight';
 
+function safeGet(key: string, fallback: string): string {
+  try {
+    return localStorage.getItem(key) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function PatientDashboard() {
   const navigate = useNavigate();
-  const patientName = localStorage.getItem('patientName') || 'Patient';
-  const patientHash = localStorage.getItem('solaceIdHash') || '0x0000000000000000000000000000000000000000';
-  const createdDate = localStorage.getItem('patientCreated') || new Date().toISOString();
+  const patientName = safeGet('patientName', 'Patient');
+  const patientHash = safeGet('solaceIdHash', '0x0000000000000000000000000000000000000000');
+  const createdDate = safeGet('patientCreated', new Date().toISOString());
 
   const [consents, setConsents] = useState<any[]>([]);
   const [revokeDialog, setRevokeDialog] = useState<{ show: boolean; index: number | null }>({ show: false, index: null });
@@ -38,18 +46,26 @@ function PatientDashboard() {
   }, []);
 
   useEffect(() => {
-    const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
-    setConsents(Array.isArray(savedConsents) ? savedConsents : []);
+    try {
+      const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
+      setConsents(Array.isArray(savedConsents) ? savedConsents : []);
+    } catch {
+      setConsents([]);
+    }
   }, []);
 
   useEffect(() => {
-    const savedAutoShare = localStorage.getItem('autoShareEmergency') === 'true';
-    const savedHospitalSearch = localStorage.getItem('allowHospitalSearch') !== 'false';
-    const savedEmailNotifications = localStorage.getItem('emailNotifications') === 'true';
+    try {
+      const savedAutoShare = localStorage.getItem('autoShareEmergency') === 'true';
+      const savedHospitalSearch = localStorage.getItem('allowHospitalSearch') !== 'false';
+      const savedEmailNotifications = localStorage.getItem('emailNotifications') === 'true';
 
-    setAutoShareEmergency(savedAutoShare);
-    setAllowHospitalSearch(savedHospitalSearch);
-    setEmailNotifications(savedEmailNotifications);
+      setAutoShareEmergency(savedAutoShare);
+      setAllowHospitalSearch(savedHospitalSearch);
+      setEmailNotifications(savedEmailNotifications);
+    } catch {
+      // ignore
+    }
   }, []);
 
   useEffect(() => {
@@ -124,7 +140,7 @@ function PatientDashboard() {
   return (
     <>
       <Navbar />
-      <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)', paddingTop: '140px', paddingBottom: '80px' }}>
+      <div style={{ background: '#0a0a0a', minHeight: '100vh', color: '#ffffff', paddingTop: '140px', paddingBottom: '80px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
             <div>
