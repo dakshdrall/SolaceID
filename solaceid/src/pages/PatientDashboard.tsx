@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import WalletPanel from '../components/WalletPanel';
-import { getWalletBalance, getWalletTxHistory } from '../utils/midnight';
 
 function safeGet(key: string, fallback: string): string {
   try {
@@ -24,29 +22,6 @@ function PatientDashboard() {
   const [autoShareEmergency, setAutoShareEmergency] = useState(false);
   const [allowHospitalSearch, setAllowHospitalSearch] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(false);
-  const [walletBalance, setWalletBalance] = useState<string>('—');
-  const [walletTxs, setWalletTxs] = useState<any[]>([]);
-  const [walletLoaded, setWalletLoaded] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const bal = await getWalletBalance();
-        setWalletBalance(bal);
-        setWalletLoaded(true);
-      } catch (err) {
-        console.error('wallet balance error', err);
-        setWalletLoaded(false);
-      }
-      try {
-        const txs = await getWalletTxHistory();
-        if (Array.isArray(txs)) setWalletTxs(txs);
-      } catch (err) {
-        console.error('wallet tx history error', err);
-      }
-    })();
-  }, []);
-
   useEffect(() => {
     try {
       const savedConsents = JSON.parse(localStorage.getItem('consents') || '[]');
@@ -300,47 +275,6 @@ function PatientDashboard() {
           })()}
 
           <button onClick={() => navigate('/consent')} className='button-primary' style={{ marginBottom: '2rem' }}>New Consent</button>
-
-          <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.18)', marginBottom: '1.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <h2 style={{ margin: 0 }}>Wallet</h2>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.85rem', borderRadius: '999px', background: 'rgba(124, 58, 237, 0.12)', border: '1px solid rgba(124, 58, 237, 0.35)', color: 'var(--accent)', fontSize: '0.85rem', fontWeight: 600 }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }} />
-                Midnight Preprod
-              </span>
-            </div>
-            <div className='panel-card' style={{ borderColor: 'rgba(6, 182, 212, 0.18)', marginBottom: '1rem' }}>
-              <p style={{ margin: '0 0 0.35rem', color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Balance</p>
-              <p style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent-2)' }}>
-                {walletLoaded ? walletBalance : 'Wallet not connected'}
-              </p>
-            </div>
-            {(walletTxs || []).length > 0 && (
-              <div>
-                <h3 style={{ margin: '0 0 0.75rem 0', fontSize: '1rem' }}>Recent Transactions</h3>
-                <div style={{ display: 'grid', gap: '0.6rem' }}>
-                  {(walletTxs || []).slice(0, 3).map((tx, i) => {
-                    const hash = tx.txHash || tx.hash || tx.id || '';
-                    const shortHash = hash.length > 20 ? hash.slice(0, 10) + '...' + hash.slice(-8) : hash;
-                    const type = tx.type || tx.direction || 'Transaction';
-                    const ts = tx.timestamp || tx.time || tx.slot;
-                    const time = ts ? new Date(typeof ts === 'number' && ts < 1e12 ? ts * 1000 : ts).toLocaleString() : '';
-                    return (
-                      <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', padding: '0.75rem 1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(124, 58, 237, 0.1)' }}>
-                        <div style={{ minWidth: 0 }}>
-                          <p style={{ margin: 0, fontWeight: 600, fontSize: '0.9rem', textTransform: 'capitalize' }}>{type}</p>
-                          {shortHash && <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.78rem', fontFamily: 'monospace' }}>{shortHash}</p>}
-                        </div>
-                        <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.78rem', textAlign: 'right' }}>{time}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <WalletPanel />
 
           <div className='surface-card' style={{ padding: '2rem', borderColor: 'rgba(124, 58, 237, 0.14)', marginBottom: '1.5rem' }}>
             <h2 style={{ margin: '0 0 1rem 0' }}>ZK Identity</h2>
